@@ -1,0 +1,14 @@
+
+ant.properties
+local.properties
+proguard-project.txt
+
+.classpath
+.project
+.settings
+assets/
+gen/
+bin/
+*.apk
+*~
+project.properties
