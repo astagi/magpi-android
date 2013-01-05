@@ -8,14 +8,23 @@ Dependencies
 
 - ActionBar (Sherlock http://actionbarsherlock.com)
 - Async-http (http://loopj.com/android-async-http)
-- YMCA (http://github.com/astagi/YMCA)
 
 How to build and install
 ------------------------
 
-You can import all the source in a new Android project and use eclipse to build and install.
+Requires:
 
-Alternatively you can use YMCA utility.
+- YMCA (http://github.com/astagi/YMCA)
+- Apache Ant http://ant.apache.org
+- Android SDK http://developer.android.com/sdk
+
+Steps:
+
+- Set ANDROID_SDK environment variable with the path where your Android SDK folder is placed.
+- Run "make" to build the .apk
+- Run "make upload" to launch the app on your device. For any problem read the YMCA Makefile.
+
+Alternatively you can import all the source in a new Android project and use eclipse to build and install.
 
 License
 -------
