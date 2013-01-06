@@ -9,6 +9,7 @@ proguard-project.txt
 assets/
 gen/
 bin/
+libs/
 *.apk
 *~
 project.properties

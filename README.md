@@ -6,7 +6,7 @@ MagPi client for Android.
 Dependencies
 ------------
 
-- ActionBar (Sherlock http://actionbarsherlock.com)
+- ActionBarSherlock (http://actionbarsherlock.com)
 - Async-http (http://loopj.com/android-async-http)
 
 How to build and install
@@ -14,7 +14,6 @@ How to build and install
 
 Requires:
 
-- YMCA (http://github.com/astagi/YMCA)
 - Apache Ant http://ant.apache.org
 - Android SDK http://developer.android.com/sdk
 
@@ -29,4 +28,4 @@ Alternatively you can import all the source in a new Android project and use ecl
 License
 -------
 
-This software is released under MIT License. Copyright (c) 2013 MagPi, Andrea Stagi <stagi.andrea@gmail.com>
+This software is released under MIT License. Copyright (c) 2013 MagPi <emailthemagpi@gmail.com>, Andrea Stagi <stagi.andrea@gmail.com>
