@@ -8,6 +8,7 @@ Dependencies
 
 - ActionBarSherlock (http://actionbarsherlock.com)
 - Async-http (http://loopj.com/android-async-http)
+- Android-rss (https://github.com/astagi/android-rss)
 
 How to build and install
 ------------------------

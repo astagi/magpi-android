@@ -1,12 +1,20 @@
 package com.themagpi.android;
 
+import org.mcsoxford.rss.RSSFeed;
+import org.mcsoxford.rss.RSSItem;
+import org.mcsoxford.rss.RSSReader;
+
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 public class HeadlinesFragment extends ListFragment {
     OnHeadlineSelectedListener mCallback;
@@ -23,6 +31,24 @@ public class HeadlinesFragment extends ListFragment {
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 
         setListAdapter(new ArrayAdapter<String>(getActivity(), layout, Issue.Headlines));
+        
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://feeds.feedburner.com/themagpi", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+            	RSSReader reader = new RSSReader();
+            	RSSFeed feed = reader.loadFromString(response);
+                Log.e("ITEMS NUMBER", "" + feed.getItems().size());
+                
+                for(RSSItem item : feed.getItems()) {
+                	
+                }
+                
+                reader.close();
+            }
+        });
+
+
     }
 
     @Override
