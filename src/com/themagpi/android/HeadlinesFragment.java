@@ -36,13 +36,24 @@ public class HeadlinesFragment extends ListFragment {
         client.get("http://feeds.feedburner.com/themagpi", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
-            	RSSReader reader = new RSSReader();
-            	RSSFeed feed = reader.loadFromString(response);
+                RSSReader reader = new RSSReader();
+                RSSFeed feed = reader.loadFromString(response);
                 Log.e("ITEMS NUMBER", "" + feed.getItems().size());
                 
-                for(RSSItem item : feed.getItems()) {
-                	
-                }
+                for(RSSItem item : feed.getItems()) {}
+                
+                reader.close();
+            }
+        });
+        
+        client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+                RSSReader reader = new RSSReader();
+                RSSFeed feed = reader.loadFromString(response);
+                Log.e("ITEMS NUMBER", "" + feed.getItems().size());
+                
+                for(RSSItem item : feed.getItems()) {}
                 
                 reader.close();
             }

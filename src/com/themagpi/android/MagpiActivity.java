@@ -8,14 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 
 public class MagpiActivity extends FragmentActivity 
-	implements HeadlinesFragment.OnHeadlineSelectedListener {
+    implements HeadlinesFragment.OnHeadlineSelectedListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_magpi, menu);
         return true;
     }
-	
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
