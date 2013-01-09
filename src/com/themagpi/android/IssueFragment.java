@@ -36,7 +36,7 @@ public class IssueFragment extends Fragment {
 
     public void updateIssueView(int position) {
         TextView issue = (TextView) getActivity().findViewById(R.id.article);
-        issue.setText(Issue.Issues[position]);
+        issue.setText(FakeIssue.Issues[position]);
         mCurrentPosition = position;
     }
 

@@ -1,5 +1,7 @@
 package com.themagpi.android;
 
+import java.util.ArrayList;
+
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 import org.mcsoxford.rss.RSSReader;
@@ -15,6 +17,8 @@ import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.themagpi.api.Issue;
+import com.themagpi.api.MagPiClient;
 
 public class HeadlinesFragment extends ListFragment {
     OnHeadlineSelectedListener mCallback;
@@ -30,32 +34,12 @@ public class HeadlinesFragment extends ListFragment {
         int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, Issue.Headlines));
+        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, FakeIssue.Headlines));
         
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://feeds.feedburner.com/themagpi", new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(String response) {
-                RSSReader reader = new RSSReader();
-                RSSFeed feed = reader.loadFromString(response);
-                Log.e("ITEMS NUMBER", "" + feed.getItems().size());
-                
-                for(RSSItem item : feed.getItems()) {}
-                
-                reader.close();
-            }
-        });
-        
-        client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(String response) {
-                RSSReader reader = new RSSReader();
-                RSSFeed feed = reader.loadFromString(response);
-                Log.e("ITEMS NUMBER", "" + feed.getItems().size());
-                
-                for(RSSItem item : feed.getItems()) {}
-                
-                reader.close();
+        MagPiClient client = new MagPiClient();
+        client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
+            public void onReceived(ArrayList<Issue> issues) {
+                Log.e("ITEMS SIZE", "Downloaded issues: " + issues.size());
             }
         });
 

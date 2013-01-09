@@ -7,11 +7,11 @@ import org.mcsoxford.rss.RSSItem;
 
 public class IssuesFactory {
     
-    Issue buildFromRSSItem(RSSItem item) {
+    public static Issue buildFromRSSItem(RSSItem item) {
         return (new Issue.Builder()).build();
     }
     
-    ArrayList<Issue> buildFromRSSFeed(RSSFeed feed) {
+    public static ArrayList<Issue> buildFromRSSFeed(RSSFeed feed) {
         
         ArrayList<Issue> issues = new ArrayList<Issue>();
         

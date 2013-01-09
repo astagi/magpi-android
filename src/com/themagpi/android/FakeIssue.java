@@ -1,6 +1,6 @@
 package com.themagpi.android;
 
-public class Issue {
+public class FakeIssue {
 
     static String[] Headlines = {
         "Issue 1",
