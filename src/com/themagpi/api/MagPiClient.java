@@ -1,12 +1,19 @@
 package com.themagpi.api;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSReader;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.BinaryHttpResponseHandler;
 
 public class MagPiClient {
     
@@ -14,6 +21,11 @@ public class MagPiClient {
 
     public static class OnIssuesReceivedListener {
         public void onReceived(ArrayList<Issue> issues) {}
+        public void onError() {}
+    }
+    
+    public static class OnFileReceivedListener {
+        public void onReceived(byte[] fileData) {}
         public void onError() {}
     }
     
@@ -29,10 +41,28 @@ public class MagPiClient {
         });
     }
     
+    public void getPdf(Issue issue, final OnFileReceivedListener fileListener) {
+        Log.e("DOWNLOADING", "..." + issue.getPdfUrl());
+        String[] allowedContentTypes = new String[] { "application/pdf" };
+        client.get(issue.getPdfUrl(), new BinaryHttpResponseHandler(allowedContentTypes) {
+            @Override
+            public void onSuccess(byte[] fileData) {
+                fileListener.onReceived(fileData);
+            }
+        });
+    }
+    
+    public void getCover(Issue issue, final OnFileReceivedListener fileListener) {
+        String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
+        client.get(issue.getCoverUrl(), new BinaryHttpResponseHandler() {
+            @Override
+            public void onSuccess(byte[] fileData) {
+                fileListener.onReceived(fileData);
+            }
+        });
+    }
+    
     public void getNews(AsyncHttpResponseHandler asyncHandler) {
         //TODO later : "http://feeds.feedburner.com/MagPi"
     }
-
-
-    
 }

@@ -1,22 +1,26 @@
 package com.themagpi.android;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import org.mcsoxford.rss.RSSFeed;
-import org.mcsoxford.rss.RSSItem;
-import org.mcsoxford.rss.RSSReader;
+import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
@@ -40,10 +44,46 @@ public class HeadlinesFragment extends ListFragment {
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {
                 Log.e("ITEMS SIZE", "Downloaded issues: " + issues.size());
+                
+                for(Issue issue : issues) {
+                    Log.e("PDFURL", "URL:" + issue.getPdfUrl());
+                }
+                
+                showPdf(issues.get(issues.size() - 1));
+                
             }
         });
+        
+        
 
 
+    }
+    
+    private void showPdf(Issue issue) {
+        MagPiClient client = new MagPiClient();
+        client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
+            public void onReceived(byte[] data) {
+                Log.e("File Status", "Arrived");
+
+                try {
+                    File sdCard = Environment.getExternalStorageDirectory();
+                    File dir = new File (sdCard.getAbsolutePath() + "/magpi");
+                    dir.mkdirs();
+                    File file = new File(dir, "test.pdf");
+
+                    FileOutputStream f = new FileOutputStream(file);
+                    f.write(data);
+                    f.flush();
+                    f.close();
+                                        
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("error", "Error opening file.", e);
+                }
+            }
+        });
     }
 
     @Override

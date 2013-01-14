@@ -27,9 +27,41 @@ public class Issue {
     }
 
     private Issue(Builder builder) {
-        title = builder.title;
-        date = builder.date;
-        imgUrl = builder.imgUrl;
-        pdfUrl = builder.pdfUrl;
+        setTitle(builder.title);
+        setDate(builder.date);
+        setCoverUrl(builder.imgUrl);
+        setPdfUrl(builder.pdfUrl);
+    }
+
+    public String getPdfUrl() {
+        return pdfUrl;
+    }
+
+    public void setPdfUrl(String pdfUrl) {
+        this.pdfUrl = pdfUrl;
+    }
+
+    public String getCoverUrl() {
+        return imgUrl;
+    }
+
+    public void setCoverUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

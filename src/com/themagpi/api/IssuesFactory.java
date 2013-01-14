@@ -8,7 +8,9 @@ import org.mcsoxford.rss.RSSItem;
 public class IssuesFactory {
     
     public static Issue buildFromRSSItem(RSSItem item) {
-        return (new Issue.Builder()).build();
+        return (new Issue.Builder())
+                .pdfUrl(item.getLink().toString())
+                .build();
     }
     
     public static ArrayList<Issue> buildFromRSSFeed(RSSFeed feed) {
