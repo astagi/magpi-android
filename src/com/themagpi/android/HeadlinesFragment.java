@@ -1,17 +1,11 @@
 package com.themagpi.android;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -44,59 +38,6 @@ public class HeadlinesFragment extends ListFragment {
         });
     }
     
-    private void showCover(final Issue issue) {
-        MagPiClient client = new MagPiClient();
-        client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
-            public void onReceived(byte[] data) {
-                Log.e("File Status", "Arrived");
-
-                try {
-                    File sdCard = Environment.getExternalStorageDirectory();
-                    File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-                    dir.mkdirs();
-                    File file = new File(dir, issue.getId() + ".pdf");
-
-                    FileOutputStream f = new FileOutputStream(file);
-                    f.write(data);
-                    f.flush();
-                    f.close();
-                                        
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e("error", "Error opening file.", e);
-                }
-            }
-        });
-    }
-    
-    private void showPdf(final Issue issue) {
-        MagPiClient client = new MagPiClient();
-        client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
-            public void onReceived(byte[] data) {
-                Log.e("File Status", "Arrived");
-
-                try {
-                    File sdCard = Environment.getExternalStorageDirectory();
-                    File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-                    dir.mkdirs();
-                    File file = new File(dir, issue.getId() + ".pdf");
-
-                    FileOutputStream f = new FileOutputStream(file);
-                    f.write(data);
-                    f.flush();
-                    f.close();
-                                        
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e("error", "Error opening file.", e);
-                }
-            }
-        });
-    }
 
     @Override
     public void onStart() {
