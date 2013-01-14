@@ -2,7 +2,6 @@ package com.themagpi.android;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -26,7 +25,7 @@ public class SplashScreen extends Activity {
                 SplashScreen.this.finish();
             }
             
-        }, 5000);
+        }, 3000);
     }
     
     public void onDestroy() {
