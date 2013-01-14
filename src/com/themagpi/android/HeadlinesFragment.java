@@ -1,13 +1,8 @@
 package com.themagpi.android;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,9 +21,10 @@ import com.themagpi.api.MagPiClient;
 
 public class HeadlinesFragment extends ListFragment {
     OnHeadlineSelectedListener mCallback;
+    ArrayList<Issue> issues = new ArrayList<Issue>();
 
     public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(int position);
+        public void onArticleSelected(Issue issue);
     }
 
     @Override
@@ -40,24 +36,12 @@ public class HeadlinesFragment extends ListFragment {
         
         MagPiClient client = new MagPiClient();
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
-            public void onReceived(ArrayList<Issue> issues) {
-                Log.e("ITEMS SIZE", "Downloaded issues: " + issues.size());
-                
-                String[] issuesHeadlines = new String[issues.size()];
-                
-                for(Issue issue : issues) {
-                    Log.e("PDFURL", "URL:" + issue.getPdfUrl());
-                }
-                
+            public void onReceived(ArrayList<Issue> issues) {         
                 //showPdf(issues.get(issues.size() - 1));
-                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));
-                
+                HeadlinesFragment.this.issues = issues;
+                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));   
             }
         });
-        
-        
-
-
     }
     
     private void showPdf(final Issue issue) {
@@ -110,7 +94,7 @@ public class HeadlinesFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.onArticleSelected(position);
+        mCallback.onArticleSelected(issues.get(position));
         getListView().setItemChecked(position, true);
     }
 }

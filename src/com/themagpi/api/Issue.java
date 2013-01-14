@@ -2,7 +2,10 @@ package com.themagpi.api;
 
 import java.util.Date;
 
-public class Issue {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Issue implements Parcelable {
     
     private String id;
     private String title;
@@ -75,6 +78,33 @@ public class Issue {
 
     public void setId(String id) {
         this.id = id;
+    }
+    
+
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(pdfUrl);
+        dest.writeString(imgUrl);
+        
+    }
+    
+    private void readFromParcel(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        pdfUrl = in.readString();
+        imgUrl = in.readString();
+    }
+    
+    public Issue(Parcel in) {
+        readFromParcel(in);
     }
     
     public String toString() {

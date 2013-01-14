@@ -2,6 +2,8 @@ package com.themagpi.android;
 
 
 
+import com.themagpi.api.Issue;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -36,17 +38,17 @@ public class MagpiActivity extends FragmentActivity
         }
     }
 
-    public void onArticleSelected(int position) {
+    public void onArticleSelected(Issue issue) {
 
         IssueFragment articleFrag = (IssueFragment)
                 getSupportFragmentManager().findFragmentById(R.id.issue_fragment);
 
         if (articleFrag != null) {
-            articleFrag.updateIssueView(position);
+            articleFrag.updateIssueView(issue);
         } else {
             IssueFragment newFragment = new IssueFragment();
             Bundle args = new Bundle();
-            args.putInt(IssueFragment.ARG_POSITION, position);
+            args.putParcelable(IssueFragment.ARG_ISSUE, issue);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
