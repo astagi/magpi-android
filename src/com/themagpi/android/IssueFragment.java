@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -71,6 +72,23 @@ public class IssueFragment extends SherlockFragment {
         //outState.putInt(ARG_POSITION, mCurrentPosition);
     }
     
+    Bitmap ScaleBitmap(Bitmap bm, float scalingFactor) {
+        int scaleHeight = (int) (bm.getHeight() * scalingFactor);
+        int scaleWidth = (int) (bm.getWidth() * scalingFactor);
+
+        return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
+    }
+    
+    private float getBitmapScalingFactor(Bitmap bm) {
+        int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+
+        ImageView imageView=(ImageView)IssueFragment.this.getActivity().findViewById(R.id.cover);
+
+        int imageViewWidth = displayWidth;
+
+        return ( (float) imageViewWidth / (float) bm.getWidth() );
+    }
+    
     private void showCover(final Issue issue) {
         MagPiClient client = new MagPiClient();
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
@@ -90,7 +108,7 @@ public class IssueFragment extends SherlockFragment {
                     
                     Bitmap bmp=BitmapFactory.decodeByteArray(data, 0, data.length);
                     ImageView image=(ImageView)IssueFragment.this.getActivity().findViewById(R.id.cover);
-                    image.setImageBitmap(Bitmap.createScaledBitmap(bmp, 640, 904, false));
+                    image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
                  
                                         
                 } catch (Exception e) {
