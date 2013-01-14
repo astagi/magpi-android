@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Issue {
     
+    private String id;
     private String title;
     private Date date;
     private String imgUrl;
@@ -11,11 +12,13 @@ public class Issue {
     
     public static class Builder {
 
+        private String id;
         private String title;
         private Date date;
         private String imgUrl;
         private String pdfUrl;
         
+        public Builder id(String id){this.id = id; return this; }
         public Builder title(String title){this.title = title; return this; }
         public Builder date(Date date){this.date = date; return this; }
         public Builder imageUrl(String imgUrl){this.imgUrl = imgUrl; return this; }
@@ -31,6 +34,7 @@ public class Issue {
         setDate(builder.date);
         setCoverUrl(builder.imgUrl);
         setPdfUrl(builder.pdfUrl);
+        setId(builder.id);
     }
 
     public String getPdfUrl() {
@@ -63,5 +67,17 @@ public class Issue {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    public String toString() {
+        return this.title;
     }
 }

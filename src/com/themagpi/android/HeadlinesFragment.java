@@ -35,21 +35,22 @@ public class HeadlinesFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+        final int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
-
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, FakeIssue.Headlines));
         
         MagPiClient client = new MagPiClient();
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {
                 Log.e("ITEMS SIZE", "Downloaded issues: " + issues.size());
                 
+                String[] issuesHeadlines = new String[issues.size()];
+                
                 for(Issue issue : issues) {
                     Log.e("PDFURL", "URL:" + issue.getPdfUrl());
                 }
                 
-                showPdf(issues.get(issues.size() - 1));
+                //showPdf(issues.get(issues.size() - 1));
+                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));
                 
             }
         });
@@ -59,7 +60,7 @@ public class HeadlinesFragment extends ListFragment {
 
     }
     
-    private void showPdf(Issue issue) {
+    private void showPdf(final Issue issue) {
         MagPiClient client = new MagPiClient();
         client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
@@ -67,9 +68,9 @@ public class HeadlinesFragment extends ListFragment {
 
                 try {
                     File sdCard = Environment.getExternalStorageDirectory();
-                    File dir = new File (sdCard.getAbsolutePath() + "/magpi");
+                    File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
                     dir.mkdirs();
-                    File file = new File(dir, "test.pdf");
+                    File file = new File(dir, issue.getId() + ".pdf");
 
                     FileOutputStream f = new FileOutputStream(file);
                     f.write(data);

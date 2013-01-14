@@ -9,6 +9,8 @@ public class IssuesFactory {
     
     public static Issue buildFromRSSItem(RSSItem item) {
         return (new Issue.Builder())
+                .id(item.getTitle().split(" - ")[0].replace(" ", "_"))
+                .title(item.getTitle().split(" - ")[0])
                 .pdfUrl(item.getLink().toString())
                 .build();
     }

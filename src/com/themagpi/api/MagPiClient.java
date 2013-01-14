@@ -54,7 +54,7 @@ public class MagPiClient {
     
     public void getCover(Issue issue, final OnFileReceivedListener fileListener) {
         String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
-        client.get(issue.getCoverUrl(), new BinaryHttpResponseHandler() {
+        client.get(issue.getCoverUrl(), new BinaryHttpResponseHandler(allowedContentTypes) {
             @Override
             public void onSuccess(byte[] fileData) {
                 fileListener.onReceived(fileData);
