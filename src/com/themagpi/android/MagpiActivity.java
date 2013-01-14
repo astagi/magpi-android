@@ -1,28 +1,41 @@
 package com.themagpi.android;
 
-
-
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.themagpi.api.Issue;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
+import com.actionbarsherlock.view.*;
 
-public class MagpiActivity extends FragmentActivity 
+public class MagpiActivity extends SherlockFragmentActivity 
     implements HeadlinesFragment.OnHeadlineSelectedListener {
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
+	{
+	    int id = item.getItemId();
+	    if (id == android.R.id.home) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_magpi, menu);
-        return true;
-    }
+	        return true;
+
+	    } else {
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
-
         if (findViewById(R.id.fragment_container) != null) {
 
             if (savedInstanceState != null) {

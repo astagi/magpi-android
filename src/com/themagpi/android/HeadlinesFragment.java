@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
-public class HeadlinesFragment extends ListFragment {
+public class HeadlinesFragment extends SherlockListFragment {
     OnHeadlineSelectedListener mCallback;
     ArrayList<Issue> issues = new ArrayList<Issue>();
 

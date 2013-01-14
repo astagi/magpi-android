@@ -3,10 +3,11 @@ package com.themagpi.android;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
-import android.support.v4.app.Fragment;
+import com.actionbarsherlock.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,9 +21,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class IssueFragment extends Fragment {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+
+public class IssueFragment extends SherlockFragment {
     final static String ARG_ISSUE = "IssueObject";
     int mCurrentPosition = -1;
+    
+    public void onCreate(Bundle si) {
+    	super.onCreate(si);
+        this.setHasOptionsMenu(true);
+        ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -31,7 +42,6 @@ public class IssueFragment extends Fragment {
         if (savedInstanceState != null) {
             //mCurrentPosition = savedInstanceState.getInt(ARG_ISSUE);
         }
-
         return inflater.inflate(R.layout.article_view, container, false);
     }
 
