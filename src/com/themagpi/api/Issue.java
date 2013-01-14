@@ -9,7 +9,7 @@ public class Issue implements Parcelable {
     
     private String id;
     private String title;
-    private Date date;
+    private String date;
     private String imgUrl;
     private String pdfUrl;
     
@@ -17,13 +17,13 @@ public class Issue implements Parcelable {
 
         private String id;
         private String title;
-        private Date date;
+        private String date;
         private String imgUrl;
         private String pdfUrl;
         
         public Builder id(String id){this.id = id; return this; }
         public Builder title(String title){this.title = title; return this; }
-        public Builder date(Date date){this.date = date; return this; }
+        public Builder date(String date){this.date = date; return this; }
         public Builder imageUrl(String imgUrl){this.imgUrl = imgUrl; return this; }
         public Builder pdfUrl(String pdfUrl){this.pdfUrl = pdfUrl; return this; }
 
@@ -64,11 +64,11 @@ public class Issue implements Parcelable {
         this.title = title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

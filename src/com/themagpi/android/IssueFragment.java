@@ -39,7 +39,7 @@ public class IssueFragment extends Fragment {
 
     public void updateIssueView(Issue issue) {
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
-        issueText.setText(issue.getTitle());
+        issueText.setText(issue.getTitle() + " - " + issue.getDate());
         //mCurrentPosition = issue;
     }
 

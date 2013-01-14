@@ -44,6 +44,33 @@ public class HeadlinesFragment extends ListFragment {
         });
     }
     
+    private void showCover(final Issue issue) {
+        MagPiClient client = new MagPiClient();
+        client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
+            public void onReceived(byte[] data) {
+                Log.e("File Status", "Arrived");
+
+                try {
+                    File sdCard = Environment.getExternalStorageDirectory();
+                    File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
+                    dir.mkdirs();
+                    File file = new File(dir, issue.getId() + ".pdf");
+
+                    FileOutputStream f = new FileOutputStream(file);
+                    f.write(data);
+                    f.flush();
+                    f.close();
+                                        
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("error", "Error opening file.", e);
+                }
+            }
+        });
+    }
+    
     private void showPdf(final Issue issue) {
         MagPiClient client = new MagPiClient();
         client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
