@@ -1,7 +1,14 @@
 MagPi for Android
 =================
 
-MagPi client for Android.
+<p align="center">
+  <img src="https://raw.github.com/astagi/magpi-android/master/pub/TheMagPi.png" alt="MagPi client for Android."/>
+</p>
+
+Description
+-----------
+
+MagPi client for Android. Read MagPi issues with your Android device :)
 
 Dependencies
 ------------
