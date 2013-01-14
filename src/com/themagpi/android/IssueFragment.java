@@ -29,7 +29,7 @@ public class IssueFragment extends SherlockFragment {
     int mCurrentPosition = -1;
     
     public void onCreate(Bundle si) {
-    	super.onCreate(si);
+        super.onCreate(si);
         this.setHasOptionsMenu(true);
         ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

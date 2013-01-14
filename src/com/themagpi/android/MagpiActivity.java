@@ -10,30 +10,30 @@ import com.actionbarsherlock.view.*;
 
 public class MagpiActivity extends SherlockFragmentActivity 
     implements HeadlinesFragment.OnHeadlineSelectedListener {
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
-	    return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
-	{
-	    int id = item.getItemId();
-	    if (id == android.R.id.home) {
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
+    {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
 
-	        return true;
+            return true;
 
-	    } else {
-	        return super.onOptionsItemSelected(item);
-	    }
-	}
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
         if (findViewById(R.id.fragment_container) != null) {
