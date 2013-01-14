@@ -8,6 +8,8 @@ import com.themagpi.api.MagPiClient;
 
 import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class IssueFragment extends Fragment {
@@ -47,8 +50,8 @@ public class IssueFragment extends Fragment {
 
     public void updateIssueView(Issue issue) {
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
-        issueText.setText(issue.getTitle() + " - " + issue.getDate()
-                + "\n" + issue.getCoverUrl());
+        issueText.setText(issue.getTitle() + " - " + issue.getDate());
+        showCover(issue);
         //mCurrentPosition = issue;
     }
 
@@ -74,6 +77,11 @@ public class IssueFragment extends Fragment {
                     f.write(data);
                     f.flush();
                     f.close();
+                    
+                    Bitmap bmp=BitmapFactory.decodeByteArray(data, 0, data.length);
+                    ImageView image=(ImageView)IssueFragment.this.getActivity().findViewById(R.id.cover);
+                    image.setImageBitmap(Bitmap.createScaledBitmap(bmp, 640, 904, false));
+                 
                                         
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);
