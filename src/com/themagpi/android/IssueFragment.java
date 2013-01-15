@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -27,6 +26,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class IssueFragment extends SherlockFragment {
     final static String ARG_ISSUE = "IssueObject";
+    private final int MAX_BMP_WIDTH = 600;
     int mCurrentPosition = -1;
     
     public void onCreate(Bundle si) {
@@ -76,13 +76,14 @@ public class IssueFragment extends SherlockFragment {
         int scaleHeight = (int) (bm.getHeight() * scalingFactor);
         int scaleWidth = (int) (bm.getWidth() * scalingFactor);
 
-        return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
+        if(scaleWidth <= MAX_BMP_WIDTH)
+            return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
+        float hwRatio = ((float)bm.getHeight() / bm.getWidth());
+        return Bitmap.createScaledBitmap(bm, MAX_BMP_WIDTH, (int)(hwRatio * MAX_BMP_WIDTH), true);
     }
     
     private float getBitmapScalingFactor(Bitmap bm) {
         int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-
-        ImageView imageView=(ImageView)IssueFragment.this.getActivity().findViewById(R.id.cover);
 
         int imageViewWidth = displayWidth;
 
