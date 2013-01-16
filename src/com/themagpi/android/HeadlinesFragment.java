@@ -16,6 +16,8 @@ import com.themagpi.api.MagPiClient;
 public class HeadlinesFragment extends SherlockListFragment {
     OnHeadlineSelectedListener mCallback;
     ArrayList<Issue> issues = new ArrayList<Issue>();
+    MagPiClient client = new MagPiClient();
+    int layout;
 
     public interface OnHeadlineSelectedListener {
         public void onArticleSelected(Issue issue);
@@ -25,17 +27,9 @@ public class HeadlinesFragment extends SherlockListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+        layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
-        
-        MagPiClient client = new MagPiClient();
-        client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
-            public void onReceived(ArrayList<Issue> issues) {         
-                //showPdf(issues.get(issues.size() - 1));
-                HeadlinesFragment.this.issues = issues;
-                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));   
-            }
-        });
+
     }
     
 
@@ -46,6 +40,14 @@ public class HeadlinesFragment extends SherlockListFragment {
         if (getFragmentManager().findFragmentById(R.id.issue_fragment) != null) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
+        
+        client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
+            public void onReceived(ArrayList<Issue> issues) {         
+                //showPdf(issues.get(issues.size() - 1));
+                HeadlinesFragment.this.issues = issues;
+                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));   
+            }
+        });
     }
 
     @Override
@@ -58,6 +60,12 @@ public class HeadlinesFragment extends SherlockListFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
+    }
+    
+    public void onPause() {
+        super.onPause();
+        if(getActivity() != null && client != null)
+            client.close(getActivity());
     }
 
     @Override

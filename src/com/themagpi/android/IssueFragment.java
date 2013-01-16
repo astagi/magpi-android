@@ -28,6 +28,7 @@ public class IssueFragment extends SherlockFragment {
     final static String ARG_ISSUE = "IssueObject";
     private final int MAX_BMP_WIDTH = 600;
     int mCurrentPosition = -1;
+    MagPiClient client = new MagPiClient();
     
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -91,7 +92,7 @@ public class IssueFragment extends SherlockFragment {
     }
     
     private void showCover(final Issue issue) {
-        MagPiClient client = new MagPiClient();
+        
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
                 Log.e("File Status", "Arrived");
@@ -120,7 +121,6 @@ public class IssueFragment extends SherlockFragment {
     }
     
     private void showPdf(final Issue issue) {
-        MagPiClient client = new MagPiClient();
         client.getPdf(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
                 Log.e("File Status", "Arrived");
@@ -144,6 +144,12 @@ public class IssueFragment extends SherlockFragment {
                 }
             }
         });
+    }
+    
+    public void onPause() {
+        super.onPause();
+        if(getActivity() != null && client != null)
+            client.close(getActivity());
     }
 
 }

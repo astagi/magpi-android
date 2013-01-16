@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSReader;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -64,5 +65,9 @@ public class MagPiClient {
     
     public void getNews(AsyncHttpResponseHandler asyncHandler) {
         //TODO later : "http://feeds.feedburner.com/MagPi"
+    }
+    
+    public void close(Context ctx) {
+        client.cancelRequests(ctx, true);
     }
 }
