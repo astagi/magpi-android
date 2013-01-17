@@ -1,12 +1,12 @@
 package com.themagpi.api;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.mcsoxford.rss.RSSConfig;
 import org.mcsoxford.rss.RSSFeed;
+import org.mcsoxford.rss.RSSParser;
 import org.mcsoxford.rss.RSSReader;
 
 import android.content.Context;
@@ -35,7 +35,8 @@ public class MagPiClient {
             @Override
             public void onSuccess(String response) {
                 RSSReader reader = new RSSReader();
-                RSSFeed feed = reader.loadFromString(response);                
+                RSSParser parser = new RSSParser(new RSSConfig());
+                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
                 issueListener.onReceived(IssuesFactory.buildFromRSSFeed(feed));
                 reader.close();
             }
