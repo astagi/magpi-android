@@ -1,13 +1,11 @@
 package com.themagpi.api;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.mcsoxford.rss.RSSConfig;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSParser;
-import org.mcsoxford.rss.RSSReader;
 
 import android.content.Context;
 import android.util.Log;
@@ -34,11 +32,9 @@ public class MagPiClient {
         client.get("http://feeds.feedburner.com/themagpi", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
-                RSSReader reader = new RSSReader();
                 RSSParser parser = new RSSParser(new RSSConfig());
                 RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
                 issueListener.onReceived(IssuesFactory.buildFromRSSFeed(feed));
-                reader.close();
             }
         });
     }
