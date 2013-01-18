@@ -29,6 +29,7 @@ public class IssueFragment extends SherlockFragment {
     private final int MAX_BMP_WIDTH = 600;
     int mCurrentPosition = -1;
     MagPiClient client = new MagPiClient();
+    Issue issue;
     
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -53,12 +54,20 @@ public class IssueFragment extends SherlockFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            updateIssueView((Issue)args.getParcelable("IssueObject"));
+            issue = (Issue)args.getParcelable("IssueObject");
+            updateIssueView(issue);
         } 
+        
+        Intent service = new Intent(getActivity(), DownloadFileService.class);
+        service.putExtra("url", issue.getPdfUrl());
+        service.putExtra("path", "");
+        this.getActivity().startService(service);
         /*else if (mCurrentPosition != -1) {
             updateIssueView(mCurrentPosition);
         }*/
     }
+    
+    
 
     public void updateIssueView(Issue issue) {
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
