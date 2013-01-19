@@ -94,9 +94,7 @@ public class IssueFragment extends SherlockFragment {
     
     private float getBitmapScalingFactor(Bitmap bm) {
         int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-
         int imageViewWidth = displayWidth;
-
         return ( (float) imageViewWidth / (float) bm.getWidth() );
     }
     
@@ -120,8 +118,7 @@ public class IssueFragment extends SherlockFragment {
                     Bitmap bmp=BitmapFactory.decodeByteArray(data, 0, data.length);
                     ImageView image=(ImageView)IssueFragment.this.getActivity().findViewById(R.id.cover);
                     image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
-                 
-                                        
+                        
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);
                 }

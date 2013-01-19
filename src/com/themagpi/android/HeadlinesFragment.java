@@ -45,7 +45,9 @@ public class HeadlinesFragment extends SherlockListFragment {
             public void onReceived(ArrayList<Issue> issues) {         
                 //showPdf(issues.get(issues.size() - 1));
                 HeadlinesFragment.this.issues = issues;
-                setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));   
+                try {
+                    setListAdapter(new ArrayAdapter<Issue>(getActivity(), layout, issues));   
+                } catch (NullPointerException ex) {}
             }
         });
     }
