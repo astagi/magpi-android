@@ -96,6 +96,17 @@ public class Issue implements Parcelable {
         
     }
     
+    public static final Parcelable.Creator CREATOR =
+            new Parcelable.Creator() {
+                    public Issue createFromParcel(Parcel in) {
+                        return new Issue(in);
+                    }
+         
+                    public Issue[] newArray(int size) {
+                        return new Issue[size];
+                    }
+                };
+    
     private void readFromParcel(Parcel in) {
         id = in.readString();
         title = in.readString();

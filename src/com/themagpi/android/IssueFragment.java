@@ -3,17 +3,16 @@ package com.themagpi.android;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.themagpi.api.Issue;
-import com.themagpi.api.MagPiClient;
-
-import com.actionbarsherlock.app.ActionBar;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.themagpi.api.Issue;
+import com.themagpi.api.MagPiClient;
 
 
 public class IssueFragment extends SherlockFragment {
@@ -30,6 +33,35 @@ public class IssueFragment extends SherlockFragment {
     int mCurrentPosition = -1;
     MagPiClient client = new MagPiClient();
     Issue issue;
+    
+    class DownloadFileBroadcastReceiver extends BroadcastReceiver {
+        private Handler updateUI = new Handler();
+
+        @Override
+        public void onReceive(Context ctxt, final Intent intent) {
+            updateUI.post(new Runnable() {
+                
+                @Override
+                public void run() {
+                    
+                    if(!intent.hasExtra("status"))
+                        return;
+                    
+                    switch(intent.getIntExtra("status", DownloadFileService.STOP)) {
+                        case DownloadFileService.COMPLETE:
+                            Log.e("DOWNLOADSERVICE", "COMPLETE");
+                            break;
+                        case DownloadFileService.UPDATE:
+                            Log.e("DOWNLOADSERVICE", "" + intent.getExtras().getInt("percentage") + "%");
+                            break;
+                    }
+                }
+                
+            });
+        }
+    };
+    
+    private DownloadFileBroadcastReceiver receiver;
     
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -51,6 +83,13 @@ public class IssueFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
+        
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(DownloadFileService.BROADCAST_STATUS);
+        
+        receiver = new DownloadFileBroadcastReceiver();
+        
+        getActivity().registerReceiver(receiver, filter);
 
         Bundle args = getArguments();
         if (args != null) {
@@ -59,8 +98,8 @@ public class IssueFragment extends SherlockFragment {
         } 
         
         Intent service = new Intent(getActivity(), DownloadFileService.class);
-        service.putExtra("url", issue.getPdfUrl());
-        service.putExtra("path", "");
+        if(issue != null)
+            service.putExtra("IssueObject", issue);
         this.getActivity().startService(service);
         /*else if (mCurrentPosition != -1) {
             updateIssueView(mCurrentPosition);
@@ -156,6 +195,8 @@ public class IssueFragment extends SherlockFragment {
         super.onPause();
         if(getActivity() != null && client != null)
             client.close(getActivity());
+        if(getActivity() != null)
+            getActivity().unregisterReceiver(receiver);
     }
 
 }
