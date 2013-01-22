@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
@@ -71,8 +72,7 @@ public class IssueFragment extends SherlockFragment {
     public void onCreate(Bundle si) {
         super.onCreate(si);
         this.setHasOptionsMenu(true);
-        ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
     
     @SuppressWarnings("deprecation")
@@ -127,13 +127,12 @@ public class IssueFragment extends SherlockFragment {
             updateIssueView(issue);
         } 
         
-        downloadIssue();
+        //downloadIssue();
         
         /*else if (mCurrentPosition != -1) {
             updateIssueView(mCurrentPosition);
         }*/
     }
-    
     
 
     public void updateIssueView(Issue issue) {

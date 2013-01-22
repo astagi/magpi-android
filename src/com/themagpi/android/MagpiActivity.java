@@ -1,11 +1,15 @@
 package com.themagpi.android;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.themagpi.api.Issue;
 
 import android.os.Bundle;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+
 import com.actionbarsherlock.view.*;
 
 public class MagpiActivity extends SherlockFragmentActivity 
@@ -20,14 +24,15 @@ public class MagpiActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
     {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-
+        if (item.getItemId() == android.R.id.home) {
+            FragmentManager fm = getSupportFragmentManager();
+            if(fm.getBackStackEntryCount()>0) {
+                onBackPressed();
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            }
             return true;
-
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     
@@ -59,6 +64,9 @@ public class MagpiActivity extends SherlockFragmentActivity
         if (articleFrag != null) {
             articleFrag.updateIssueView(issue);
         } else {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
             IssueFragment newFragment = new IssueFragment();
             Bundle args = new Bundle();
             args.putParcelable(IssueFragment.ARG_ISSUE, issue);
