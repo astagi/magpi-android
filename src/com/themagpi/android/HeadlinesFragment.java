@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
@@ -51,6 +52,8 @@ public class HeadlinesFragment extends SherlockListFragment {
                 } catch (NullPointerException ex) {}
             }
         });
+        
+        ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override

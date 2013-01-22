@@ -24,13 +24,17 @@ public class MagpiActivity extends SherlockFragmentActivity
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
     {
-        if (item.getItemId() == android.R.id.home) {
-            FragmentManager fm = getSupportFragmentManager();
-            if(fm.getBackStackEntryCount()>0) {
-                onBackPressed();
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            }
-            return true;
+        switch(item.getItemId()) {
+        
+            case android.R.id.home:
+                FragmentManager fm = getSupportFragmentManager();
+                if(fm.getBackStackEntryCount()>0) {
+                    onBackPressed();
+                }
+                break;
+            
+            case R.id.menu_settings:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

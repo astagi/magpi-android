@@ -69,7 +69,12 @@ public class DownloadFileService extends Service {
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
  
-            fileSize = Long.parseLong(urlConnection.getHeaderField("Content-Length"));
+            String contentLen = urlConnection.getHeaderField("Content-Length");
+            
+            if(contentLen == null)
+                contentLen = "30000000";
+                    
+            fileSize = Long.parseLong(contentLen);
             
             Log.e("File length", "" + fileSize);
             
@@ -95,7 +100,9 @@ public class DownloadFileService extends Service {
             output.flush();
             output.close();
             input.close();
-            sendDownloadComplete();
+            
+            if (actualRead == fileSize)
+                sendDownloadComplete(file);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,10 +115,11 @@ public class DownloadFileService extends Service {
             
     }
     
-    private void sendDownloadComplete() {  
+    private void sendDownloadComplete(File file) {  
         Intent intent = new Intent();
         intent.setAction(BROADCAST_STATUS);
         intent.putExtra("status", COMPLETE);
+        intent.putExtra("file", file);
         sendBroadcast(intent);
     }
 
@@ -132,9 +140,7 @@ public class DownloadFileService extends Service {
         }
 
         protected void onPostExecute() {
-            /*Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-            intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
-            startActivity(intentPdf);*/
+            
         }
 
         @Override
