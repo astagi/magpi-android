@@ -3,8 +3,10 @@ package com.themagpi.android;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -32,6 +34,7 @@ public class IssueFragment extends SherlockFragment {
     private final int MAX_BMP_WIDTH = 600;
     int mCurrentPosition = -1;
     MagPiClient client = new MagPiClient();
+    ProgressDialog progressBar;
     Issue issue;
     
     class DownloadFileBroadcastReceiver extends BroadcastReceiver {
@@ -49,9 +52,11 @@ public class IssueFragment extends SherlockFragment {
                     
                     switch(intent.getIntExtra("status", DownloadFileService.STOP)) {
                         case DownloadFileService.COMPLETE:
+                            progressBar.dismiss();
                             Log.e("DOWNLOADSERVICE", "COMPLETE");
                             break;
                         case DownloadFileService.UPDATE:
+                            progressBar.setProgress(intent.getExtras().getInt("percentage"));
                             Log.e("DOWNLOADSERVICE", "" + intent.getExtras().getInt("percentage") + "%");
                             break;
                     }
@@ -68,6 +73,31 @@ public class IssueFragment extends SherlockFragment {
         this.setHasOptionsMenu(true);
         ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+    
+    @SuppressWarnings("deprecation")
+    public void downloadIssue() {
+        progressBar = new ProgressDialog(this.getActivity());
+        progressBar.setCancelable(false);
+        progressBar.setMessage("Downloading " + issue.getTitle());
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setProgress(0);
+        progressBar.setButton("Cancel", new ProgressDialog.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int arg1) {
+                dialog.cancel();
+                getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
+            }
+            
+        });
+        progressBar.setMax(100);
+        progressBar.show();
+        
+        Intent service = new Intent(getActivity(), DownloadFileService.class);
+        if(issue != null)
+            service.putExtra("IssueObject", issue);
+        this.getActivity().startService(service);
     }
 
     @Override
@@ -97,10 +127,8 @@ public class IssueFragment extends SherlockFragment {
             updateIssueView(issue);
         } 
         
-        Intent service = new Intent(getActivity(), DownloadFileService.class);
-        if(issue != null)
-            service.putExtra("IssueObject", issue);
-        this.getActivity().startService(service);
+        downloadIssue();
+        
         /*else if (mCurrentPosition != -1) {
             updateIssueView(mCurrentPosition);
         }*/

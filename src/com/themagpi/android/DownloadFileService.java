@@ -23,6 +23,10 @@ public class DownloadFileService extends Service {
     protected static final int STOP = 0;
     protected static final int UPDATE = 2;
     protected static final int COMPLETE = 1;
+    
+    private volatile boolean isRunning = false;
+    
+    RetreiveFileTask task;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -31,26 +35,41 @@ public class DownloadFileService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        (new RetreiveFileTask((Issue)(intent.getParcelableExtra("IssueObject")))).execute();
+        task = new RetreiveFileTask((Issue)(intent.getParcelableExtra("IssueObject")));
+        task.execute();
+        isRunning = true;
         return 0;
+    }
+    
+    public void onDestroy() {
+        if(task != null) {
+            isRunning = false;
+            task.cancel(true);
+        }
     }
     
     private void downloadFile(Issue issue) {
                 
         Log.e("URL to download", issue.getPdfUrl());
+        
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
+        dir.mkdirs();
+        File file = new File(dir, issue.getId() + ".pdf");
+        
+        int actualRead = 0;
+        long fileSize = 0;
 
         try {
             
-            File sdCard = Environment.getExternalStorageDirectory();
-            File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-            dir.mkdirs();
-            File file = new File(dir, issue.getId() + ".pdf");
-        
+            actualRead = 0;
+            fileSize = 0;
+
             URL url = new URL(issue.getPdfUrl());
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
  
-            long fileSize = Long.parseLong(urlConnection.getHeaderField("Content-Length"));
+            fileSize = Long.parseLong(urlConnection.getHeaderField("Content-Length"));
             
             Log.e("File length", "" + fileSize);
             
@@ -62,9 +81,8 @@ public class DownloadFileService extends Service {
     
             byte data[] = new byte[1024];
             int count = 0;
-            int actualRead = 0;
             
-            while ((count = input.read(data)) != -1) {
+            while (isRunning && (count = input.read(data)) != -1) {
                 output.write(data);
                 actualRead += count;
                 percentage = (int)(((float)actualRead/fileSize)*100);
@@ -77,16 +95,16 @@ public class DownloadFileService extends Service {
             output.flush();
             output.close();
             input.close();
-            
             sendDownloadComplete();
             
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(actualRead != fileSize) {
+                //Rollback action. Delete file if it's corrupted
+                file.delete();
+            }
         }
-        
-        /*Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-        intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
-        startActivity(intentPdf);*/
             
     }
     
@@ -114,7 +132,9 @@ public class DownloadFileService extends Service {
         }
 
         protected void onPostExecute() {
-
+            /*Intent intentPdf = new Intent(Intent.ACTION_VIEW);
+            intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
+            startActivity(intentPdf);*/
         }
 
         @Override
