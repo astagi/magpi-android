@@ -139,9 +139,9 @@ public class IssueFragment extends SherlockFragment {
         case R.id.menu_view:
             downloadIssue();
             return true;
-        /*case R.id.menu_share:
+        case R.id.menu_share:
             startActivity(Intent.createChooser(shareIntent, "Share Issue"));
-            return true;*/
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -178,10 +178,11 @@ public class IssueFragment extends SherlockFragment {
     }
 
     public void updateIssueView(Issue issue) {
+        this.issue = issue;
         TextView issueText = (TextView) getActivity()
                 .findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
-        showCover(issue);
+        showCover();
         // mCurrentPosition = issue;
     }
 
@@ -209,7 +210,7 @@ public class IssueFragment extends SherlockFragment {
         return ((float) imageViewWidth / (float) bm.getWidth());
     }
 
-    private void showCover(final Issue issue) {
+    private void showCover() {
 
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
