@@ -2,6 +2,7 @@
 
 # Author: Andrea Stagi (4ndreaSt4gi)
 # Description: scale images from the drawable-xhdpi folder (ugly but fast)
+# Requires: imagemagick
 # License: MIT
 
 cd ../res/drawable-xhdpi
