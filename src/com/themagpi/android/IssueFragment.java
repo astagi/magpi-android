@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -139,14 +138,14 @@ public class IssueFragment extends SherlockFragment {
         switch (item.getItemId()) {
         case R.id.menu_view:
             downloadIssue();
-            break;
+            return true;
+        /*case R.id.menu_share:
+            startActivity(Intent.createChooser(shareIntent, "Share Issue"));
+            return true;*/
+        default:
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void shareIssue() {
-        // TODO Auto-generated method stub
-
+        
     }
 
     @Override
