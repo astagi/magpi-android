@@ -25,8 +25,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.ShareActionProvider;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
@@ -37,9 +35,7 @@ public class IssueFragment extends SherlockFragment {
     private MagPiClient client = new MagPiClient();
     private ProgressDialog progressBar;
     private Issue issue;
-    private ShareActionProvider shareActionProvider;
     
-    Intent shareIntent;
 
     class DownloadFileBroadcastReceiver extends BroadcastReceiver {
         private Handler updateUI = new Handler();
@@ -125,21 +121,20 @@ public class IssueFragment extends SherlockFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.issue, menu);
-        MenuItem item = menu.findItem(R.id.menu_share);
-        shareActionProvider = (ShareActionProvider) item.getActionProvider();
-        shareActionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
-        shareActionProvider.setShareIntent(shareIntent);
     }
 
     @Override
-    public boolean onOptionsItemSelected(
-            com.actionbarsherlock.view.MenuItem item) {
-        Log.e("PRESSED", "" + item.getItemId());
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        if(issue == null)
+            return true;
         switch (item.getItemId()) {
         case R.id.menu_view:
             downloadIssue();
             return true;
         case R.id.menu_share:
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
             startActivity(Intent.createChooser(shareIntent, "Share Issue"));
             return true;
         default:
@@ -163,12 +158,6 @@ public class IssueFragment extends SherlockFragment {
         if (args != null) {
             issue = (Issue) args.getParcelable("IssueObject");
             updateIssueView(issue);
-            
-            shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT,
-                    issue.getPdfUrl());
-            
         }
 
         /*
@@ -247,7 +236,9 @@ public class IssueFragment extends SherlockFragment {
         if (getActivity() != null && client != null)
             client.close(getActivity());
         if (getActivity() != null) {
-            getActivity().unregisterReceiver(receiver);
+            try {
+                getActivity().unregisterReceiver(receiver);
+            } catch(IllegalArgumentException e) {}
         }
     }
 
