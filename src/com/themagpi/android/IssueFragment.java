@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -51,13 +52,13 @@ public class IssueFragment extends SherlockFragment {
                         return;
 
                     switch (intent.getIntExtra("status",
-                            DownloadFileService.STOP)) {
+                            DownloadFileService.ERROR)) {
                     case DownloadFileService.COMPLETE:
                         progressBar.dismiss();
                         File file = (File) intent.getExtras().getSerializable("file");
                         if (file != null) {
                             Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-                            intentPdf.setDataAndType(Uri.fromFile(file),"application/pdf");
+                            intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
                             startActivity(intentPdf);
                         }
                         Log.e("DOWNLOADSERVICE", "COMPLETE");
@@ -66,6 +67,11 @@ public class IssueFragment extends SherlockFragment {
                         progressBar.setProgress(intent.getExtras().getInt("percentage"));
                         Log.e("DOWNLOADSERVICE", ""
                                 + intent.getExtras().getInt("percentage") + "%");
+                        break;
+                    case DownloadFileService.ERROR:
+                    	if(progressBar != null && progressBar.isShowing())
+                    		progressBar.dismiss();
+                    	Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -94,8 +100,7 @@ public class IssueFragment extends SherlockFragment {
             @Override
             public void onClick(DialogInterface dialog, int arg1) {
                 dialog.cancel();
-                getActivity().stopService(
-                        new Intent(getActivity(), DownloadFileService.class));
+                getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
             }
 
         });
@@ -193,8 +198,7 @@ public class IssueFragment extends SherlockFragment {
     }
 
     private float getBitmapScalingFactor(Bitmap bm) {
-        int displayWidth = getActivity().getWindowManager().getDefaultDisplay()
-                .getWidth();
+        int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         int imageViewWidth = displayWidth;
         return ((float) imageViewWidth / (float) bm.getWidth());
     }
@@ -217,12 +221,9 @@ public class IssueFragment extends SherlockFragment {
                     f.flush();
                     f.close();
 
-                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0,
-                            data.length);
-                    ImageView image = (ImageView) IssueFragment.this
-                            .getActivity().findViewById(R.id.cover);
-                    image.setImageBitmap(ScaleBitmap(bmp,
-                            getBitmapScalingFactor(bmp)));
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    ImageView image = (ImageView) IssueFragment.this.getActivity().findViewById(R.id.cover);
+                    image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
 
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);

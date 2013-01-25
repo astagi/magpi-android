@@ -20,7 +20,7 @@ import com.themagpi.api.Issue;
 public class DownloadFileService extends Service {
 
     public static final String BROADCAST_STATUS = "com.themagpi.android.downloadfileservice";
-    protected static final int STOP = 0;
+    protected static final int ERROR = 0;
     protected static final int UPDATE = 2;
     protected static final int COMPLETE = 1;
     
@@ -72,7 +72,7 @@ public class DownloadFileService extends Service {
             String contentLen = urlConnection.getHeaderField("Content-Length");
             
             if(contentLen == null)
-                contentLen = "30000000";
+                throw new IOException();
                     
             fileSize = Long.parseLong(contentLen);
             
@@ -105,7 +105,7 @@ public class DownloadFileService extends Service {
                 sendDownloadComplete(file);
             
         } catch (IOException e) {
-            e.printStackTrace();
+        	sendError();
         } finally {
             if(actualRead != fileSize) {
                 //Rollback action. Delete file if it's corrupted
@@ -113,6 +113,13 @@ public class DownloadFileService extends Service {
             }
         }
             
+    }
+    
+    private void sendError() {  
+        Intent intent = new Intent();
+        intent.setAction(BROADCAST_STATUS);
+        intent.putExtra("status", ERROR);
+        sendBroadcast(intent);
     }
     
     private void sendDownloadComplete(File file) {  
