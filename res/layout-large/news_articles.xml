@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment android:name="com.themagpi.android.HeadlinesFragment"
+    <FrameLayout android:name="com.themagpi.android.HeadlinesFragment"
               android:id="@+id/headlines_fragment"
               android:layout_weight="1"
               android:layout_width="0dp"
               android:layout_height="match_parent" />
 
-    <fragment android:name="com.themagpi.android.IssueFragment"
+    <FrameLayout android:name="com.themagpi.android.IssueFragment"
               android:id="@+id/issue_fragment"
               android:layout_weight="2"
               android:layout_width="0dp"

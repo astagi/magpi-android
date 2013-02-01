@@ -1,7 +1,5 @@
 package com.themagpi.api;
 
-import java.util.Date;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -93,7 +91,7 @@ public class Issue implements Parcelable {
         dest.writeString(title);
         dest.writeString(pdfUrl);
         dest.writeString(imgUrl);
-        
+        dest.writeString(date);
     }
     
     public static final Parcelable.Creator CREATOR =
@@ -112,6 +110,7 @@ public class Issue implements Parcelable {
         title = in.readString();
         pdfUrl = in.readString();
         imgUrl = in.readString();
+        date = in.readString();
     }
     
     public Issue(Parcel in) {

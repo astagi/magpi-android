@@ -23,6 +23,11 @@ public class MagPiClient {
         public void onError() {}
     }
     
+    public static class OnNewsReceivedListener {
+        public void onReceived(ArrayList<News> news) {}
+        public void onError() {}
+    }
+    
     public static class OnFileReceivedListener {
         public void onReceived(byte[] fileData) {}
         public void onError() {}
@@ -60,8 +65,15 @@ public class MagPiClient {
         });
     }
     
-    public void getNews(AsyncHttpResponseHandler asyncHandler) {
-        //TODO later : "http://feeds.feedburner.com/MagPi"
+    public void getNews(final OnNewsReceivedListener newsListener) {
+    	client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+                RSSParser parser = new RSSParser(new RSSConfig());
+                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
+                newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
+            }
+        });
     }
     
     public void close(Context ctx) {

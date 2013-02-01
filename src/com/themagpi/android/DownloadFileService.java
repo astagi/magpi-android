@@ -108,7 +108,7 @@ public class DownloadFileService extends Service {
         	sendError();
         } finally {
             if(actualRead != fileSize) {
-                //Rollback action. Delete file if it's corrupted
+                Log.e("ROLLBACK", "ROLLBACK");
                 file.delete();
             }
         }

@@ -85,7 +85,6 @@ public class IssueFragment extends SherlockFragment {
     public void onCreate(Bundle si) {
         super.onCreate(si);
         this.setHasOptionsMenu(true);
-
     }
 
     @SuppressWarnings("deprecation")
@@ -133,17 +132,17 @@ public class IssueFragment extends SherlockFragment {
         if(issue == null)
             return true;
         switch (item.getItemId()) {
-        case R.id.menu_view:
-            downloadIssue();
-            return true;
-        case R.id.menu_share:
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
-            startActivity(Intent.createChooser(shareIntent, "Share Issue"));
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+	        case R.id.menu_view:
+	            downloadIssue();
+	            return true;
+	        case R.id.menu_share:
+	            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+	            shareIntent.setType("text/plain");
+	            shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
+	            startActivity(Intent.createChooser(shareIntent, "Share Issue"));
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
         }
         
     }
@@ -185,7 +184,23 @@ public class IssueFragment extends SherlockFragment {
         super.onSaveInstanceState(outState);
         // outState.putInt(ARG_POSITION, mCurrentPosition);
     }
+    
+    public void onPause() {
+        super.onPause();
+        if (getActivity() != null && client != null)
+            client.close(getActivity());
+        if (getActivity() != null) {
+            try {
+                getActivity().unregisterReceiver(receiver);
+            } catch(IllegalArgumentException e) {}
+        }
+    }
 
+    
+    /*
+     * --------------------------- BITMAP FUNCTIONS ---------------------------
+     */
+    
     Bitmap ScaleBitmap(Bitmap bm, float scalingFactor) {
         int scaleHeight = (int) (bm.getHeight() * scalingFactor);
         int scaleWidth = (int) (bm.getWidth() * scalingFactor);
@@ -230,17 +245,6 @@ public class IssueFragment extends SherlockFragment {
                 }
             }
         });
-    }
-
-    public void onPause() {
-        super.onPause();
-        if (getActivity() != null && client != null)
-            client.close(getActivity());
-        if (getActivity() != null) {
-            try {
-                getActivity().unregisterReceiver(receiver);
-            } catch(IllegalArgumentException e) {}
-        }
     }
 
 }

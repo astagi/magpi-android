@@ -13,3 +13,5 @@ libs/
 *.apk
 *~
 project.properties
+
+Thumbs.db
