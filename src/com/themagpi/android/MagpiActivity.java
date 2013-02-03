@@ -38,11 +38,18 @@ public class MagpiActivity extends SherlockFragmentActivity
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
     {
         switch(item.getItemId()) {
-            
+	        case R.id.menu_refresh:
+	        	refreshFragment((Refreshable)currentFragment);
+	            break;
             case R.id.menu_settings:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    public void refreshFragment(Refreshable fragment) {
+    	if(fragment != null)
+    		fragment.refresh();
     }
     
     @Override
@@ -117,7 +124,7 @@ public class MagpiActivity extends SherlockFragmentActivity
 	@Override
 	public void onCategorySelected(int catIndex) {
         FragmentTransaction fTransaction = getSupportFragmentManager().beginTransaction();
-        fTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fTransaction.setTransition(FragmentTransaction.TRANSIT_NONE);
         
         if(currentFragment != null)
         	fTransaction.remove(currentFragment);
@@ -137,4 +144,5 @@ public class MagpiActivity extends SherlockFragmentActivity
 		
 		fTransaction.commit();
 	}
+
 }

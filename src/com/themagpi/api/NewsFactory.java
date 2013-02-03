@@ -1,9 +1,12 @@
 package com.themagpi.api;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
+
+import android.text.format.DateFormat;
 
 public class NewsFactory {
 	
@@ -12,7 +15,9 @@ public class NewsFactory {
         ArrayList<News> news = new ArrayList<News>();
         
         for(RSSItem item : feed.getItems()) {
-            news.add(new News(item.getPubDate().toString(), item.getDescription()));
+        	SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy HH:mm");
+        	String pubDateText = formatter.format(item.getPubDate());
+            news.add(new News(pubDateText, item.getDescription()));
         }
         
         return news;

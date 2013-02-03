@@ -21,35 +21,14 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 
-/**
- * Adapter for action bar navigation events.
- *
- * This class implements an adapter that facilitates handling of action bar navigation events.
- * An instance of this class must be installed as a TabListener or OnNavigationListener on an
- * Action Bar, and it will relay the navigation events to a configured listener
- * (a {@link CompatActionBarNavListener}).
- *
- * This class should only be instanced and used on Android platforms that support the Action Bar,
- * that is, SDK level 11 and above.
- */
 public class CompatActionBarNavHandler implements TabListener, OnNavigationListener {
-    // The listener that we notify of navigation events
-    CompatActionBarNavListener mNavListener;
 
-    /**
-     * Constructs an instance with the given listener.
-     *
-     * @param listener the listener to notify when a navigation event occurs.
-     */
+	CompatActionBarNavListener mNavListener;
+
     public CompatActionBarNavHandler(CompatActionBarNavListener listener) {
         mNavListener = listener;
     }
 
-    /**
-     * Called by framework when a item on the navigation menu is selected.
-     *
-     * This will cause a navigation event to be delivered to the configured listener.
-     */
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         mNavListener.onCategorySelected(itemPosition);
@@ -65,13 +44,11 @@ public class CompatActionBarNavHandler implements TabListener, OnNavigationListe
 	@Override
 	public void onTabUnselected(Tab tab,
 			android.support.v4.app.FragmentTransaction ft) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void onTabReselected(Tab tab,
 			android.support.v4.app.FragmentTransaction ft) {
-		// TODO Auto-generated method stub
 	}
 
 }

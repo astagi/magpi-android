@@ -5,33 +5,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class SplashScreen extends Activity {
-    Handler splashTimeout = new Handler();
+public class SplashScreenActivity extends Activity {
+    private Handler splashTimeout = new Handler();
+    private Class<?> cls;
+    private long time;
     
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.splashscreen);
     }
     
+    public void setActivityTime(Class<?> cls, long time) {
+        this.cls = cls;
+        this.time = time;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         splashTimeout.postDelayed(new Runnable() {
-
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, MagpiActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, cls);
                 startActivity(intent);
-                SplashScreen.this.finish();
-            }
-            
-        }, 3000);
+                SplashScreenActivity.this.finish();
+            }            
+        }, time);
     }
     
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if(splashTimeout != null)
             splashTimeout.removeMessages(0);
     }
-
 }

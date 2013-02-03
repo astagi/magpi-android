@@ -172,8 +172,7 @@ public class IssueFragment extends SherlockFragment {
 
     public void updateIssueView(Issue issue) {
         this.issue = issue;
-        TextView issueText = (TextView) getActivity()
-                .findViewById(R.id.article);
+        TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
         showCover();
         // mCurrentPosition = issue;
