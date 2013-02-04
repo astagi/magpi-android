@@ -39,6 +39,7 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
         layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         this.setHasOptionsMenu(true);
+        this.refresh();
     }
     
 
@@ -49,8 +50,6 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
         if (getFragmentManager().findFragmentById(R.id.issue_fragment) != null) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
-        
-        this.refresh();
         
         ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
@@ -97,6 +96,11 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
                     	menu.findItem(R.id.menu_refresh).setActionView(null);
                 } catch (NullPointerException ex) {}
             }
+            public void onError(int error) {
+            	if(menu != null)
+                	menu.findItem(R.id.menu_refresh).setActionView(null);
+            }
+            
         });
         
         if(menu != null)

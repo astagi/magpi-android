@@ -20,17 +20,17 @@ public class MagPiClient {
 
     public static class OnIssuesReceivedListener {
         public void onReceived(ArrayList<Issue> issues) {}
-        public void onError() {}
+        public void onError(int error) {}
     }
     
     public static class OnNewsReceivedListener {
         public void onReceived(ArrayList<News> news) {}
-        public void onError() {}
+        public void onError(int error) {}
     }
     
     public static class OnFileReceivedListener {
         public void onReceived(byte[] fileData) {}
-        public void onError() {}
+        public void onError(int error) {}
     }
     
     public void getIssues(final OnIssuesReceivedListener issueListener) {
@@ -40,6 +40,11 @@ public class MagPiClient {
                 RSSParser parser = new RSSParser(new RSSConfig());
                 RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
                 issueListener.onReceived(IssuesFactory.buildFromRSSFeed(feed));
+            }
+            
+            @Override
+            public void onFailure(Throwable e, String response) {
+            	issueListener.onError(0);
             }
         });
     }
@@ -62,6 +67,8 @@ public class MagPiClient {
             public void onSuccess(byte[] fileData) {
                 fileListener.onReceived(fileData);
             }
+            
+            
         });
     }
     
@@ -72,6 +79,11 @@ public class MagPiClient {
                 RSSParser parser = new RSSParser(new RSSConfig());
                 RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
                 newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
+            }
+            
+            @Override
+            public void onFailure(Throwable e, String response) {
+            	newsListener.onError(0);
             }
         });
     }

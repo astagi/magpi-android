@@ -71,7 +71,7 @@ public class IssueFragment extends SherlockFragment {
                     case DownloadFileService.ERROR:
                     	if(progressBar != null && progressBar.isShowing())
                     		progressBar.dismiss();
-                    	Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                    	Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

@@ -37,6 +37,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
         layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         this.setHasOptionsMenu(true);
+        refresh();
     }
     
 
@@ -49,8 +50,6 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
         }
         
         ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        
-        refresh();
     }
     
     public void onPause() {
@@ -80,6 +79,10 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                     if(menu != null)
                     	menu.findItem(R.id.menu_refresh).setActionView(null);
                 } catch (NullPointerException ex) {}
+            }
+            public void onError(int error) {
+            	if(menu != null)
+                	menu.findItem(R.id.menu_refresh).setActionView(null);
             }
         });
                 
