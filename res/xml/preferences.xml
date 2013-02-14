@@ -1,0 +1,39 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="notifications_settings"
+        android:title="Notifications" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_notif_newissue"
+            android:summary="Notify if a new Issue is out"
+            android:title="Issues" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_notif_newnews"
+            android:summary="Notify if a new news is out"
+            android:title="News" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="storage_settings"
+        android:title="Storage" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_store_issue"
+            android:summary="Store your issues"
+            android:title="Issues on disk" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="about_settings"
+        android:title="About" >
+        <Preference android:title="Version 1.0" >
+            <intent android:action="com.themagpi.android.AboutActivity"/>
+        </Preference>
+        <Preference android:title="Magpi website" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.themagpi.com" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

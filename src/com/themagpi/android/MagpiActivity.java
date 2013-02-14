@@ -43,6 +43,8 @@ public class MagpiActivity extends SherlockFragmentActivity
 	        	refreshFragment((Refreshable)currentFragment);
 	            break;
             case R.id.menu_settings:
+            	Intent intent = new Intent(this, MagpiSettingsActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
