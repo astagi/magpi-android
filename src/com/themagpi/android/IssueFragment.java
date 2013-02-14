@@ -89,27 +89,35 @@ public class IssueFragment extends SherlockFragment {
 
     @SuppressWarnings("deprecation")
     public void downloadIssue() {
-        progressBar = new ProgressDialog(this.getActivity());
-        progressBar.setCancelable(false);
-        progressBar.setMessage("Downloading " + issue.getTitle());
-        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressBar.setProgress(0);
-        progressBar.setButton("Cancel", new ProgressDialog.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int arg1) {
-                dialog.cancel();
-                getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
-            }
-
-        });
-        progressBar.setMax(100);
-        progressBar.show();
-
-        Intent service = new Intent(getActivity(), DownloadFileService.class);
-        if (issue != null)
-            service.putExtra("IssueObject", issue);
-        this.getActivity().startService(service);
+    	File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
+    							issue.getId() + "/" + issue.getId() + ".pdf");
+    	if(pdf.exists()) {
+            Intent intentPdf = new Intent(Intent.ACTION_VIEW);
+            intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
+            startActivity(intentPdf);
+    	} else {
+	        progressBar = new ProgressDialog(this.getActivity());
+	        progressBar.setCancelable(false);
+	        progressBar.setMessage("Downloading " + issue.getTitle());
+	        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+	        progressBar.setProgress(0);
+	        progressBar.setButton("Cancel", new ProgressDialog.OnClickListener() {
+	
+	            @Override
+	            public void onClick(DialogInterface dialog, int arg1) {
+	                dialog.cancel();
+	                getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
+	            }
+	
+	        });
+	        progressBar.setMax(100);
+	        progressBar.show();
+	
+	        Intent service = new Intent(getActivity(), DownloadFileService.class);
+	        if (issue != null)
+	            service.putExtra("IssueObject", issue);
+	        this.getActivity().startService(service);
+    	}
     }
 
     @Override

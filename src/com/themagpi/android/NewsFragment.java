@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -38,6 +44,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         this.setHasOptionsMenu(true);
         refresh();
+
     }
     
 
@@ -79,6 +86,18 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                     if(menu != null)
                     	menu.findItem(R.id.menu_refresh).setActionView(null);
                 } catch (NullPointerException ex) {}
+                getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                            int position, long arg3) {
+        	            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        	            shareIntent.setType("text/plain");
+        	            shareIntent.putExtra(Intent.EXTRA_TEXT, NewsFragment.this.news.get(position).getContent());
+        	            startActivity(Intent.createChooser(shareIntent, "Share News"));
+                        return true;
+                    }
+                });
             }
             public void onError(int error) {
             	if(menu != null)
@@ -101,10 +120,11 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
             list_populate.add(temp);
         }
                         
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), list_populate,
+        LinkedAdapter adapter = new LinkedAdapter(getActivity(), list_populate,
                 R.layout.news_row,
                 new String[] {"news_content", "news_date"},
-                new int[] { R.id.news_content, R.id.news_date});
+                new int[] { R.id.news_content, R.id.news_date},
+                new int[] { R.id.news_content});
         return adapter;
 	}
 }
