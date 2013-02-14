@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
@@ -87,33 +88,33 @@ public class MagpiActivity extends SherlockFragmentActivity
         }
         getSupportActionBar().setSelectedNavigationItem(0);
         
-        if (findViewById(R.id.fragment_container) != null) {
+        if (this.isDualPane()) {
 
             if (savedInstanceState != null) {
                 return;
             }
 
-            HeadlinesFragment firstFragment = new HeadlinesFragment();
+            IssueFragment issueFragment = new IssueFragment();
 
-            firstFragment.setArguments(getIntent().getExtras());
+            issueFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
+                    .add(R.id.issue_fragment, issueFragment).commit();
         }
     }
 
     private boolean isDualPane() {
-		// TODO Auto-generated method stub
 		return (findViewById(R.id.issue_fragment) != null);
 	}
 
 	public void onArticleSelected(Issue issue) {
 
-        IssueFragment articleFrag = (IssueFragment)
-                getSupportFragmentManager().findFragmentById(R.id.issue_fragment);
-
         if (isDualPane()) {
-            articleFrag.updateIssueView(issue);
+            IssueFragment articleFrag = (IssueFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.issue_fragment);
+
+            if(articleFrag != null)
+            	articleFrag.updateIssueView(issue);
         } else {
         	Intent intent = new Intent(this, IssueActivity.class);
             intent.putExtra(IssueFragment.ARG_ISSUE, issue);
@@ -124,7 +125,16 @@ public class MagpiActivity extends SherlockFragmentActivity
 	@Override
 	public void onCategorySelected(int catIndex) {
         FragmentTransaction fTransaction = getSupportFragmentManager().beginTransaction();
-        fTransaction.setTransition(FragmentTransaction.TRANSIT_NONE);
+        if(this.isDualPane())
+        	fTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        else
+        	fTransaction.setTransition(FragmentTransaction.TRANSIT_NONE);
+        int id;
+        
+        if(this.isDualPane())
+        	id = R.id.headlines_fragment;
+        else
+        	id = R.id.fragment_container;
         
         if(currentFragment != null)
         	fTransaction.remove(currentFragment);
@@ -132,11 +142,15 @@ public class MagpiActivity extends SherlockFragmentActivity
 		switch (catIndex) {
 			case 0:
 				currentFragment = headFragment;
-	            fTransaction.replace(R.id.fragment_container, headFragment);
+	            fTransaction.replace(id, headFragment);
+	            if(this.isDualPane())
+	            	this.findViewById(R.id.issue_fragment).setVisibility(View.VISIBLE);
 				break;
 			case 1:
 				currentFragment = newsFragment;
-				fTransaction.replace(R.id.fragment_container, newsFragment);
+				fTransaction.replace(id, newsFragment);
+				if(this.isDualPane())
+					this.findViewById(R.id.issue_fragment).setVisibility(View.GONE);
 				break;
 			default:
 				return;

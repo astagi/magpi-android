@@ -80,7 +80,8 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.onArticleSelected(issues.get(position));
+        if(mCallback != null)
+    		mCallback.onArticleSelected(issues.get(position));
         getListView().setItemChecked(position, true);
     }
 
