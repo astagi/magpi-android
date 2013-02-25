@@ -193,7 +193,7 @@ public class IssueFragment extends SherlockFragment {
     }
     
     public void onPause() {
-        super.onPause();
+        super.onPause(); 
         if (getActivity() != null && client != null)
             client.close(getActivity());
         if (getActivity() != null) {

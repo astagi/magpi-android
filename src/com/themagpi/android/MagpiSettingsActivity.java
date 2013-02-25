@@ -1,12 +1,28 @@
 package com.themagpi.android;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-public class MagpiSettingsActivity extends PreferenceActivity{
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+
+public class MagpiSettingsActivity extends SherlockPreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
+    {
+        switch(item.getItemId()) {    
+            case android.R.id.home:
+            	finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

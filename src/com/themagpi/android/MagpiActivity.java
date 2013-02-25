@@ -1,23 +1,18 @@
 package com.themagpi.android;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.themagpi.api.Issue;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
-import com.actionbarsherlock.view.*;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.themagpi.api.Issue;
 
 
 public class MagpiActivity extends SherlockFragmentActivity 
@@ -26,6 +21,7 @@ public class MagpiActivity extends SherlockFragmentActivity
     
 	HeadlinesFragment headFragment = new HeadlinesFragment();
     NewsFragment newsFragment = new NewsFragment();
+    IssueFragment issueFragment;
     OnNavigationListener mOnNavigationListener;
 	SherlockListFragment currentFragment;
 	
@@ -60,19 +56,13 @@ public class MagpiActivity extends SherlockFragmentActivity
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
-        
 
-        
         mOnNavigationListener = new OnNavigationListener() {
-        	  // Get the same strings provided for the drop-down's ArrayAdapter
-        	  String[] strings = getResources().getStringArray(R.array.dropdown_array);
-
-        	  @Override
-        	  public boolean onNavigationItemSelected(int position, long itemId) {
-        	   
-        	    return true;
-        	  }
-        	};
+			@Override
+			public boolean onNavigationItemSelected(int position, long itemId) {
+				return true;
+			}
+		};
         	
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
         
@@ -92,12 +82,10 @@ public class MagpiActivity extends SherlockFragmentActivity
         
         if (this.isDualPane()) {
 
-            if (savedInstanceState != null) {
+            if (savedInstanceState != null)
                 return;
-            }
 
-            IssueFragment issueFragment = new IssueFragment();
-
+            issueFragment = new IssueFragment();
             issueFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction()
@@ -114,7 +102,6 @@ public class MagpiActivity extends SherlockFragmentActivity
         if (isDualPane()) {
             IssueFragment articleFrag = (IssueFragment)
                     getSupportFragmentManager().findFragmentById(R.id.issue_fragment);
-
             if(articleFrag != null)
             	articleFrag.updateIssueView(issue);
         } else {
@@ -138,18 +125,24 @@ public class MagpiActivity extends SherlockFragmentActivity
         else
         	id = R.id.fragment_container;
         
-        if(currentFragment != null)
+        if(currentFragment != null) {
         	fTransaction.remove(currentFragment);
+			currentFragment.setMenuVisibility(false);
+        }
         
 		switch (catIndex) {
 			case 0:
 				currentFragment = headFragment;
+		        if(issueFragment != null)
+		        	issueFragment.setMenuVisibility(true);
 	            fTransaction.replace(id, headFragment);
 	            if(this.isDualPane())
 	            	this.findViewById(R.id.issue_fragment).setVisibility(View.VISIBLE);
 				break;
 			case 1:
 				currentFragment = newsFragment;
+		        if(issueFragment != null)
+		        	issueFragment.setMenuVisibility(false);
 				fTransaction.replace(id, newsFragment);
 				if(this.isDualPane())
 					this.findViewById(R.id.issue_fragment).setVisibility(View.GONE);
