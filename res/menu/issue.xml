@@ -3,13 +3,13 @@
     <item
         android:id="@+id/menu_share"
         android:showAsAction="ifRoom"
-        android:title="Share"
+        android:title="@string/menu_share"
         android:icon="@android:drawable/ic_menu_share"/>
     
     <item
         android:id="@+id/menu_view"
         android:showAsAction="ifRoom"
-        android:title="View"
+        android:title="@string/menu_view"
         android:icon="@android:drawable/ic_menu_view"/>
 
 </menu>

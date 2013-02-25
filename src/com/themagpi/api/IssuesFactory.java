@@ -1,6 +1,11 @@
 package com.themagpi.api;
 
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,9 +25,18 @@ public class IssuesFactory {
         while (m.find()) {
             imgUrl = m.group(1);
         }
+        SimpleDateFormat format = new SimpleDateFormat("LLLL yyyy", Locale.US);
+        String dateLocale = item.getTitle().split(" - ")[1];
+        try {
+			Date instance = format.parse(dateLocale);
+			dateLocale = (new DateFormatSymbols()).getMonths()[instance.getMonth()] + " " + (1900 + instance.getYear());
+			dateLocale = dateLocale.substring(0,1).toUpperCase() + dateLocale.substring(1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
         return (new Issue.Builder())
                 .id(item.getTitle().split(" - ")[0].replace(" ", "_"))
-                .date(item.getTitle().split(" - ")[1])
+                .date(dateLocale)
                 .title(item.getTitle().split(" - ")[0])
                 .pdfUrl(item.getLink().toString())
                 .imageUrl(imgUrl)

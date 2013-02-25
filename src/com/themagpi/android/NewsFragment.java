@@ -94,7 +94,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
         	            Intent shareIntent = new Intent(Intent.ACTION_SEND);
         	            shareIntent.setType("text/plain");
         	            shareIntent.putExtra(Intent.EXTRA_TEXT, NewsFragment.this.news.get(position).getContent());
-        	            startActivity(Intent.createChooser(shareIntent, "Share News"));
+        	            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_news)));
                         return true;
                     }
                 });

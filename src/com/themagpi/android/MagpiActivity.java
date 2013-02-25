@@ -83,7 +83,7 @@ public class MagpiActivity extends SherlockFragmentActivity
         getSupportActionBar().setListNavigationCallbacks(mSpinnerAdapter, mOnNavigationListener);
         
         getSupportActionBar().setNavigationMode(android.app.ActionBar.NAVIGATION_MODE_TABS);
-    	final String CATEGORIES[] = { "Issues", "News" };
+    	final String CATEGORIES[] = getResources().getStringArray(R.array.dropdown_array);
         for (int i = 0; i < CATEGORIES.length; i++) {
         	this.getSupportActionBar().addTab(this.getSupportActionBar().newTab().setText(
                 CATEGORIES[i]).setTabListener(handler));

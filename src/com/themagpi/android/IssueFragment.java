@@ -98,10 +98,10 @@ public class IssueFragment extends SherlockFragment {
     	} else {
 	        progressBar = new ProgressDialog(this.getActivity());
 	        progressBar.setCancelable(false);
-	        progressBar.setMessage("Downloading " + issue.getTitle());
+	        progressBar.setMessage(getResources().getString(R.string.downloading) + " ... " + issue.getTitle());
 	        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 	        progressBar.setProgress(0);
-	        progressBar.setButton("Cancel", new ProgressDialog.OnClickListener() {
+	        progressBar.setButton(getResources().getString(R.string.cancel), new ProgressDialog.OnClickListener() {
 	
 	            @Override
 	            public void onClick(DialogInterface dialog, int arg1) {
@@ -147,7 +147,7 @@ public class IssueFragment extends SherlockFragment {
 	            Intent shareIntent = new Intent(Intent.ACTION_SEND);
 	            shareIntent.setType("text/plain");
 	            shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
-	            startActivity(Intent.createChooser(shareIntent, "Share Issue"));
+	            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_issue)));
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

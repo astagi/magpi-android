@@ -20,7 +20,6 @@
             <TableRow android:gravity="center_vertical|center_horizontal" >
 
                 <ImageView
-                    android:id="@+id/icon_of_app"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dip"
@@ -30,22 +29,20 @@
             <TableRow android:gravity="center_vertical|center_horizontal" >
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="MagPi for Android"
+                    android:text="@string/about_app_longname"
                     android:textColor="#000" />
             </TableRow>
 
             <TableRow android:gravity="center_vertical|center_horizontal" >
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Version 1.0"
+                    android:text="@string/app_version"
                     android:textColor="#000" />
             </TableRow>
         </TableLayout>
@@ -59,39 +56,32 @@
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/layout_image_text"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/credit_andrea"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Developed by Andrea Stagi"
+                android:text="@string/about_andrea"
                 android:textColor="#000" />
 
             <TextView
-                android:id="@+id/credit_merin"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="Graphics by Marta Calistri"
+                android:text="@string/about_marta"
                 android:layout_marginBottom="10dip"
                 android:textColor="#000" />
 
-
-
             <TextView
-                android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This app is an open source product, built upon the following open source projects:"
+                android:text="@string/about_open"
                 android:textColor="#000" />
 
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/layout_image_text"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical|center_horizontal"
@@ -99,7 +89,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
@@ -107,7 +96,6 @@
                     android:textColor="#000" />
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dip"
@@ -118,7 +106,6 @@
                     android:textColor="#000" />
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
@@ -126,7 +113,6 @@
                     android:textColor="#000" />
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dip"
@@ -137,7 +123,6 @@
                     android:textColor="#000" />
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
@@ -145,7 +130,6 @@
                     android:textColor="#000" />
 
                 <TextView
-                    android:id="@+id/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dip"
@@ -165,10 +149,9 @@
             android:background="#000" />
 
         <TextView
-            android:id="@+id/text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Copyright ©2013 MagPi, Andrea Stagi. All the code is relased under MIT lincese."
+            android:text="@string/about_copyright"
             android:textColor="#000" />
 
         <View
