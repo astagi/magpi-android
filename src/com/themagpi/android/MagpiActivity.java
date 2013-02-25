@@ -21,7 +21,7 @@ public class MagpiActivity extends SherlockFragmentActivity
     
 	HeadlinesFragment headFragment = new HeadlinesFragment();
     NewsFragment newsFragment = new NewsFragment();
-    IssueFragment issueFragment;
+    IssueFragment issueFragment = new IssueFragment();
     OnNavigationListener mOnNavigationListener;
 	SherlockListFragment currentFragment;
 	
@@ -85,7 +85,6 @@ public class MagpiActivity extends SherlockFragmentActivity
             if (savedInstanceState != null)
                 return;
 
-            issueFragment = new IssueFragment();
             issueFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction()

@@ -31,7 +31,7 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
     public interface OnHeadlineSelectedListener {
         public void onArticleSelected(Issue issue);
     }
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +83,7 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
         if(mCallback != null)
     		mCallback.onArticleSelected(issues.get(position));
         getListView().setItemChecked(position, true);
+        v.setSelected(true);
     }
 
 

@@ -22,13 +22,12 @@
     <string name="settings_keep_desc">Store Issues on your device</string>
     <string name="settings_about">About</string>
     <string name="settings_more">More</string>
-    <string name="settings_visit">Go to MagPi website</string>
-    <string name="settings_version">Version @string/app_version</string>
+    <string name="settings_visit">MagPi website</string>
     <string name="about">About</string>
     <string name="about_app_longname">MagPi for Android</string>
     <string name="about_andrea">Developed by Andrea Stagi</string>
     <string name="about_marta">Graphics by Marta Calistri</string>
     <string name="about_open">This app is an open source product, built upon the following open source projects</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. All the code is relased under MIT lincese.</string>
+    <string name="about_copyright">Copyright ©2013 MagPi. All the code is relased under MIT license.</string>
 
 </resources>
