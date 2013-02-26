@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">Laddar ner</string>
+    <string name="menu_issues">Nummer</string>
+    <string name="menu_news">Nyheter</string>
+    <string name="cancel">Avbryt</string>
+    <string name="share_news">Dela nyheter</string>
+    <string name="share_issue">Dela nummer</string>
+    <string name="menu_settings">Inställningar</string>
+    <string name="menu_share">Dela</string>
+    <string name="menu_refresh">Uppdatera</string>
+    <string name="menu_view">Vy</string>
+    <string name="settings_notifications">Notifikationer</string>
+    <string name="settings_issues">Nummer</string>
+    <string name="settings_issues_desc">Medala mig när ett nytt nummer finns tillgängligt</string>
+    <string name="settings_news">Nyheter</string>
+    <string name="settings_news_desc">Medla mig när en nyhet inkommit</string>
+    <string name="settings_storage">Utrymme</string>
+    <string name="settings_keep">Behåll nummer</string>
+    <string name="settings_keep_desc">Behåll nummer på din enhet</string>
+    <string name="settings_about">Om</string>
+    <string name="settings_more">Mer</string>
+    <string name="settings_visit">MagPi hemsidan</string>
+    <string name="about">Om</string>
+    <string name="about_app_longname">MagPi för Android</string>
+    <string name="about_andrea">Utvecklad av Andrea Stagi</string>
+    <string name="about_marta">Grafik av Marta Calistri</string>
+    <string name="about_open">Det här programmet är en produkt byggt med öppen källkod och bygger på följande projekt med öppen källkod</string>
+    <string name="about_copyright">Copyright ©2013 MagPi. All kod är släppt under MIT licensen</string>
+
+</resources>

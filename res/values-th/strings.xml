@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">กำลังดาวโหลด</string>
+    <string name="menu_issues">ประเด็น</string>
+    <string name="menu_news">ข่าว</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="share_news">แลกเปลี่ยนข่าวสาร</string>
+    <string name="share_issue">แลกเปลี่ยนประเด็น</string>
+    <string name="menu_settings">ปรับแต่ง</string>
+    <string name="menu_share">แบ่งปัน</string>
+    <string name="menu_refresh">ปรับปรุง</string>
+    <string name="menu_view">ดู</string>
+    <string name="settings_notifications">การแจ้งเตือน</string>
+    <string name="settings_issues">ปรับแต่งประเด็น</string>
+    <string name="settings_issues_desc">แจ้งเตือนเมื่อมีประเด็นใหม่ปรากฎ</string>
+    <string name="settings_news">ข่าว</string>
+    <string name="settings_news_desc">แจ้งเตือนเมื่อมีข่าวใหม่ปรากฎ</string>
+    <string name="settings_storage">จัดเก็บ</string>
+    <string name="settings_keep">เก็บประเด็น</string>
+    <string name="settings_keep_desc">เก็บประเด็นบนอุปกรณ์ของท่าน</string>
+    <string name="settings_about">ปรับแต่งบทนำ</string>
+    <string name="settings_more">มีอีก</string>
+    <string name="settings_visit">MagPi เว็บไซต์</string>
+    <string name="about">บทนำ</string>
+    <string name="about_app_longname">MagPi สำหรับ Android</string>
+    <string name="about_andrea">พัฒนาโดย Andrea Stagi</string>
+    <string name="about_marta">กราฟิก โดย Marta Calistri</string>
+    <string name="about_open">โปรแกรมนี้เป็นผลิตภัณฑ์ที่เปิดเผยรหัสต้นฉบับ (open source)  </string>
+    <string name="about_copyright">Copyright ©2013 MagPi. All the code is relased under MIT license.</string>
+
+</resources>

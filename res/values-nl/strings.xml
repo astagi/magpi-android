@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">Aan het downloaden</string>
+    <string name="menu_issues">Problemen</string>
+    <string name="menu_news">Nieuws</string>
+    <string name="cancel">Annuleren</string>
+    <string name="share_news">Deel nieuws</string>
+    <string name="share_issue">Deel probleem</string>
+    <string name="menu_settings">Instellingen</string>
+    <string name="menu_share">Deel</string>
+    <string name="menu_refresh">Vernieuw</string>
+    <string name="menu_view">Bekijk</string>
+    <string name="settings_notifications">Berichten</string>
+    <string name="settings_issues">Problemen</string>
+    <string name="settings_issues_desc">Verwittig me als er een nieuw probleem is</string>
+    <string name="settings_news">Nieuws</string>
+    <string name="settings_news_desc">Verwittig me als er nieuws is</string>
+    <string name="settings_storage">Opslag</string>
+    <string name="settings_keep">Bewaar problemen</string>
+    <string name="settings_keep_desc">Bewaar problemen op je eigen toestel</string>
+    <string name="settings_about">Over</string>
+    <string name="settings_more">Meer</string>
+    <string name="settings_visit">MagPi website</string>
+    <string name="about">Over</string>
+    <string name="about_app_longname">MagPi voor Android</string>
+    <string name="about_andrea">Ontwikkeld door Andrea Stagi</string>
+    <string name="about_marta">Grafiek door Marta Calistri</string>
+    <string name="about_open">Deze app is een open source product, gebaseerd op de volgende open source projecten</string>
+	<string name="about_copyright">Copyright ©2013 MagPi. Al de code is uitgebracht onder de MIT licentie.</string>
+
+</resources>
