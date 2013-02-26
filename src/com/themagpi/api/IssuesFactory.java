@@ -28,12 +28,12 @@ public class IssuesFactory {
         SimpleDateFormat format = new SimpleDateFormat("LLLL yyyy", Locale.US);
         String dateLocale = item.getTitle().split(" - ")[1];
         try {
-			Date instance = format.parse(dateLocale);
-			dateLocale = (new DateFormatSymbols()).getMonths()[instance.getMonth()] + " " + (1900 + instance.getYear());
-			dateLocale = dateLocale.substring(0,1).toUpperCase() + dateLocale.substring(1);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+            Date instance = format.parse(dateLocale);
+            dateLocale = (new DateFormatSymbols()).getMonths()[instance.getMonth()] + " " + (1900 + instance.getYear());
+            dateLocale = dateLocale.substring(0,1).toUpperCase() + dateLocale.substring(1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return (new Issue.Builder())
                 .id(item.getTitle().split(" - ")[0].replace(" ", "_"))
                 .date(dateLocale)

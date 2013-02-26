@@ -23,7 +23,7 @@ import android.app.FragmentTransaction;
 
 public class CompatActionBarNavHandler implements TabListener, OnNavigationListener {
 
-	CompatActionBarNavListener mNavListener;
+    CompatActionBarNavListener mNavListener;
 
     public CompatActionBarNavHandler(CompatActionBarNavListener listener) {
         mNavListener = listener;
@@ -35,20 +35,20 @@ public class CompatActionBarNavHandler implements TabListener, OnNavigationListe
         return true;
     }
 
-	@Override
-	public void onTabSelected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-		mNavListener.onCategorySelected(tab.getPosition());
-	}
+    @Override
+    public void onTabSelected(Tab tab,
+            android.support.v4.app.FragmentTransaction ft) {
+        mNavListener.onCategorySelected(tab.getPosition());
+    }
 
-	@Override
-	public void onTabUnselected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-	}
+    @Override
+    public void onTabUnselected(Tab tab,
+            android.support.v4.app.FragmentTransaction ft) {
+    }
 
-	@Override
-	public void onTabReselected(Tab tab,
-			android.support.v4.app.FragmentTransaction ft) {
-	}
+    @Override
+    public void onTabReselected(Tab tab,
+            android.support.v4.app.FragmentTransaction ft) {
+    }
 
 }

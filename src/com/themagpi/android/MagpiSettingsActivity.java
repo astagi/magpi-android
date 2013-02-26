@@ -20,7 +20,7 @@ public class MagpiSettingsActivity extends SherlockPreferenceActivity {
     {
         switch(item.getItemId()) {    
             case android.R.id.home:
-            	finish();
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

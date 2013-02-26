@@ -105,7 +105,7 @@ public class DownloadFileService extends Service {
                 sendDownloadComplete(file);
             
         } catch (IOException e) {
-        	sendError();
+            sendError();
         } finally {
             if(actualRead != fileSize) {
                 Log.e("ROLLBACK", "ROLLBACK");

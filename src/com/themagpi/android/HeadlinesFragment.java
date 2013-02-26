@@ -25,8 +25,8 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
     ArrayList<Issue> issues = new ArrayList<Issue>();
     MagPiClient client = new MagPiClient();
     int layout;
-	private Menu menu;
-	private LayoutInflater inflater;
+    private Menu menu;
+    private LayoutInflater inflater;
 
     public interface OnHeadlineSelectedListener {
         public void onArticleSelected(Issue issue);
@@ -68,7 +68,7 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
     
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-    	this.menu = menu;
+        this.menu = menu;
         this.inflater = (LayoutInflater) ((SherlockFragmentActivity) getActivity()).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
@@ -81,37 +81,37 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         if(mCallback != null)
-    		mCallback.onArticleSelected(issues.get(position));
+            mCallback.onArticleSelected(issues.get(position));
         getListView().setItemChecked(position, true);
         v.setSelected(true);
     }
 
 
-	@Override
-	public void refresh() {
+    @Override
+    public void refresh() {
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
                 HeadlinesFragment.this.issues = issues;
                 try {
                     setListAdapter(createIssueAdapter(issues)); 
                     if(menu != null)
-                    	menu.findItem(R.id.menu_refresh).setActionView(null);
+                        menu.findItem(R.id.menu_refresh).setActionView(null);
                 } catch (NullPointerException ex) {}
             }
             public void onError(int error) {
-            	if(menu != null)
-                	menu.findItem(R.id.menu_refresh).setActionView(null);
+                if(menu != null)
+                    menu.findItem(R.id.menu_refresh).setActionView(null);
             }
             
         });
         
         if(menu != null)
-        	menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-		
-	}
-	
-	public SimpleAdapter createIssueAdapter(ArrayList<Issue> issues) {
-		ArrayList<HashMap<String,Object>> list_populate = new ArrayList<HashMap<String,Object>>();
+            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
+        
+    }
+    
+    public SimpleAdapter createIssueAdapter(ArrayList<Issue> issues) {
+        ArrayList<HashMap<String,Object>> list_populate = new ArrayList<HashMap<String,Object>>();
         
         for( Issue issue : issues ) {     
             HashMap<String,Object> temp = new HashMap<String,Object>();
@@ -125,5 +125,5 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
                 new String[] {"issue_title", "issue_date"},
                 new int[] { R.id.issue_title, R.id.issue_date});
         return adapter;
-	}
+    }
 }

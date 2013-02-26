@@ -69,9 +69,9 @@ public class IssueFragment extends SherlockFragment {
                                 + intent.getExtras().getInt("percentage") + "%");
                         break;
                     case DownloadFileService.ERROR:
-                    	if(progressBar != null && progressBar.isShowing())
-                    		progressBar.dismiss();
-                    	Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
+                        if(progressBar != null && progressBar.isShowing())
+                            progressBar.dismiss();
+                        Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -89,35 +89,35 @@ public class IssueFragment extends SherlockFragment {
 
     @SuppressWarnings("deprecation")
     public void downloadIssue() {
-    	File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
-    							issue.getId() + "/" + issue.getId() + ".pdf");
-    	if(pdf.exists()) {
+        File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
+                                issue.getId() + "/" + issue.getId() + ".pdf");
+        if(pdf.exists()) {
             Intent intentPdf = new Intent(Intent.ACTION_VIEW);
             intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
             startActivity(intentPdf);
-    	} else {
-	        progressBar = new ProgressDialog(this.getActivity());
-	        progressBar.setCancelable(false);
-	        progressBar.setMessage(getResources().getString(R.string.downloading) + " ... " + issue.getTitle());
-	        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-	        progressBar.setProgress(0);
-	        progressBar.setButton(getResources().getString(R.string.cancel), new ProgressDialog.OnClickListener() {
-	
-	            @Override
-	            public void onClick(DialogInterface dialog, int arg1) {
-	                dialog.cancel();
-	                getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
-	            }
-	
-	        });
-	        progressBar.setMax(100);
-	        progressBar.show();
-	
-	        Intent service = new Intent(getActivity(), DownloadFileService.class);
-	        if (issue != null)
-	            service.putExtra("IssueObject", issue);
-	        this.getActivity().startService(service);
-    	}
+        } else {
+            progressBar = new ProgressDialog(this.getActivity());
+            progressBar.setCancelable(false);
+            progressBar.setMessage(getResources().getString(R.string.downloading) + " ... " + issue.getTitle());
+            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressBar.setProgress(0);
+            progressBar.setButton(getResources().getString(R.string.cancel), new ProgressDialog.OnClickListener() {
+    
+                @Override
+                public void onClick(DialogInterface dialog, int arg1) {
+                    dialog.cancel();
+                    getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
+                }
+    
+            });
+            progressBar.setMax(100);
+            progressBar.show();
+    
+            Intent service = new Intent(getActivity(), DownloadFileService.class);
+            if (issue != null)
+                service.putExtra("IssueObject", issue);
+            this.getActivity().startService(service);
+        }
     }
 
     @Override
@@ -140,17 +140,17 @@ public class IssueFragment extends SherlockFragment {
         if(issue == null)
             return true;
         switch (item.getItemId()) {
-	        case R.id.menu_view:
-	            downloadIssue();
-	            return true;
-	        case R.id.menu_share:
-	            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-	            shareIntent.setType("text/plain");
-	            shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
-	            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_issue)));
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
+            case R.id.menu_view:
+                downloadIssue();
+                return true;
+            case R.id.menu_share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_issue)));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         
     }

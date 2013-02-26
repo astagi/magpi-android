@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class LinkedAdapter extends SimpleAdapter {
     
-	private int[] textViews;
+    private int[] textViews;
 
     public LinkedAdapter(Context context, ArrayList<HashMap<String, Object>> list, int resource, String[] from, int[] to, int[] textViews) {
         super(context, list, resource, from, to);
@@ -25,12 +25,12 @@ public class LinkedAdapter extends SimpleAdapter {
         View view = super.getView(position, convertView, parent);
         TextView noteView = null;
         for(int textViewId : textViews) {
-	        noteView = (TextView) view.findViewById(textViewId);
-	        if(noteView != null) {
-		        noteView.setAutoLinkMask(Linkify.ALL);
-		        noteView.setLinksClickable(true);
-		        noteView.setMovementMethod(LinkMovementMethod.getInstance());
-	        }
+            noteView = (TextView) view.findViewById(textViewId);
+            if(noteView != null) {
+                noteView.setAutoLinkMask(Linkify.ALL);
+                noteView.setLinksClickable(true);
+                noteView.setMovementMethod(LinkMovementMethod.getInstance());
+            }
         }
         return view;
     }

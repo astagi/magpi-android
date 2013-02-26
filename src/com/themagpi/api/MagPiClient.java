@@ -44,7 +44,7 @@ public class MagPiClient {
             
             @Override
             public void onFailure(Throwable e, String response) {
-            	issueListener.onError(0);
+                issueListener.onError(0);
             }
         });
     }
@@ -73,7 +73,7 @@ public class MagPiClient {
     }
     
     public void getNews(final OnNewsReceivedListener newsListener) {
-    	client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
+        client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
                 RSSParser parser = new RSSParser(new RSSConfig());
@@ -83,7 +83,7 @@ public class MagPiClient {
             
             @Override
             public void onFailure(Throwable e, String response) {
-            	newsListener.onError(0);
+                newsListener.onError(0);
             }
         });
     }
