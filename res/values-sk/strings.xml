@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">Sťahovanie</string>
+    <string name="menu_issues">Chyby</string>
+    <string name="menu_news">Novinky</string>
+    <string name="cancel">Zrušiť</string>
+    <string name="share_news">Zdielať Novinky</string>
+    <string name="share_issue">Zdielať Chybu</string>
+    <string name="menu_settings">Nastavenia</string>
+    <string name="menu_share">Zdieľať</string>
+    <string name="menu_refresh">Obnoviť</string>
+    <string name="menu_view">Zobraziť</string>
+    <string name="settings_notifications">Oznámenia</string>
+    <string name="settings_issues">Chyby</string>
+    <string name="settings_issues_desc">Upozorniť ma ak sa vyskytne chyba</string>
+    <string name="settings_news">Novinky</string>
+    <string name="settings_news_desc">Oznámiť ak sa vyskytne novinka</string>
+    <string name="settings_storage">Úložisko</string>
+    <string name="settings_keep">Ponechať chyby</string>
+    <string name="settings_keep_desc">Uložiť hlásené chyby vo Vašom Zariadení</string>
+    <string name="settings_about">O Porgrame</string>
+    <string name="settings_more">Viac</string>
+    <string name="settings_visit">MagPi webstránka</string>
+    <string name="about">O Programe</string>
+    <string name="about_app_longname">MagPi pre Android</string>
+    <string name="about_andrea">Vývojár : Andrea Stagi</string>
+    <string name="about_marta">Grafika : Marta Calistri</string>
+    <string name="about_open">Táto aplikácia je open source produkt, postavená na nasledujúcich projektoch.</string>
+    <string name="about_copyright">Copyright ©2013 MagPi. Celý kód je vydaný pod licenciou MIT .</string>
+
+</resources>
