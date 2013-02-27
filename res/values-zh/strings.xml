@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">下載中</string>
+    <string name="menu_issues">雜誌</string>
+    <string name="menu_news">新聞</string>
+    <string name="cancel">取消</string>
+    <string name="share_news">分享新聞</string>
+    <string name="share_issue">分享 Issue</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_refresh">更新</string>
+    <string name="menu_view">觀看</string>
+    <string name="settings_notifications">通知</string>
+    <string name="settings_issues">雜誌</string>
+    <string name="settings_issues_desc">有新一期雜誌時通知我</string>
+    <string name="settings_news">新聞</string>
+    <string name="settings_news_desc">有新聞時通知我</string>
+    <string name="settings_storage">儲存</string>
+    <string name="settings_keep">保存雜誌</string>
+    <string name="settings_keep_desc">將雜誌存放在裝置裡</string>
+    <string name="settings_about">關於</string>
+    <string name="settings_more">更多</string>
+    <string name="settings_visit">MagPi網站</string>
+    <string name="about">關於</string>
+    <string name="about_app_longname">MagPi for Android</string>
+    <string name="about_andrea">程式開發：Andrea Stagi</string>
+    <string name="about_marta">美術：Marta Calistri</string>
+    <string name="about_open">此軟體為開放原始碼產品，所用的開放原始碼計畫如下</string>
+    <string name="about_copyright">Copyright ©2013 MagPi. All the code is relased under MIT license.</string>
+
+</resources>
