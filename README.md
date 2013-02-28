@@ -14,6 +14,18 @@ Dependencies
 - Async-http (http://loopj.com/android-async-http)
 - Android-rss (https://github.com/ahorn/android-rss)
 
+Add configuration file
+----------------------
+
+First thing you've to do is adding a Config.java file under src/com/themagpi/android
+
+	public class Config {
+		public static final String SENDER_ID = "17516895224";
+		public static final String SERVICE_URL = "http://andreastagi.dyndns.org";
+	}
+
+leave SENDER_ID and SERVICE_URL equal to "" if you don't need to use push notifications
+
 How to build and install
 ------------------------
 

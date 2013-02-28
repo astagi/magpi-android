@@ -1,8 +1,12 @@
 package com.themagpi.android;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
@@ -12,6 +16,10 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
+import com.google.android.gcm.GCMRegistrar;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.themagpi.api.Issue;
 
 
@@ -51,11 +59,30 @@ public class MagpiActivity extends SherlockFragmentActivity
             fragment.refresh();
     }
     
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
+        
+        GCMRegistrar.checkDevice(this);
+        GCMRegistrar.checkManifest(this);
+        final String regId = GCMRegistrar.getRegistrationId(this);
+        if (regId.equals("")) {
+        	GCMRegistrar.register(MagpiActivity.this, Config.SENDER_ID);
+        } else {
+        	RequestParams params = new RequestParams();
+        	params.put("id", regId);
+        	AsyncHttpClient client = new AsyncHttpClient();
+        	client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONArray timeline) {
+
+                }
+            });
+        	Log.e("ERRORREGISTERING", "Already registered");
+        }
 
         mOnNavigationListener = new OnNavigationListener() {
             @Override
