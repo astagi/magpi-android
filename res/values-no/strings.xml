@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">Laster ned</string>
+    <string name="menu_issues">Utgave</string>
+    <string name="menu_news">Nyheter</string>
+    <string name="cancel">Avbryt</string>
+    <string name="share_news">Del nyheter</string>
+    <string name="share_issue">Del utgave</string>
+    <string name="menu_settings">Innstillinger</string>
+    <string name="menu_share">Del</string>
+    <string name="menu_refresh">Oppdater</string>
+    <string name="menu_view">Vis</string>
+    <string name="settings_notifications">Varsler</string>
+    <string name="settings_issues">Utgaver</string>
+    <string name="settings_issues_desc">Varsle når ny utgave er tilgjengelig</string>
+    <string name="settings_news">Nyheter</string>
+    <string name="settings_news_desc">Varsle meg når nye nyheter er tilgjengelig</string>
+    <string name="settings_storage">Lagring</string>
+    <string name="settings_keep">Behold utgave</string>
+    <string name="settings_keep_desc">Beholder utgaver på din enhet</string>
+    <string name="settings_about">Om</string>
+    <string name="settings_more">Mer</string>
+    <string name="settings_visit">MagPi på nett</string>
+    <string name="about">Om</string>
+    <string name="about_app_longname">MagPi for Android</string>
+    <string name="about_andrea">Utviklet av Andrea Stagi</string>
+    <string name="about_marta">Grafikk av Marta Calistri</string>
+    <string name="about_open">Denne applikasjonen er åpen kildekode, og bygger på disse prosjektene</string>
+    <string name="about_copyright">Copyright ©2013 MagPi. All kode er sluppet under MIT lisens.</string>
+
+</resources>
