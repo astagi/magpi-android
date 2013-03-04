@@ -35,7 +35,8 @@ public class DownloadFileService extends Service {
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        task = new RetreiveFileTask((Issue)(intent.getParcelableExtra("IssueObject")));
+        task = new RetreiveFileTask((Issue)(intent.getParcelableExtra("IssueObject")), 
+        		intent.getBooleanExtra("keep", false));
         task.execute();
         isRunning = true;
         return 0;
@@ -48,14 +49,22 @@ public class DownloadFileService extends Service {
         }
     }
     
-    private void downloadFile(Issue issue) {
+    private void downloadFile(Issue issue, boolean keep) {
                 
         Log.e("URL to download", issue.getPdfUrl());
         
         File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-        dir.mkdirs();
-        File file = new File(dir, issue.getId() + ".pdf");
+        File dir = null;
+        File file = null;
+        if(!keep) {
+	        dir = new File (sdCard.getAbsolutePath() + "/MagPi/");
+	        dir.mkdirs();
+	        file = new File(dir, "tmp.pdf");
+        } else {
+	        dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
+	        dir.mkdirs();
+	        file = new File(dir, issue.getId() + ".pdf");
+        }
         
         int actualRead = 0;
         long fileSize = 0;
@@ -141,9 +150,11 @@ public class DownloadFileService extends Service {
     class RetreiveFileTask extends AsyncTask<Void, Void, Void> {
 
         private Issue issue;
+		private boolean keep;
 
-        RetreiveFileTask(Issue issue) {
+        RetreiveFileTask(Issue issue, boolean keep) {
             this.issue = issue;
+            this.keep = keep;
         }
 
         protected void onPostExecute() {
@@ -152,7 +163,7 @@ public class DownloadFileService extends Service {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            downloadFile(issue);
+            downloadFile(issue, keep);
             return null;
         }
      }

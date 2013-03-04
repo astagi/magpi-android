@@ -1,13 +1,17 @@
 package com.themagpi.api;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 
+import android.content.Intent;
 import android.util.Log;
 
 public class IssuesFactory {
@@ -34,15 +38,49 @@ public class IssuesFactory {
         
         SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
         String pubDateText = formatter.format(item.getPubDate());
+    	Log.e("ISSUEDATEEEE", "" + item.getPubDate());
         
         return (new Issue.Builder())
                 .id(issueTitle.replace(" ", "_"))
                 .date(capitalizeString(pubDateText))
                 .title(capitalizeString(issueTitle))
-                .pdfUrl(item.getLink().toString())
+                .pdfUrl(item.getLink().toString() + "/pdf")
                 .imageUrl(imgUrl)
                 .build();
     }
+    
+    public static Issue buildFromIntent(Intent item) {
+        
+        Pattern ISSUE_PATTERN = Pattern.compile("The-MagPi-(issue-[0-9]+)-en");
+        
+        Matcher mIssue = ISSUE_PATTERN.matcher(item.getStringExtra("title"));
+        String issueTitle = "";
+        while (mIssue.find()) {
+        	issueTitle = mIssue.group(1);
+        	issueTitle = issueTitle.replace("-", " ");
+        	Log.e("ISSUETITLEEE", issueTitle);
+        }
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
+        Date date = null;
+        try {
+			date = formatter.parse(item.getStringExtra("pubDate"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        SimpleDateFormat formatter2 = new SimpleDateFormat("MMMM yyyy");
+        String pubDateText = formatter2.format(date);
+        
+        return (new Issue.Builder())
+                .id(issueTitle.replace(" ", "_"))
+                .date(capitalizeString(pubDateText))
+                .title(capitalizeString(issueTitle))
+                .pdfUrl(item.getStringExtra("link") + "/pdf")
+                .imageUrl(item.getStringExtra("image"))
+                .build();
+    }
+    
     
     public static String capitalizeString(String str) {
     	return str.substring(0, 1).toUpperCase() + str.substring(1, str.length());

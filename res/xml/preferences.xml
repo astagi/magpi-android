@@ -8,11 +8,11 @@
             android:key="pref_notif_newissue"
             android:summary="@string/settings_issues_desc"
             android:title="@string/settings_issues" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_notif_newnews"
-            android:summary="@string/settings_news_desc"
-            android:title="@string/settings_news" />
+        <!--  <CheckBoxPreference
+		            android:defaultValue="false"
+		            android:key="pref_notif_newnews"
+		            android:summary="@string/settings_news_desc"
+		            android:title="@string/settings_news" /> -->
     </PreferenceCategory>
     <PreferenceCategory
         android:key="storage_settings"

@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
-public class IssueFragment extends SherlockFragment {
+public class IssueFragment extends SherlockFragment implements Refreshable {
     final static String ARG_ISSUE = "IssueObject";
     private final int MAX_BMP_WIDTH = 600;
     private int mCurrentPosition = -1;
@@ -81,6 +84,8 @@ public class IssueFragment extends SherlockFragment {
     };
 
     private DownloadFileBroadcastReceiver receiver;
+	private Menu menu;
+	private LayoutInflater inflater;
 
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -116,6 +121,11 @@ public class IssueFragment extends SherlockFragment {
             Intent service = new Intent(getActivity(), DownloadFileService.class);
             if (issue != null)
                 service.putExtra("IssueObject", issue);
+            
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getSherlockActivity());
+            
+			service.putExtra("keep", prefs.getBoolean("pref_store_issue", true));
+			
             this.getActivity().startService(service);
         }
     }
@@ -131,9 +141,16 @@ public class IssueFragment extends SherlockFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {	
         inflater.inflate(R.menu.issue, menu);
     }
+    
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        this.menu = menu;
+        this.inflater = (LayoutInflater) ((SherlockFragmentActivity) getActivity()).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -253,5 +270,12 @@ public class IssueFragment extends SherlockFragment {
             }
         });
     }
+
+	@Override
+	public void refresh() {
+        if(menu != null)
+            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
+		
+	}
 
 }
