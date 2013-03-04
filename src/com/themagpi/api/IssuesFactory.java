@@ -1,11 +1,7 @@
 package com.themagpi.api;
 
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,27 +16,36 @@ public class IssuesFactory {
         
         Pattern IMAGE_PATTERN = Pattern.compile("img src='(.*?)'");
         
-        Matcher m = IMAGE_PATTERN.matcher(item.getDescription());
+        Matcher mImg = IMAGE_PATTERN.matcher(item.getDescription());
         String imgUrl = "";
-        while (m.find()) {
-            imgUrl = m.group(1);
+        while (mImg.find()) {
+            imgUrl = mImg.group(1);
         }
-        SimpleDateFormat format = new SimpleDateFormat("LLLL yyyy", Locale.US);
-        String dateLocale = item.getTitle().split(" - ")[1];
-        try {
-            Date instance = format.parse(dateLocale);
-            dateLocale = (new DateFormatSymbols()).getMonths()[instance.getMonth()] + " " + (1900 + instance.getYear());
-            dateLocale = dateLocale.substring(0,1).toUpperCase() + dateLocale.substring(1);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        
+        Pattern ISSUE_PATTERN = Pattern.compile("The-MagPi-(issue-[0-9]+)-en");
+        
+        Matcher mIssue = ISSUE_PATTERN.matcher(item.getTitle());
+        String issueTitle = "";
+        while (mIssue.find()) {
+        	issueTitle = mIssue.group(1);
+        	issueTitle = issueTitle.replace("-", " ");
+        	Log.e("ISSUETITLEEE", issueTitle);
         }
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
+        String pubDateText = formatter.format(item.getPubDate());
+        
         return (new Issue.Builder())
-                .id(item.getTitle().split(" - ")[0].replace(" ", "_"))
-                .date(dateLocale)
-                .title(item.getTitle().split(" - ")[0])
+                .id(issueTitle.replace(" ", "_"))
+                .date(capitalizeString(pubDateText))
+                .title(capitalizeString(issueTitle))
                 .pdfUrl(item.getLink().toString())
                 .imageUrl(imgUrl)
                 .build();
+    }
+    
+    public static String capitalizeString(String str) {
+    	return str.substring(0, 1).toUpperCase() + str.substring(1, str.length());
     }
     
     public static ArrayList<Issue> buildFromRSSFeed(RSSFeed feed) {
