@@ -8,7 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class IssueActivity extends SherlockFragmentActivity {
     IssueFragment issueFragment = new IssueFragment();
-	
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +27,9 @@ public class IssueActivity extends SherlockFragmentActivity {
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
     {
         switch(item.getItemId()) {    
-	        case R.id.menu_refresh:
-	            ((Refreshable)issueFragment).refresh();
-	            break;
+            case R.id.menu_refresh:
+                ((Refreshable)issueFragment).refresh();
+                break;
             case android.R.id.home:
                 finish();
                 break;

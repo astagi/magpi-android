@@ -36,7 +36,7 @@ public class DownloadFileService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         task = new RetreiveFileTask((Issue)(intent.getParcelableExtra("IssueObject")), 
-        		intent.getBooleanExtra("keep", false));
+                intent.getBooleanExtra("keep", false));
         task.execute();
         isRunning = true;
         return 0;
@@ -57,13 +57,13 @@ public class DownloadFileService extends Service {
         File dir = null;
         File file = null;
         if(!keep) {
-	        dir = new File (sdCard.getAbsolutePath() + "/MagPi/");
-	        dir.mkdirs();
-	        file = new File(dir, "tmp.pdf");
+            dir = new File (sdCard.getAbsolutePath() + "/MagPi/");
+            dir.mkdirs();
+            file = new File(dir, "tmp.pdf");
         } else {
-	        dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-	        dir.mkdirs();
-	        file = new File(dir, issue.getId() + ".pdf");
+            dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
+            dir.mkdirs();
+            file = new File(dir, issue.getId() + ".pdf");
         }
         
         int actualRead = 0;
@@ -150,7 +150,7 @@ public class DownloadFileService extends Service {
     class RetreiveFileTask extends AsyncTask<Void, Void, Void> {
 
         private Issue issue;
-		private boolean keep;
+        private boolean keep;
 
         RetreiveFileTask(Issue issue, boolean keep) {
             this.issue = issue;

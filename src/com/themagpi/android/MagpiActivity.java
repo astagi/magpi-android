@@ -70,18 +70,18 @@ public class MagpiActivity extends SherlockFragmentActivity
         GCMRegistrar.checkManifest(this);
         final String regId = GCMRegistrar.getRegistrationId(this);
         if (regId.equals("")) {
-        	GCMRegistrar.register(MagpiActivity.this, Config.SENDER_ID);
+            GCMRegistrar.register(MagpiActivity.this, Config.SENDER_ID);
         } else {
-        	RequestParams params = new RequestParams();
-        	params.put("id", regId);
-        	AsyncHttpClient client = new AsyncHttpClient();
-        	client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
+            RequestParams params = new RequestParams();
+            params.put("id", regId);
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(JSONArray timeline) {
 
                 }
             });
-        	Log.e("ERRORREGISTERING", "Already registered");
+            Log.e("ERRORREGISTERING", "Already registered");
         }
 
         mOnNavigationListener = new OnNavigationListener() {

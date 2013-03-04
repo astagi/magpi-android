@@ -94,7 +94,7 @@ public class HeadlinesFragment extends SherlockListFragment implements Refreshab
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
                 HeadlinesFragment.this.issues = issues;
-    			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeadlinesFragment.this.getSherlockActivity());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeadlinesFragment.this.getSherlockActivity());
                 prefs.edit().putString("last_issue", issues.get(0).getId()).commit();
                 try {
                     setListAdapter(createIssueAdapter(issues)); 

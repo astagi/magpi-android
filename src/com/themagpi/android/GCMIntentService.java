@@ -30,66 +30,66 @@ import com.themagpi.api.IssuesFactory;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
-	@Override
-	protected void onError(Context ctx, String devId) {
-		Log.e("ERROR", "ERROR" + devId);	
-	}
+    @Override
+    protected void onError(Context ctx, String devId) {
+        Log.e("ERROR", "ERROR" + devId);    
+    }
 
-	@Override
-	protected void onMessage(Context ctx, Intent intent) {
-		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		if (!prefs.getBoolean("pref_notif_newissue", true))
-			return;
-		
-		Issue issue = IssuesFactory.buildFromIntent(intent);
-		
-		if (prefs.getString("last_issue", "").equalsIgnoreCase(issue.getId()))
-			return;
-		
-		InputStream is = null; 
-		byte[] bytes = null;
-		
-		try { 
-			URL url = new URL(issue.getCoverUrl()); 
-			is = url.openStream(); 
-			int buff = 0; 
-			ByteArrayOutputStream outStream = new ByteArrayOutputStream(); 
-			while((buff = is.read()) != -1) { 
-				outStream.write(buff); 
-			} 
-			bytes = outStream.toByteArray(); 
-		} catch(Exception e)	{	}  
-		
-		Notification noti = new NotificationCompat.Builder(this)
-			 .setContentTitle("New issue!")
-			 .setContentText(issue.getTitle() + " - " + issue.getDate())
-			 .setSmallIcon(R.drawable.new_issue)
-			 .setLargeIcon(BitmapFactory.decodeByteArray(bytes, 0 , bytes.length))
-			 .getNotification();
-		
-		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		notificationManager.notify(0, noti); 
-	}
+    @Override
+    protected void onMessage(Context ctx, Intent intent) {
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        if (!prefs.getBoolean("pref_notif_newissue", true))
+            return;
+        
+        Issue issue = IssuesFactory.buildFromIntent(intent);
+        
+        if (prefs.getString("last_issue", "").equalsIgnoreCase(issue.getId()))
+            return;
+        
+        InputStream is = null; 
+        byte[] bytes = null;
+        
+        try { 
+            URL url = new URL(issue.getCoverUrl()); 
+            is = url.openStream(); 
+            int buff = 0; 
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream(); 
+            while((buff = is.read()) != -1) { 
+                outStream.write(buff); 
+            } 
+            bytes = outStream.toByteArray(); 
+        } catch(Exception e)    {   }  
+        
+        Notification noti = new NotificationCompat.Builder(this)
+             .setContentTitle("New issue!")
+             .setContentText(issue.getTitle() + " - " + issue.getDate())
+             .setSmallIcon(R.drawable.new_issue)
+             .setLargeIcon(BitmapFactory.decodeByteArray(bytes, 0 , bytes.length))
+             .getNotification();
+        
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, noti); 
+    }
 
-	@Override 
-	protected void onRegistered(Context ctx, String devId) {
-    	RequestParams params = new RequestParams();
-    	params.put("id", devId);
-    	AsyncHttpClient client = new AsyncHttpClient();
-    	client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
+    @Override 
+    protected void onRegistered(Context ctx, String devId) {
+        RequestParams params = new RequestParams();
+        params.put("id", devId);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray timeline) {
 
             }
         });
-	}
+    }
 
-	@Override
-	protected void onUnregistered(Context ctx, String devId) {
+    @Override
+    protected void onUnregistered(Context ctx, String devId) {
 
-	}
+    }
 
 }

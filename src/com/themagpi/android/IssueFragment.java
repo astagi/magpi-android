@@ -84,8 +84,8 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     };
 
     private DownloadFileBroadcastReceiver receiver;
-	private Menu menu;
-	private LayoutInflater inflater;
+    private Menu menu;
+    private LayoutInflater inflater;
 
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -122,10 +122,10 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             if (issue != null)
                 service.putExtra("IssueObject", issue);
             
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getSherlockActivity());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getSherlockActivity());
             
-			service.putExtra("keep", prefs.getBoolean("pref_store_issue", true));
-			
+            service.putExtra("keep", prefs.getBoolean("pref_store_issue", true));
+            
             this.getActivity().startService(service);
         }
     }
@@ -141,7 +141,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {	
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) { 
         inflater.inflate(R.menu.issue, menu);
     }
     
@@ -271,11 +271,11 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         });
     }
 
-	@Override
-	public void refresh() {
+    @Override
+    public void refresh() {
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-		
-	}
+        
+    }
 
 }
