@@ -45,10 +45,10 @@ public class MagpiActivity extends SherlockFragmentActivity implements ViewPager
 		fragments.add(Fragment.instantiate(this, HeadlinesFragment.class.getName()));
 		fragments.add(Fragment.instantiate(this, NewsFragment.class.getName()));
 		this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
-		//
 		this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
 		this.mViewPager.setAdapter(this.mPagerAdapter);
 		this.mViewPager.setOnPageChangeListener(this);
+		
     }
     
     @Override
@@ -56,7 +56,7 @@ public class MagpiActivity extends SherlockFragmentActivity implements ViewPager
     {
         switch(item.getItemId()) {
             case R.id.menu_refresh:
-                refreshFragment((Refreshable)currentFragment);
+            	refreshFragment((Refreshable)this.mPagerAdapter.getItem(mViewPager.getCurrentItem()));
                 break;
             case R.id.menu_settings:
                 Intent intent = new Intent(this, MagpiSettingsActivity.class);

@@ -14,6 +14,7 @@ Dependencies
 - Async-http (http://loopj.com/android-async-http)
 - Android-rss (https://github.com/ahorn/android-rss)
 - GCM for Android (http://developer.android.com/google/gcm/gs.html#libs)
+- Universal Image Loader for Android (https://github.com/nostra13/Android-Universal-Image-Loader)
 
 Add configuration file
 ----------------------

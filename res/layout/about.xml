@@ -64,33 +64,33 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_andrea"
                 android:gravity="center_vertical|center_horizontal"
+                android:text="@string/about_andrea"
                 android:textColor="#000" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginBottom="10dip"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="@string/about_marta"
-                android:layout_marginBottom="10dip"
-                android:gravity="center_vertical|center_horizontal"
                 android:textColor="#000" />
-            
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginBottom="10dip"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="TR4N5L4T0R5T34M"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dip"
-                android:gravity="center_vertical|center_horizontal"
-                android:textColor="#000" />
-            
+                android:textColor="#000"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="@string/app_contrib_translators"
                 android:layout_marginBottom="10dip"
                 android:gravity="center_vertical|center_horizontal"
+                android:text="@string/app_contrib_translators"
                 android:textColor="#000" />
 
             <TextView
@@ -158,6 +158,40 @@
                     android:linksClickable="true"
                     android:text="http://actionbarsherlock.com"
                     android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Universal Image Loader for Android"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dip"
+                    android:autoLink="web"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:linksClickable="true"
+                    android:text="https://github.com/nostra13/Android-Universal-Image-Loader"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="GCM for Android"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dip"
+                    android:autoLink="web"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:linksClickable="true"
+                    android:text="http://developer.android.com/google/gcm/gs.html#libs"
+                    android:textColor="#000" />
             </LinearLayout>
         </LinearLayout>
 
@@ -171,9 +205,9 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
             android:text="@string/about_copyright"
-            android:textColor="#000" 
-            android:gravity="center_vertical|center_horizontal"/>
+            android:textColor="#000" />
 
         <View
             android:layout_width="fill_parent"
