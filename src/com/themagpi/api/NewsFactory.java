@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 
-import android.text.format.DateFormat;
-
 public class NewsFactory {
     
     public static ArrayList<News> buildFromRSSFeed(RSSFeed feed) {

@@ -1,40 +1,26 @@
 package com.themagpi.android;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
 public class HeadlinesFragment extends SherlockFragment implements Refreshable {
     MagPiClient client = new MagPiClient();
     int layout;
-    private Menu menu;
-    private LayoutInflater inflater;
     private GridView mGridView;
     private IssueGridAdapter mGridAdapter;
     
@@ -81,12 +67,12 @@ public class HeadlinesFragment extends SherlockFragment implements Refreshable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.refresh();
     }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.refresh();
     }
 
 
@@ -98,19 +84,16 @@ public class HeadlinesFragment extends SherlockFragment implements Refreshable {
                 prefs.edit().putString("last_issue", issues.get(0).getId()).commit();
                 updateGrid(issues); 
                 try {
-                    if(menu != null)
-                        menu.findItem(R.id.menu_refresh).setActionView(null);
+                	((RefreshableContainer) getActivity()).stopRefreshIndicator();
                 } catch (NullPointerException ex) {}
             }
             public void onError(int error) {
-                if(menu != null)
-                    menu.findItem(R.id.menu_refresh).setActionView(null);
+            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
             
         });
         
-        if(menu != null)
-            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
+        ((RefreshableContainer) getActivity()).startRefreshIndicator();
         
     }
 }

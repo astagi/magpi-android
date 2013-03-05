@@ -6,24 +6,18 @@ import java.net.URL;
 
 import org.json.JSONArray;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.provider.Settings.Global;
 import android.support.v4.app.NotificationCompat;
-import android.util.Base64;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.themagpi.api.Issue;

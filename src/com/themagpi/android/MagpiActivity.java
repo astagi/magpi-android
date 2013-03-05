@@ -5,11 +5,13 @@ import java.util.Vector;
 
 import org.json.JSONArray;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
@@ -22,7 +24,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class MagpiActivity extends SherlockFragmentActivity implements ViewPager.OnPageChangeListener , CompatActionBarNavListener{
+public class MagpiActivity extends SherlockFragmentActivity 
+	implements ViewPager.OnPageChangeListener , 
+	CompatActionBarNavListener,
+	RefreshableContainer{
     
     HeadlinesFragment headFragment = new HeadlinesFragment();
     NewsFragment newsFragment = new NewsFragment();
@@ -31,11 +36,15 @@ public class MagpiActivity extends SherlockFragmentActivity implements ViewPager
     SherlockFragment currentFragment;
 	private PagerAdapter mPagerAdapter;
 	private ViewPager mViewPager;
+	private Menu menu;
+	private LayoutInflater inflater;
     
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	this.menu = menu;
         getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
+        this.inflater = (LayoutInflater) ((SherlockFragmentActivity) this).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return true;
     }
     
@@ -142,6 +151,20 @@ public class MagpiActivity extends SherlockFragmentActivity implements ViewPager
 	@Override
 	public void onPageSelected(int pos) {
 		getSupportActionBar().setSelectedNavigationItem(pos);
+	}
+
+	@Override
+	public void startRefreshIndicator() {
+        if(menu != null)
+            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
+		
+	}
+
+	@Override
+	public void stopRefreshIndicator() {
+        if(menu != null)
+            menu.findItem(R.id.menu_refresh).setActionView(null);
+		
 	}
 
 }

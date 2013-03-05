@@ -3,24 +3,16 @@ package com.themagpi.android;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 import com.themagpi.api.News;
@@ -29,8 +21,6 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
     ArrayList<News> news = new ArrayList<News>();
     MagPiClient client = new MagPiClient();
     int layout;
-    private Menu menu;
-    private LayoutInflater inflater;
 
     public interface OnHeadlineSelectedListener {
         public void onArticleSelected(Issue issue);
@@ -61,20 +51,13 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        this.menu = menu;
-        this.inflater = (LayoutInflater) ((SherlockFragmentActivity) getActivity()).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
     public void refresh() {
         client.getNews(new MagPiClient.OnNewsReceivedListener() {
             public void onReceived(ArrayList<News> news) {         
                 NewsFragment.this.news = news;
                 try {
                     setListAdapter(createNewsAdapter(news));
-                    if(menu != null)
-                        menu.findItem(R.id.menu_refresh).setActionView(null);
+                    ((RefreshableContainer) getActivity()).stopRefreshIndicator();
                 } catch (NullPointerException ex) {}
                 getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -91,13 +74,11 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                 });
             }
             public void onError(int error) {
-                if(menu != null)
-                    menu.findItem(R.id.menu_refresh).setActionView(null);
+            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
         });
                 
-        if(menu != null)
-            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
+        ((RefreshableContainer) getActivity()).startRefreshIndicator();
         
     }
     
