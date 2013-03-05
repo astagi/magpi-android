@@ -1,42 +1,54 @@
 package com.themagpi.android;
 
+import java.util.List;
+import java.util.Vector;
+
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.google.android.gcm.GCMRegistrar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.themagpi.api.Issue;
 
-
-public class MagpiActivity extends SherlockFragmentActivity 
-    implements HeadlinesFragment.OnHeadlineSelectedListener,
-    CompatActionBarNavListener {
+public class MagpiActivity extends SherlockFragmentActivity implements ViewPager.OnPageChangeListener , CompatActionBarNavListener{
     
     HeadlinesFragment headFragment = new HeadlinesFragment();
     NewsFragment newsFragment = new NewsFragment();
     IssueFragment issueFragment = new IssueFragment();
     OnNavigationListener mOnNavigationListener;
-    SherlockListFragment currentFragment;
+    SherlockFragment currentFragment;
+	private PagerAdapter mPagerAdapter;
+	private ViewPager mViewPager;
+    
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
         return true;
+    }
+    
+    private void intialiseViewPager() {
+
+		List<Fragment> fragments = new Vector<Fragment>();
+		fragments.add(Fragment.instantiate(this, HeadlinesFragment.class.getName()));
+		fragments.add(Fragment.instantiate(this, NewsFragment.class.getName()));
+		this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
+		//
+		this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
+		this.mViewPager.setAdapter(this.mPagerAdapter);
+		this.mViewPager.setOnPageChangeListener(this);
     }
     
     @Override
@@ -59,12 +71,11 @@ public class MagpiActivity extends SherlockFragmentActivity
             fragment.refresh();
     }
     
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.news_articles);
+        setContentView(R.layout.activity_magpi);
         
         GCMRegistrar.checkDevice(this);
         GCMRegistrar.checkManifest(this);
@@ -90,13 +101,15 @@ public class MagpiActivity extends SherlockFragmentActivity
                 return true;
             }
         };
+        
+        this.intialiseViewPager();
+
             
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
         
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dropdown_array,
                 android.R.layout.simple_spinner_dropdown_item);
         
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         getSupportActionBar().setListNavigationCallbacks(mSpinnerAdapter, mOnNavigationListener);
         getSupportActionBar().setNavigationMode(android.app.ActionBar.NAVIGATION_MODE_TABS);
         
@@ -107,77 +120,28 @@ public class MagpiActivity extends SherlockFragmentActivity
         }
         getSupportActionBar().setSelectedNavigationItem(0);
         
-        if (this.isDualPane()) {
-
-            if (savedInstanceState != null)
-                return;
-
-            issueFragment.setArguments(getIntent().getExtras());
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.issue_fragment, issueFragment).commit();
-        }
-    }
-
-    private boolean isDualPane() {
-        return (findViewById(R.id.issue_fragment) != null);
-    }
-
-    public void onArticleSelected(Issue issue) {
-
-        if (isDualPane()) {
-            IssueFragment articleFrag = (IssueFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.issue_fragment);
-            if(articleFrag != null)
-                articleFrag.updateIssueView(issue);
-        } else {
-            Intent intent = new Intent(this, IssueActivity.class);
-            intent.putExtra(IssueFragment.ARG_ISSUE, issue);
-            startActivity(intent);
-        }
     }
 
     @Override
     public void onCategorySelected(int catIndex) {
-        FragmentTransaction fTransaction = getSupportFragmentManager().beginTransaction();
-        if(this.isDualPane())
-            fTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        else
-            fTransaction.setTransition(FragmentTransaction.TRANSIT_NONE);
-        int id;
-        
-        if(this.isDualPane())
-            id = R.id.headlines_fragment;
-        else
-            id = R.id.fragment_container;
-        
-        if(currentFragment != null) {
-            fTransaction.remove(currentFragment);
-            currentFragment.setMenuVisibility(false);
-        }
-        
-        switch (catIndex) {
-            case 0:
-                currentFragment = headFragment;
-                if(issueFragment != null)
-                    issueFragment.setMenuVisibility(true);
-                fTransaction.replace(id, headFragment);
-                if(this.isDualPane())
-                    this.findViewById(R.id.issue_fragment).setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                currentFragment = newsFragment;
-                if(issueFragment != null)
-                    issueFragment.setMenuVisibility(false);
-                fTransaction.replace(id, newsFragment);
-                if(this.isDualPane())
-                    this.findViewById(R.id.issue_fragment).setVisibility(View.GONE);
-                break;
-            default:
-                return;
-        }
-        
-        fTransaction.commit();
+		this.mViewPager.setCurrentItem(catIndex);
     }
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int pos) {
+		getSupportActionBar().setSelectedNavigationItem(pos);
+	}
 
 }
