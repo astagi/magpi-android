@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF" >
+    android:background="#000000" >
 
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,14 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="16dp"
-        android:textSize="18sp" />
+        android:textSize="20sp" 
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
 
 
             <ImageView
+                android:layout_marginTop="2dip"
                 android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

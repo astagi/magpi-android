@@ -61,11 +61,6 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        //getListView().setItemChecked(position, true);
-    }
-
-    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         this.menu = menu;
         this.inflater = (LayoutInflater) ((SherlockFragmentActivity) getActivity()).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,6 +81,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                             int position, long arg3) {
+                    	
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, NewsFragment.this.news.get(position).getContent());

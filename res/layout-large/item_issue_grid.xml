@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="150dp">
+    android:layout_width="340dp"
+    android:layout_height="340dp">
     
     <ImageView 
         android:layout_marginTop="5dip"
@@ -19,7 +19,7 @@
         android:background="#90000000"
         android:gravity="center"
         android:layout_alignBottom="@+id/grid_image"
-        android:textSize="18dp"
+        android:textSize="30dp"
         android:singleLine="true"
         android:ellipsize="marquee" />
 

@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Global;
 import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -30,6 +31,10 @@ import com.themagpi.api.IssuesFactory;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
+	public GCMIntentService() {
+        super(Config.SENDER_ID);
+	}
+	
     @Override
     protected void onError(Context ctx, String devId) {
         Log.e("ERROR", "ERROR" + devId);    
