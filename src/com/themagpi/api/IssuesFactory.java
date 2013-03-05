@@ -31,14 +31,14 @@ public class IssuesFactory {
         Matcher mIssue = ISSUE_PATTERN.matcher(item.getTitle());
         String issueTitle = "";
         while (mIssue.find()) {
-        	issueTitle = mIssue.group(1);
-        	issueTitle = issueTitle.replace("-", " ");
-        	Log.e("ISSUETITLEEE", issueTitle);
+            issueTitle = mIssue.group(1);
+            issueTitle = issueTitle.replace("-", " ");
+            Log.e("ISSUETITLEEE", issueTitle);
         }
         
         SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy");
         String pubDateText = formatter.format(item.getPubDate());
-    	Log.e("ISSUEDATEEEE", "" + item.getPubDate());
+        Log.e("ISSUEDATEEEE", "" + item.getPubDate());
         
         return (new Issue.Builder())
                 .id(issueTitle.replace(" ", "_"))
@@ -56,19 +56,19 @@ public class IssuesFactory {
         Matcher mIssue = ISSUE_PATTERN.matcher(item.getStringExtra("title"));
         String issueTitle = "";
         while (mIssue.find()) {
-        	issueTitle = mIssue.group(1);
-        	issueTitle = issueTitle.replace("-", " ");
-        	Log.e("ISSUETITLEEE", issueTitle);
+            issueTitle = mIssue.group(1);
+            issueTitle = issueTitle.replace("-", " ");
+            Log.e("ISSUETITLEEE", issueTitle);
         }
         
         SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
         Date date = null;
         try {
-			date = formatter.parse(item.getStringExtra("pubDate"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            date = formatter.parse(item.getStringExtra("pubDate"));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         SimpleDateFormat formatter2 = new SimpleDateFormat("MMMM yyyy");
         String pubDateText = formatter2.format(date);
         
@@ -83,7 +83,7 @@ public class IssuesFactory {
     
     
     public static String capitalizeString(String str) {
-    	return str.substring(0, 1).toUpperCase() + str.substring(1, str.length());
+        return str.substring(0, 1).toUpperCase() + str.substring(1, str.length());
     }
     
     public static ArrayList<Issue> buildFromRSSFeed(RSSFeed feed) {
