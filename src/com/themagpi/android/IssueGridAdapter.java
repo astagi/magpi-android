@@ -50,7 +50,7 @@ public class IssueGridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-    	return position;
+        return position;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class IssueGridAdapter extends BaseAdapter {
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
         .cacheInMemory()
-        .cacheOnDisc()
+        .cacheOnDisc().resetViewBeforeLoading()
         .build();
         
         ImageLoader.getInstance().displayImage(locationModel.getCoverUrl(), viewHolder.imageView, options);
