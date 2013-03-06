@@ -1,18 +1,22 @@
 package com.themagpi.android;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,53 +43,11 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     private MagPiClient client = new MagPiClient();
     private ProgressDialog progressBar;
     private Issue issue;
-    
-
-    class DownloadFileBroadcastReceiver extends BroadcastReceiver {
-        private Handler updateUI = new Handler();
-
-        @Override
-        public void onReceive(Context ctxt, final Intent intent) {
-            updateUI.post(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    if (!intent.hasExtra("status"))
-                        return;
-
-                    switch (intent.getIntExtra("status",
-                            DownloadFileService.ERROR)) {
-                    case DownloadFileService.COMPLETE:
-                        progressBar.dismiss();
-                        File file = (File) intent.getExtras().getSerializable("file");
-                        if (file != null) {
-                            Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-                            intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
-                            startActivity(intentPdf);
-                        }
-                        Log.e("DOWNLOADSERVICE", "COMPLETE");
-                        break;
-                    case DownloadFileService.UPDATE:
-                        progressBar.setProgress(intent.getExtras().getInt("percentage"));
-                        Log.e("DOWNLOADSERVICE", ""
-                                + intent.getExtras().getInt("percentage") + "%");
-                        break;
-                    case DownloadFileService.ERROR:
-                        if(progressBar != null && progressBar.isShowing())
-                            progressBar.dismiss();
-                        Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
-
-            });
-        }
-    };
-
-    private DownloadFileBroadcastReceiver receiver;
+    private Handler updateUI = new Handler();
     private Menu menu;
     private LayoutInflater inflater;
+	private volatile boolean isRunning;
+	private RetreiveFileTask task;
 
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -111,23 +73,153 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                 @Override
                 public void onClick(DialogInterface dialog, int arg1) {
                     dialog.cancel();
-                    getActivity().stopService(new Intent(getActivity(), DownloadFileService.class));
+                    isRunning = false;
                 }
     
             });
             progressBar.setMax(100);
             progressBar.show();
-    
-            Intent service = new Intent(getActivity(), DownloadFileService.class);
-            if (issue != null)
-                service.putExtra("IssueObject", issue);
+
+            isRunning = true;
+        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueFragment.this.getSherlockActivity());
+
+            task = new RetreiveFileTask(issue, prefs.getBoolean("pref_store_issue", true));
+            task.execute();
             
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getSherlockActivity());
-            
-            service.putExtra("keep", prefs.getBoolean("pref_store_issue", true));
-            
-            this.getActivity().startService(service);
         }
+    }
+    
+    class RetreiveFileTask extends AsyncTask<Void, Void, Void> {
+
+        private Issue issue;
+        private boolean keep;
+
+        RetreiveFileTask(Issue issue, boolean keep) {
+            this.issue = issue;
+            this.keep = keep;
+        }
+
+        protected void onPostExecute() {
+            
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            downloadFile(issue, keep);
+            return null;
+        }
+     }
+    
+    private void downloadFile(Issue issue, boolean keep) {
+        
+        Log.e("URL to download", issue.getPdfUrl());
+        
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = null;
+        File file = null;
+        if(!keep) {
+            dir = new File (sdCard.getAbsolutePath() + "/MagPi/");
+            dir.mkdirs();
+            file = new File(dir, "tmp.pdf");
+        } else {
+            dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
+            dir.mkdirs();
+            file = new File(dir, issue.getId() + ".pdf");
+        }
+        
+        int actualRead = 0;
+        long fileSize = 0;
+
+        try {
+            
+            actualRead = 0;
+            fileSize = 0;
+
+            URL url = new URL(issue.getPdfUrl());
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+ 
+            String contentLen = urlConnection.getHeaderField("Content-Length");
+            
+            if(contentLen == null)
+                throw new IOException();
+                    
+            fileSize = Long.parseLong(contentLen);
+            
+            Log.e("File length", "" + fileSize);
+            
+            int percentage, oldPercentage = 0;
+    
+            InputStream inputStr = new BufferedInputStream(urlConnection.getInputStream());
+            StatisticsInputStream input = new StatisticsInputStream(inputStr);
+            FileOutputStream output = new FileOutputStream(file);
+    
+            byte data[] = new byte[1024];
+            int count = 0;
+            
+            while (isRunning && (count = input.read(data)) != -1) {
+                output.write(data);
+                actualRead += count;
+                percentage = (int)(((float)actualRead/fileSize)*100);
+                if(percentage != oldPercentage) {
+                	progressUpdate(percentage);
+                    oldPercentage = percentage;
+                }
+            }
+    
+            output.flush();
+            output.close();
+            input.close();
+            
+            if (actualRead == fileSize) {
+                if (file != null) {
+                    Intent intentPdf = new Intent(Intent.ACTION_VIEW);
+                    intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
+                    startActivity(intentPdf);
+                }
+                Log.e("DOWNLOADSERVICE", "COMPLETE");
+            }
+            
+        } catch (IOException e) {
+
+            Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
+        } finally {
+            updateUI.post(new Runnable()
+            {
+                public void run() 
+                {
+                	progressDismiss();
+
+                }
+            });
+            if(actualRead != fileSize) {
+                Log.e("ROLLBACK", "ROLLBACK");
+                file.delete();
+            }
+        }
+            
+    }
+    
+    private void progressDismiss() {
+        updateUI.post(new Runnable()
+        {
+            public void run() 
+            {
+                if(progressBar != null && progressBar.isShowing())
+                    progressBar.dismiss();
+            }
+        });
+    }
+    
+    private void progressUpdate(final int percentage) {
+        updateUI.post(new Runnable()
+        {
+            public void run() 
+            {
+                if(progressBar != null && progressBar.isShowing())
+                	progressBar.setProgress(percentage);
+            }
+        });
     }
 
     @Override
@@ -176,13 +268,6 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     public void onStart() {
         super.onStart();
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(DownloadFileService.BROADCAST_STATUS);
-
-        receiver = new DownloadFileBroadcastReceiver();
-
-        getActivity().registerReceiver(receiver, filter);
-
         Bundle args = getArguments();
         if (args != null) {
             issue = (Issue) args.getParcelable("IssueObject");
@@ -206,18 +291,12 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // outState.putInt(ARG_POSITION, mCurrentPosition);
     }
     
     public void onPause() {
         super.onPause(); 
         if (getActivity() != null && client != null)
             client.close(getActivity());
-        if (getActivity() != null) {
-            try {
-                getActivity().unregisterReceiver(receiver);
-            } catch(IllegalArgumentException e) {}
-        }
     }
 
     

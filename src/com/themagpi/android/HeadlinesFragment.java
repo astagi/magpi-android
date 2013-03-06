@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
