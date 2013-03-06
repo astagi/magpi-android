@@ -31,7 +31,7 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	this.menu = menu;
-        getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
+        getSupportMenuInflater().inflate(R.menu.issue, menu);
         this.inflater = (LayoutInflater) ((SherlockFragmentActivity) this).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return true;
     }
