@@ -137,15 +137,11 @@ public class MagpiActivity extends SherlockFragmentActivity
     }
 
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
-		
+	public void onPageScrollStateChanged(int arg0) {		
 	}
 
 	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
+	public void onPageScrolled(int arg0, float arg1, int arg2) {		
 	}
 
 	@Override

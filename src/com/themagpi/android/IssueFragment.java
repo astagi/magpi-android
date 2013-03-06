@@ -44,8 +44,6 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     private ProgressDialog progressBar;
     private Issue issue;
     private Handler updateUI = new Handler();
-    private Menu menu;
-    private LayoutInflater inflater;
 	private volatile boolean isRunning;
 	private RetreiveFileTask task;
 
@@ -233,18 +231,6 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) { 
-        inflater.inflate(R.menu.issue, menu);
-    }
-    
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        this.menu = menu;
-        this.inflater = (LayoutInflater) ((SherlockFragmentActivity) getActivity()).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         if(issue == null)
             return true;
@@ -298,29 +284,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         if (getActivity() != null && client != null)
             client.close(getActivity());
     }
-
     
-    /*
-     * --------------------------- BITMAP FUNCTIONS ---------------------------
-     */
-    
-    Bitmap ScaleBitmap(Bitmap bm, float scalingFactor) {
-        int scaleHeight = (int) (bm.getHeight() * scalingFactor);
-        int scaleWidth = (int) (bm.getWidth() * scalingFactor);
-
-        if (scaleWidth <= MAX_BMP_WIDTH)
-            return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
-        float hwRatio = ((float) bm.getHeight() / bm.getWidth());
-        return Bitmap.createScaledBitmap(bm, MAX_BMP_WIDTH,
-                (int) (hwRatio * MAX_BMP_WIDTH), true);
-    }
-
-    private float getBitmapScalingFactor(Bitmap bm) {
-        int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        int imageViewWidth = displayWidth;
-        return ((float) imageViewWidth / (float) bm.getWidth());
-    }
-
     private void showCover() {
 
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
@@ -345,16 +309,43 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
 
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);
+                } finally {
+                	((RefreshableContainer) getActivity()).stopRefreshIndicator();
                 }
+            }
+            
+            public void onError(int error) {
+            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
         });
     }
 
     @Override
     public void refresh() {
-        if(menu != null)
-            menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-        
+    	showCover();
+    	((RefreshableContainer) getActivity()).startRefreshIndicator(); 
+    }
+
+    
+    /*
+     * --------------------------- BITMAP FUNCTIONS ---------------------------
+     */
+    
+    Bitmap ScaleBitmap(Bitmap bm, float scalingFactor) {
+        int scaleHeight = (int) (bm.getHeight() * scalingFactor);
+        int scaleWidth = (int) (bm.getWidth() * scalingFactor);
+
+        if (scaleWidth <= MAX_BMP_WIDTH)
+            return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
+        float hwRatio = ((float) bm.getHeight() / bm.getWidth());
+        return Bitmap.createScaledBitmap(bm, MAX_BMP_WIDTH,
+                (int) (hwRatio * MAX_BMP_WIDTH), true);
+    }
+
+    private float getBitmapScalingFactor(Bitmap bm) {
+        int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        int imageViewWidth = displayWidth;
+        return ((float) imageViewWidth / (float) bm.getWidth());
     }
 
 }
