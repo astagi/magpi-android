@@ -9,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,9 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
@@ -311,11 +307,14 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                     Log.e("error", "Error opening file.", e);
                 } finally {
                 	((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                	IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+
                 }
             }
             
             public void onError(int error) {
             	((RefreshableContainer) getActivity()).stopRefreshIndicator();
+            	IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
             }
         });
     }
@@ -324,6 +323,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     public void refresh() {
     	showCover();
     	((RefreshableContainer) getActivity()).startRefreshIndicator(); 
+    	this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
     }
 
     

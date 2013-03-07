@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000000" >
+    android:background="#000000"
+    android:orientation="vertical" >
 
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,24 +12,37 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="16dp"
-        android:textSize="20sp" 
         android:textColor="#FFFFFF"
-        android:textStyle="bold"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <ScrollView
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF" >
+        android:layout_height="match_parent" >
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" >
 
             <ImageView
-                android:layout_marginTop="2dip"
                 android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:layout_gravity="center_horizontal" />
-            
-    </ScrollView>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dip"
+                android:background="#FFFFFF" />
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/image_progress"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
 </LinearLayout>

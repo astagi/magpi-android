@@ -1,6 +1,7 @@
 package com.themagpi.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -44,7 +45,10 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
                 ((Refreshable)issueFragment).refresh();
                 break;
             case android.R.id.home:
-                finish();
+            	Intent i = new Intent();
+                i.setClass(IssueActivity.this, MagpiActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);

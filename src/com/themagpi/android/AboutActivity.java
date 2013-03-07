@@ -1,5 +1,6 @@
 package com.themagpi.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -21,7 +22,10 @@ public class AboutActivity extends SherlockActivity {
     {
         switch(item.getItemId()) {    
             case android.R.id.home:
-                finish();
+            	Intent i = new Intent();
+                i.setClass(AboutActivity.this, MagpiActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);
