@@ -8,8 +8,7 @@ public class MagPi extends SplashScreenActivity {
     
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.
-        setContentView(R.layout.splashscreen);
+        super.setContentView(R.layout.splashscreen);
         this.setActivityTime(MagpiActivity.class, 3000);
     }
 
