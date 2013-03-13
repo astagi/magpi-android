@@ -14,7 +14,7 @@
     
     <item
         android:id="@+id/menu_view"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_view"
         android:icon="@android:drawable/ic_menu_view"/>
 

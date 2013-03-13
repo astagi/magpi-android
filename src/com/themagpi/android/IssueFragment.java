@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -282,39 +283,56 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     }
     
     private void showCover() {
+    	
+        final ImageView image = (ImageView) IssueFragment.this.getActivity().findViewById(R.id.cover);
+        image.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				downloadIssue();
+			}
+        	
+        });
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + "/MagPi/"
+                + issue.getId());
+        dir.mkdirs();
+        final File file = new File(dir, "cover.jpg");
+        
+        if(file.exists()) {
+	    	Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+	    	image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
+    		getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+	    	return;
+	    }
 
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
                 Log.e("File Status", "Arrived");
 
                 try {
-                    File sdCard = Environment.getExternalStorageDirectory();
-                    File dir = new File(sdCard.getAbsolutePath() + "/MagPi/"
-                            + issue.getId());
-                    dir.mkdirs();
-                    File file = new File(dir, "cover.jpg");
-
                     FileOutputStream f = new FileOutputStream(file);
                     f.write(data);
                     f.flush();
                     f.close();
-
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    ImageView image = (ImageView) IssueFragment.this.getActivity().findViewById(R.id.cover);
                     image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
-
+                    
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);
                 } finally {
-                	((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                	IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-
+                	try{
+                		((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                		IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+                	} catch (Exception ex) {}
                 }
             }
             
             public void onError(int error) {
-            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
-            	IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+            	try{
+            		((RefreshableContainer) getActivity()).stopRefreshIndicator();
+            		IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+            	} catch (Exception ex) {}
             }
         });
     }

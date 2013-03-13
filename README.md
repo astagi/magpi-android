@@ -47,4 +47,4 @@ Alternatively you can import all the source in a new Android project and use ecl
 License
 -------
 
-This software is released under MIT License. Copyright (c) 2013 MagPi <emailthemagpi@gmail.com>, Andrea Stagi <stagi.andrea@gmail.com>
+This software is released under MIT License. Copyright (c) 2013 The MagPi Limited <emailthemagpi@gmail.com>

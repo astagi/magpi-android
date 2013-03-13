@@ -28,6 +28,6 @@
     <string name="about_andrea">Developed by Andrea Stagi</string>
     <string name="about_marta">Graphics by Marta Calistri</string>
     <string name="about_open">This app is an open source product, built upon the following open source projects</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. All the code is relased under MIT license.</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All the code is released under MIT license.</string>
 
 </resources>
