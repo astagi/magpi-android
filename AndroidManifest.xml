@@ -27,18 +27,21 @@
         android:name="MagPiApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Magpitheme"
+        android:logo="@drawable/logo" >
         <activity
             android:name="com.themagpi.android.MagpiActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+            >
         </activity>
         <activity
             android:name="com.themagpi.android.MagPi"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -47,19 +50,19 @@
         <activity
             android:name="com.themagpi.android.IssueActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+             >
         </activity>
         <activity
             android:name="com.themagpi.android.MagpiSettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/menu_settings"
-            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+             >
         </activity>
         <activity
             android:name="com.themagpi.android.AboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/about"
-            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+             >
             <intent-filter>
                 <action android:name="com.themagpi.android.AboutActivity" />
                 <category android:name="android.intent.category.DEFAULT" />

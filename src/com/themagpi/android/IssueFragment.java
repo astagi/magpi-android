@@ -9,9 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -51,6 +53,11 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
 
     @SuppressWarnings("deprecation")
     public void downloadIssue() {
+    	if(!this.canDisplayPdf(this.getActivity())) {
+    		Toast.makeText(getActivity(), "You need to install a PDF viewer first!", Toast.LENGTH_LONG).show();
+    		return;
+    	}
+    		
         File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
                                 issue.getId() + "/" + issue.getId() + ".pdf");
         if(pdf.exists()) {
@@ -256,11 +263,6 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             issue = (Issue) args.getParcelable("IssueObject");
             updateIssueView(issue);
         }
-
-        /*
-         * else if (mCurrentPosition != -1) { updateIssueView(mCurrentPosition);
-         * }
-         */
     }
 
     public void updateIssueView(Issue issue) {
@@ -268,7 +270,6 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
         showCover();
-        // mCurrentPosition = issue;
     }
 
     @Override
@@ -302,6 +303,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         if(file.exists()) {
 	    	Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
 	    	image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
+	    	((RefreshableContainer) getActivity()).stopRefreshIndicator();
     		getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
 	    	return;
 	    }
@@ -339,9 +341,20 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
 
     @Override
     public void refresh() {
-    	showCover();
     	((RefreshableContainer) getActivity()).startRefreshIndicator(); 
     	this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
+    	showCover();
+    }
+    
+    public boolean canDisplayPdf(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        testIntent.setType("application/pdf");
+        if (packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     
