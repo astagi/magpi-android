@@ -64,7 +64,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                             int position, long arg3) {
-                    	
+                        
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, NewsFragment.this.news.get(position).getContent());
@@ -74,7 +74,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                 });
             }
             public void onError(int error) {
-            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                ((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
         });
                 

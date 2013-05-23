@@ -45,11 +45,11 @@
         <item name="android:background">@drawable/ab_transparent_magpitheme</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Magpitheme</item>
     </style>
-	
-    <style name="PopupMenu.Magpitheme" parent="@style/Widget.Sherlock.ListPopupWindow">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>	
+    
+    <style name="PopupMenu.Magpitheme" parent="@style/Widget.Sherlock.ListPopupWindow"> 
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>    
     </style>
-	
+    
     <style name="DropDownListView.Magpitheme" parent="@style/Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_magpitheme</item>
     </style>

@@ -22,7 +22,7 @@ public class AboutActivity extends SherlockActivity {
     {
         switch(item.getItemId()) {    
             case android.R.id.home:
-            	Intent i = new Intent();
+                Intent i = new Intent();
                 i.setClass(AboutActivity.this, MagpiActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

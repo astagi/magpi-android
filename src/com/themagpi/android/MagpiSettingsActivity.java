@@ -21,7 +21,7 @@ public class MagpiSettingsActivity extends SherlockPreferenceActivity {
     {
         switch(item.getItemId()) {    
             case android.R.id.home:
-            	Intent i = new Intent();
+                Intent i = new Intent();
                 i.setClass(MagpiSettingsActivity.this, MagpiActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

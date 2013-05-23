@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themagpi.api.Issue;
 
 public class IssueGridAdapter extends BaseAdapter {
-	
+    
 
     private class ViewHolder {
         public ImageView imageView;

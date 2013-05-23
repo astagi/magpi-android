@@ -26,10 +26,10 @@ import com.themagpi.api.IssuesFactory;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
-	public GCMIntentService() {
+    public GCMIntentService() {
         super(Config.SENDER_ID);
-	}
-	
+    }
+    
     @Override
     protected void onError(Context ctx, String devId) {
         Log.e("ERROR", "ERROR" + devId);    

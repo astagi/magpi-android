@@ -3,6 +3,7 @@ package com.themagpi.api;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
 import org.mcsoxford.rss.RSSConfig;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSParser;
@@ -13,6 +14,7 @@ import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class MagPiClient {
     
@@ -34,12 +36,12 @@ public class MagPiClient {
     }
     
     public void getIssues(final OnIssuesReceivedListener issueListener) {
-        client.get("http://feeds.feedburner.com/themagpi", new AsyncHttpResponseHandler() {
+        client.get("http://magpiapi.herokuapp.com/issues", new JsonHttpResponseHandler() {
+            
             @Override
-            public void onSuccess(String response) {
-                RSSParser parser = new RSSParser(new RSSConfig());
-                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
-                issueListener.onReceived(IssuesFactory.buildFromRSSFeed(feed));
+            public void onSuccess(JSONObject response) {
+                Log.e("RESPONSE", response.toString());
+                issueListener.onReceived(IssuesFactory.buildFromJSONFeed(response));
             }
             
             @Override

@@ -8,6 +8,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 
@@ -15,6 +18,38 @@ import android.content.Intent;
 import android.util.Log;
 
 public class IssuesFactory {
+    
+    public static Issue buildFromJsonObject(JSONObject item) {
+        try {
+            return (new Issue.Builder())
+                    .id("" + item.getInt("id"))
+                    .date(capitalizeString(item.getString("date")))
+                    .title("Issue " + item.getInt("id"))
+                    .pdfUrl(item.getString("url"))
+                    .imageUrl(item.getString("cover"))
+                    .build();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static ArrayList<Issue> buildFromJSONFeed(JSONObject feed) {
+        
+        ArrayList<Issue> issues = new ArrayList<Issue>();
+        JSONArray jsonArray;
+        
+        try {
+            jsonArray = feed.getJSONArray("issues");      
+            for(int i = 0 ; i < jsonArray.length() ; i++) {
+                issues.add(buildFromJsonObject(jsonArray.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+        return issues;
+    }
     
     public static Issue buildFromRSSItem(RSSItem item) {
         

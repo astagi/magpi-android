@@ -79,15 +79,15 @@ public class HeadlinesFragment extends SherlockFragment implements Refreshable {
     public void refresh() {
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
-    			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeadlinesFragment.this.getSherlockActivity());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeadlinesFragment.this.getSherlockActivity());
                 prefs.edit().putString("last_issue", issues.get(0).getId()).commit();
                 updateGrid(issues); 
                 try {
-                	((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                    ((RefreshableContainer) getActivity()).stopRefreshIndicator();
                 } catch (NullPointerException ex) {}
             }
             public void onError(int error) {
-            	((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                ((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
             
         });

@@ -12,8 +12,8 @@ import com.actionbarsherlock.view.Menu;
 
 public class IssueActivity extends SherlockFragmentActivity implements RefreshableContainer {
     IssueFragment issueFragment = new IssueFragment();
-	private Menu menu;
-	private LayoutInflater inflater;
+    private Menu menu;
+    private LayoutInflater inflater;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	this.menu = menu;
+        this.menu = menu;
         getSupportMenuInflater().inflate(R.menu.issue, menu);
         this.inflater = (LayoutInflater) ((SherlockFragmentActivity) this).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return true;
@@ -45,7 +45,7 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
                 ((Refreshable)issueFragment).refresh();
                 break;
             case android.R.id.home:
-            	Intent i = new Intent();
+                Intent i = new Intent();
                 i.setClass(IssueActivity.this, MagpiActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
@@ -54,15 +54,15 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
         return super.onOptionsItemSelected(item);
     }
 
-	@Override
-	public void startRefreshIndicator() {
+    @Override
+    public void startRefreshIndicator() {
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-	}
+    }
 
-	@Override
-	public void stopRefreshIndicator() {
+    @Override
+    public void stopRefreshIndicator() {
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(null);
-	}
+    }
 }

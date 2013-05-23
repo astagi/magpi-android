@@ -25,39 +25,35 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class MagpiActivity extends SherlockFragmentActivity 
-	implements ViewPager.OnPageChangeListener , 
-	CompatActionBarNavListener,
-	RefreshableContainer{
+            implements ViewPager.OnPageChangeListener , CompatActionBarNavListener, RefreshableContainer {
     
     HeadlinesFragment headFragment = new HeadlinesFragment();
     NewsFragment newsFragment = new NewsFragment();
     IssueFragment issueFragment = new IssueFragment();
     OnNavigationListener mOnNavigationListener;
     SherlockFragment currentFragment;
-	private PagerAdapter mPagerAdapter;
-	private ViewPager mViewPager;
-	private Menu menu;
-	private LayoutInflater inflater;
-    
+    private PagerAdapter mPagerAdapter;
+    private ViewPager mViewPager;
+    private Menu menu;
+    private LayoutInflater inflater;
+    private boolean isRefreshing = false;
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	this.menu = menu;
+        this.menu = menu;
         getSupportMenuInflater().inflate(R.menu.activity_magpi, menu);
         this.inflater = (LayoutInflater) ((SherlockFragmentActivity) this).getSupportActionBar().getThemedContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return true;
     }
     
     private void intialiseViewPager() {
-
-		List<Fragment> fragments = new Vector<Fragment>();
-		fragments.add(Fragment.instantiate(this, HeadlinesFragment.class.getName()));
-		fragments.add(Fragment.instantiate(this, NewsFragment.class.getName()));
-		this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
-		this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
-		this.mViewPager.setAdapter(this.mPagerAdapter);
-		this.mViewPager.setOnPageChangeListener(this);
-		
+        List<Fragment> fragments = new Vector<Fragment>();
+        fragments.add(Fragment.instantiate(this, HeadlinesFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, NewsFragment.class.getName()));
+        this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
+        this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
+        this.mViewPager.setAdapter(this.mPagerAdapter);
+        this.mViewPager.setOnPageChangeListener(this);
     }
     
     @Override
@@ -65,7 +61,7 @@ public class MagpiActivity extends SherlockFragmentActivity
     {
         switch(item.getItemId()) {
             case R.id.menu_refresh:
-            	refreshFragment((Refreshable)this.mPagerAdapter.getItem(mViewPager.getCurrentItem()));
+                refreshFragment((Refreshable)this.mPagerAdapter.getItem(mViewPager.getCurrentItem()));
                 break;
             case R.id.menu_settings:
                 Intent intent = new Intent(this, MagpiSettingsActivity.class);
@@ -133,34 +129,34 @@ public class MagpiActivity extends SherlockFragmentActivity
 
     @Override
     public void onCategorySelected(int catIndex) {
-		this.mViewPager.setCurrentItem(catIndex);
+        this.mViewPager.setCurrentItem(catIndex);
     }
 
-	@Override
-	public void onPageScrollStateChanged(int arg0) {		
-	}
+    @Override
+    public void onPageScrollStateChanged(int arg0) {        
+    }
 
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {		
-	}
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {        
+    }
 
-	@Override
-	public void onPageSelected(int pos) {
-		getSupportActionBar().setSelectedNavigationItem(pos);
-	}
+    @Override
+    public void onPageSelected(int pos) {
+        getSupportActionBar().setSelectedNavigationItem(pos);
+    }
 
-	@Override
-	public void startRefreshIndicator() {
+    @Override
+    public void startRefreshIndicator() {
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-		
-	}
+        
+    }
 
-	@Override
-	public void stopRefreshIndicator() {
+    @Override
+    public void stopRefreshIndicator() {
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(null);
-		
-	}
+        
+    }
 
 }

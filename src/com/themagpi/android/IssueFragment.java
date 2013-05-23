@@ -43,8 +43,8 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     private ProgressDialog progressBar;
     private Issue issue;
     private Handler updateUI = new Handler();
-	private volatile boolean isRunning;
-	private RetreiveFileTask task;
+    private volatile boolean isRunning;
+    private RetreiveFileTask task;
 
     public void onCreate(Bundle si) {
         super.onCreate(si);
@@ -53,11 +53,11 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
 
     @SuppressWarnings("deprecation")
     public void downloadIssue() {
-    	if(!this.canDisplayPdf(this.getActivity())) {
-    		Toast.makeText(getActivity(), "You need to install a PDF viewer first!", Toast.LENGTH_LONG).show();
-    		return;
-    	}
-    		
+        if(!this.canDisplayPdf(this.getActivity())) {
+            Toast.makeText(getActivity(), "You need to install a PDF viewer first!", Toast.LENGTH_LONG).show();
+            return;
+        }
+            
         File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
                                 issue.getId() + "/" + issue.getId() + ".pdf");
         if(pdf.exists()) {
@@ -83,7 +83,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             progressBar.show();
 
             isRunning = true;
-        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueFragment.this.getSherlockActivity());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueFragment.this.getSherlockActivity());
 
             task = new RetreiveFileTask(issue, prefs.getBoolean("pref_store_issue", true));
             task.execute();
@@ -164,7 +164,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                 actualRead += count;
                 percentage = (int)(((float)actualRead/fileSize)*100);
                 if(percentage != oldPercentage) {
-                	progressUpdate(percentage);
+                    progressUpdate(percentage);
                     oldPercentage = percentage;
                 }
             }
@@ -190,7 +190,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             {
                 public void run() 
                 {
-                	progressDismiss();
+                    progressDismiss();
 
                 }
             });
@@ -219,7 +219,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             public void run() 
             {
                 if(progressBar != null && progressBar.isShowing())
-                	progressBar.setProgress(percentage);
+                    progressBar.setProgress(percentage);
             }
         });
     }
@@ -284,15 +284,15 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     }
     
     private void showCover() {
-    	
+        
         final ImageView image = (ImageView) IssueFragment.this.getActivity().findViewById(R.id.cover);
         image.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
-				downloadIssue();
-			}
-        	
+            @Override
+            public void onClick(View arg0) {
+                downloadIssue();
+            }
+            
         });
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File(sdCard.getAbsolutePath() + "/MagPi/"
@@ -301,12 +301,12 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         final File file = new File(dir, "cover.jpg");
         
         if(file.exists()) {
-	    	Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-	    	image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
-	    	((RefreshableContainer) getActivity()).stopRefreshIndicator();
-    		getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-	    	return;
-	    }
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
+            ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+            getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+            return;
+        }
 
         client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
             public void onReceived(byte[] data) {
@@ -323,27 +323,27 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                 } catch (Exception e) {
                     Log.e("error", "Error opening file.", e);
                 } finally {
-                	try{
-                		((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                		IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-                	} catch (Exception ex) {}
+                    try{
+                        ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                        IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+                    } catch (Exception ex) {}
                 }
             }
             
             public void onError(int error) {
-            	try{
-            		((RefreshableContainer) getActivity()).stopRefreshIndicator();
-            		IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-            	} catch (Exception ex) {}
+                try{
+                    ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                    IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+                } catch (Exception ex) {}
             }
         });
     }
 
     @Override
     public void refresh() {
-    	((RefreshableContainer) getActivity()).startRefreshIndicator(); 
-    	this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
-    	showCover();
+        ((RefreshableContainer) getActivity()).startRefreshIndicator(); 
+        this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
+        showCover();
     }
     
     public boolean canDisplayPdf(Context context) {
