@@ -20,19 +20,19 @@ public class MagPiClient {
     
     private AsyncHttpClient client = new AsyncHttpClient();
 
-    public static class OnIssuesReceivedListener {
-        public void onReceived(ArrayList<Issue> issues) {}
-        public void onError(int error) {}
+    public static abstract class OnIssuesReceivedListener {
+        public abstract void onReceived(ArrayList<Issue> issues);
+        public abstract void onError(int error);
     }
     
-    public static class OnNewsReceivedListener {
-        public void onReceived(ArrayList<News> news) {}
-        public void onError(int error) {}
+    public static abstract class OnNewsReceivedListener {
+        public abstract void onReceived(ArrayList<News> news);
+        public abstract void onError(int error);
     }
     
-    public static class OnFileReceivedListener {
-        public void onReceived(byte[] fileData) {}
-        public void onError(int error) {}
+    public static abstract class OnFileReceivedListener {
+        public abstract void onReceived(byte[] fileData);
+        public abstract void onError(int error);
     }
     
     public void getIssues(final OnIssuesReceivedListener issueListener) {

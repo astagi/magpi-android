@@ -17,7 +17,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 
-public class HeadlinesFragment extends SherlockFragment implements Refreshable {
+public class IssuesFragment extends SherlockFragment implements Refreshable {
     MagPiClient client = new MagPiClient();
     int layout;
     private GridView mGridView;
@@ -79,11 +79,12 @@ public class HeadlinesFragment extends SherlockFragment implements Refreshable {
     public void refresh() {
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HeadlinesFragment.this.getSherlockActivity());
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssuesFragment.this.getSherlockActivity());
                 prefs.edit().putString("last_issue", issues.get(0).getId()).commit();
                 updateGrid(issues); 
                 try {
                     ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                    getActivity().findViewById(R.id.progress_issues).setVisibility(View.GONE);
                 } catch (NullPointerException ex) {}
             }
             public void onError(int error) {

@@ -58,6 +58,7 @@ public class NewsFragment extends SherlockListFragment implements Refreshable {
                 try {
                     setListAdapter(createNewsAdapter(news));
                     ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                    getActivity().findViewById(R.id.progress_news).setVisibility(View.GONE);
                 } catch (NullPointerException ex) {}
                 getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 

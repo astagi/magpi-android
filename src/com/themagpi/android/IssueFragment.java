@@ -38,7 +38,6 @@ import com.themagpi.api.MagPiClient;
 public class IssueFragment extends SherlockFragment implements Refreshable {
     final static String ARG_ISSUE = "IssueObject";
     private final int MAX_BMP_WIDTH = 600;
-    private int mCurrentPosition = -1;
     private MagPiClient client = new MagPiClient();
     private ProgressDialog progressBar;
     private Issue issue;
@@ -91,7 +90,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         }
     }
     
-    class RetreiveFileTask extends AsyncTask<Void, Void, Void> {
+    class RetreiveFileTask extends AsyncTask<Void, Void, Boolean> {
 
         private Issue issue;
         private boolean keep;
@@ -101,18 +100,20 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             this.keep = keep;
         }
 
-        protected void onPostExecute() {
-            
+        protected void onPostExecute(Boolean result) {
+            if(result != true)
+                Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
-            downloadFile(issue, keep);
-            return null;
+        protected Boolean doInBackground(Void... arg0) {
+            return downloadFile(issue, keep);
         }
      }
     
-    private void downloadFile(Issue issue, boolean keep) {
+    private boolean downloadFile(Issue issue, boolean keep) {
+        
+        boolean result = true;
         
         Log.e("URL to download", issue.getPdfUrl());
         
@@ -183,8 +184,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             }
             
         } catch (IOException e) {
-
-            Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
+            result = false;
         } finally {
             updateUI.post(new Runnable()
             {
@@ -199,6 +199,8 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                 file.delete();
             }
         }
+        
+        return result;
             
     }
     

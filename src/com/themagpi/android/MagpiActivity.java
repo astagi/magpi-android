@@ -27,7 +27,7 @@ import com.loopj.android.http.RequestParams;
 public class MagpiActivity extends SherlockFragmentActivity 
             implements ViewPager.OnPageChangeListener , CompatActionBarNavListener, RefreshableContainer {
     
-    HeadlinesFragment headFragment = new HeadlinesFragment();
+    IssuesFragment headFragment = new IssuesFragment();
     NewsFragment newsFragment = new NewsFragment();
     IssueFragment issueFragment = new IssueFragment();
     OnNavigationListener mOnNavigationListener;
@@ -36,7 +36,6 @@ public class MagpiActivity extends SherlockFragmentActivity
     private ViewPager mViewPager;
     private Menu menu;
     private LayoutInflater inflater;
-    private boolean isRefreshing = false;
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +47,7 @@ public class MagpiActivity extends SherlockFragmentActivity
     
     private void intialiseViewPager() {
         List<Fragment> fragments = new Vector<Fragment>();
-        fragments.add(Fragment.instantiate(this, HeadlinesFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, IssuesFragment.class.getName()));
         fragments.add(Fragment.instantiate(this, NewsFragment.class.getName()));
         this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
         this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
