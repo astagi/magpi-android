@@ -12,8 +12,9 @@ bin/
 libs/
 *.apk
 *~
-project.properties
-
+proguard/
+src/org/mcsoxford
+.DS_Store
 Config.java
 
 Thumbs.db

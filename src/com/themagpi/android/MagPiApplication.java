@@ -12,7 +12,6 @@ public class MagPiApplication extends Application {
 
         // Create global configuration and initialize ImageLoader with this configuration
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-            .enableLogging()
             .memoryCacheSize(41943040)
             .discCacheSize(104857600)
             .threadPoolSize(10)    
