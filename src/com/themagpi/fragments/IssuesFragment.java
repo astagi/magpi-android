@@ -80,6 +80,7 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
 
     @Override
     public void refresh() {
+        ((RefreshableContainer) getActivity()).startRefreshIndicator();
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssuesFragment.this.getSherlockActivity());
@@ -92,9 +93,6 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
                 ((RefreshableContainer) getActivity()).stopRefreshIndicator();
             }
             
-        });
-        
-        ((RefreshableContainer) getActivity()).startRefreshIndicator();
-        
+        });      
     }
 }
