@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.fragments;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -32,11 +32,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.themagpi.android.R;
+import com.themagpi.android.StatisticsInputStream;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
+import com.themagpi.interfaces.Refreshable;
+import com.themagpi.interfaces.RefreshableContainer;
 
-public class IssueFragment extends SherlockFragment implements Refreshable {
-    final static String ARG_ISSUE = "IssueObject";
+public class IssueDetailsFragment extends SherlockFragment implements Refreshable {
+    public final static String ARG_ISSUE = "IssueObject";
     private final int MAX_BMP_WIDTH = 600;
     private MagPiClient client = new MagPiClient();
     private ProgressDialog progressBar;
@@ -82,7 +86,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             progressBar.show();
 
             isRunning = true;
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueFragment.this.getSherlockActivity());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueDetailsFragment.this.getSherlockActivity());
 
             task = new RetreiveFileTask(issue, prefs.getBoolean("pref_store_issue", true));
             task.execute();
@@ -233,7 +237,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
         if (savedInstanceState != null) {
             // mCurrentPosition = savedInstanceState.getInt(ARG_ISSUE);
         }
-        return inflater.inflate(R.layout.article_view, container, false);
+        return inflater.inflate(R.layout.fragment_issue_details, container, false);
     }
 
     @Override
@@ -287,7 +291,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
     
     private void showCover() {
         
-        final ImageView image = (ImageView) IssueFragment.this.getActivity().findViewById(R.id.cover);
+        final ImageView image = (ImageView) IssueDetailsFragment.this.getActivity().findViewById(R.id.cover);
         image.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -327,7 +331,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
                 } finally {
                     try{
                         ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                        IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+                        IssueDetailsFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
                     } catch (Exception ex) {}
                 }
             }
@@ -335,7 +339,7 @@ public class IssueFragment extends SherlockFragment implements Refreshable {
             public void onError(int error) {
                 try{
                     ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                    IssueFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
+                    IssueDetailsFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
                 } catch (Exception ex) {}
             }
         });

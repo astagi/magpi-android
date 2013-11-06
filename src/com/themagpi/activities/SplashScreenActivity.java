@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.activities;
 
 import android.app.Activity;
 import android.content.Intent;

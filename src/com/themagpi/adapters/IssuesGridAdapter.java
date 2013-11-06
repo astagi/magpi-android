@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.adapters;
 
 import java.util.ArrayList;
 
@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.themagpi.android.R;
+import com.themagpi.android.R.id;
+import com.themagpi.android.R.layout;
 import com.themagpi.api.Issue;
 
-public class IssueGridAdapter extends BaseAdapter {
+public class IssuesGridAdapter extends BaseAdapter {
     
 
     private class ViewHolder {
@@ -25,7 +28,7 @@ public class IssueGridAdapter extends BaseAdapter {
     private ArrayList<Issue> mLocations;
     private LayoutInflater  mInflater;
     
-    public IssueGridAdapter(Context context, ArrayList<Issue> locations) {
+    public IssuesGridAdapter(Context context, ArrayList<Issue> locations) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mLocations = locations;
     }
@@ -62,7 +65,7 @@ public class IssueGridAdapter extends BaseAdapter {
         Issue locationModel = mLocations.get(position);
         
         if (view == null) {
-            view = mInflater.inflate(R.layout.item_issue_grid, parent, false);
+            view = mInflater.inflate(R.layout.adapter_issue_item, parent, false);
             
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) view.findViewById(R.id.grid_image);

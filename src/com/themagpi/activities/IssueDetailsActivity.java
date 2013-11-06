@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,16 +9,20 @@ import android.view.LayoutInflater;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.themagpi.android.R;
+import com.themagpi.fragments.IssueDetailsFragment;
+import com.themagpi.interfaces.Refreshable;
+import com.themagpi.interfaces.RefreshableContainer;
 
-public class IssueActivity extends SherlockFragmentActivity implements RefreshableContainer {
-    IssueFragment issueFragment = new IssueFragment();
+public class IssueDetailsActivity extends SherlockFragmentActivity implements RefreshableContainer {
+    IssueDetailsFragment issueFragment = new IssueDetailsFragment();
     private Menu menu;
     private LayoutInflater inflater;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.news_articles);
+        setContentView(R.layout.activity_issue_details);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -46,7 +50,7 @@ public class IssueActivity extends SherlockFragmentActivity implements Refreshab
                 break;
             case android.R.id.home:
                 Intent i = new Intent();
-                i.setClass(IssueActivity.this, MagpiActivity.class);
+                i.setClass(IssueDetailsActivity.this, MagpiMainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 break;

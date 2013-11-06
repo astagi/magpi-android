@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- File created by the Android Action Bar Style Generator
 
+     Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,14 +45,6 @@
     <style name="ActionBar.Transparent.Magpitheme" parent="@style/Widget.Sherlock.ActionBar">
         <item name="android:background">@drawable/ab_transparent_magpitheme</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Magpitheme</item>
-    </style>
-    
-    <style name="PopupMenu.Magpitheme" parent="@style/Widget.Sherlock.ListPopupWindow"> 
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>    
-    </style>
-    
-    <style name="DropDownListView.Magpitheme" parent="@style/Widget.Sherlock.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_magpitheme</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->

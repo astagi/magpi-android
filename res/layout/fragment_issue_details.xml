@@ -6,7 +6,6 @@
     android:orientation="vertical" >
 
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/article"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,8 +16,6 @@
         android:textStyle="bold" />
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"  >
@@ -34,7 +31,6 @@
 
         <ProgressBar
             android:id="@+id/image_progress"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

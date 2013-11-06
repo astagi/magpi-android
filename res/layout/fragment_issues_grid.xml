@@ -4,7 +4,7 @@
     android:layout_height="fill_parent" >
 
     <GridView
-        android:id="@+id/grid_view"
+        android:id="@+id/issues_grid_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:columnWidth="150dp"
@@ -15,7 +15,6 @@
         android:verticalSpacing="10dp" />
 
     <ProgressBar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/progress_issues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.activities;
 
 import java.util.List;
 import java.util.Vector;
@@ -23,13 +23,19 @@ import com.google.android.gcm.GCMRegistrar;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.themagpi.adapters.PagerAdapter;
+import com.themagpi.android.CompatActionBarNavHandler;
+import com.themagpi.android.CompatActionBarNavListener;
+import com.themagpi.android.Config;
+import com.themagpi.android.R;
+import com.themagpi.fragments.IssuesFragment;
+import com.themagpi.fragments.NewsFragment;
+import com.themagpi.interfaces.Refreshable;
+import com.themagpi.interfaces.RefreshableContainer;
 
-public class MagpiActivity extends SherlockFragmentActivity 
+public class MagpiMainActivity extends SherlockFragmentActivity 
             implements ViewPager.OnPageChangeListener , CompatActionBarNavListener, RefreshableContainer {
     
-    IssuesFragment headFragment = new IssuesFragment();
-    NewsFragment newsFragment = new NewsFragment();
-    IssueFragment issueFragment = new IssueFragment();
     OnNavigationListener mOnNavigationListener;
     SherlockFragment currentFragment;
     private PagerAdapter mPagerAdapter;
@@ -79,13 +85,13 @@ public class MagpiActivity extends SherlockFragmentActivity
     public void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_magpi);
+        setContentView(R.layout.activity_magpi_main);
         
         GCMRegistrar.checkDevice(this);
         GCMRegistrar.checkManifest(this);
         final String regId = GCMRegistrar.getRegistrationId(this);
         if (regId.equals("")) {
-            GCMRegistrar.register(MagpiActivity.this, Config.SENDER_ID);
+            GCMRegistrar.register(MagpiMainActivity.this, Config.SENDER_ID);
         } else {
             RequestParams params = new RequestParams();
             params.put("id", regId);

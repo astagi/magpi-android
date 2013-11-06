@@ -16,9 +16,16 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+/*
+ * NEW API
+ * Get the issue pdf: http://www.themagpi.com/en/issue/%d/pdf/
+ * Get the issue img: http://www.themagpi.com/assets/%d.jpg
+ */
+
 public class MagPiClient {
     
     private AsyncHttpClient client = new AsyncHttpClient();
+    private final int LAST_ISSUE = 16;
 
     public static abstract class OnIssuesReceivedListener {
         public abstract void onReceived(ArrayList<Issue> issues);
@@ -36,7 +43,19 @@ public class MagPiClient {
     }
     
     public void getIssues(final OnIssuesReceivedListener issueListener) {
-        client.get("http://magpiapi.herokuapp.com/issues", new JsonHttpResponseHandler() {
+    	ArrayList<Issue> issues = new ArrayList<Issue>();
+    	for(int i = 1 ; i <= LAST_ISSUE; i++) {
+    		Issue issue = new Issue.Builder()
+            .id("" + i)
+            .date("")
+            .title("Issue " + i)
+            .pdfUrl(String.format("http://www.themagpi.com/en/issue/%d/pdf/", i))
+            .imageUrl(String.format("http://www.themagpi.com/assets/%d.jpg", i))
+            .build();
+            issues.add(issue);
+    	}
+    	issueListener.onReceived(issues);
+        /*client.get("http://magpiapi.herokuapp.com/issues", new JsonHttpResponseHandler() {
             
             @Override
             public void onSuccess(JSONObject response) {
@@ -48,7 +67,7 @@ public class MagPiClient {
             public void onFailure(Throwable e, String response) {
                 issueListener.onError(0);
             }
-        });
+        });*/
     }
     
     public void getPdf(Issue issue, final OnFileReceivedListener fileListener) {

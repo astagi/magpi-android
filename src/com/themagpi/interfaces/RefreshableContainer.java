@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.interfaces;
 
 public interface RefreshableContainer {
     public void startRefreshIndicator();

@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.adapters;
 
 
 import java.util.List;

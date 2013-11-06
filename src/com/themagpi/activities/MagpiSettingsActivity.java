@@ -1,10 +1,12 @@
-package com.themagpi.android;
+package com.themagpi.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.themagpi.android.R;
+import com.themagpi.android.R.xml;
 
 public class MagpiSettingsActivity extends SherlockPreferenceActivity {
     @Override
@@ -22,7 +24,7 @@ public class MagpiSettingsActivity extends SherlockPreferenceActivity {
         switch(item.getItemId()) {    
             case android.R.id.home:
                 Intent i = new Intent();
-                i.setClass(MagpiSettingsActivity.this, MagpiActivity.class);
+                i.setClass(MagpiSettingsActivity.this, MagpiMainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 break;

@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -21,8 +21,13 @@ import com.google.android.gcm.GCMBaseIntentService;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.themagpi.activities.IssueDetailsActivity;
+import com.themagpi.android.Config;
+import com.themagpi.android.R;
+import com.themagpi.android.R.drawable;
 import com.themagpi.api.Issue;
 import com.themagpi.api.IssuesFactory;
+import com.themagpi.fragments.IssueDetailsFragment;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
@@ -62,8 +67,8 @@ public class GCMIntentService extends GCMBaseIntentService {
             bytes = outStream.toByteArray(); 
         } catch(Exception e)    {   }  
         
-        Intent notificationIntent = new Intent(this, IssueActivity.class);
-        notificationIntent.putExtra(IssueFragment.ARG_ISSUE, issue);
+        Intent notificationIntent = new Intent(this, IssueDetailsActivity.class);
+        notificationIntent.putExtra(IssueDetailsFragment.ARG_ISSUE, issue);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         
         Notification noti = new NotificationCompat.Builder(this)

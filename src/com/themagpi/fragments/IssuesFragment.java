@@ -1,4 +1,4 @@
-package com.themagpi.android;
+package com.themagpi.fragments;
 
 import java.util.ArrayList;
 
@@ -7,28 +7,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+
 import com.actionbarsherlock.app.SherlockFragment;
+import com.themagpi.activities.IssueDetailsActivity;
+import com.themagpi.adapters.IssuesGridAdapter;
+import com.themagpi.android.R;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
+import com.themagpi.interfaces.Refreshable;
+import com.themagpi.interfaces.RefreshableContainer;
 
 public class IssuesFragment extends SherlockFragment implements Refreshable {
     MagPiClient client = new MagPiClient();
     int layout;
     private GridView mGridView;
-    private IssueGridAdapter mGridAdapter;
+    private IssuesGridAdapter mGridAdapter;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.issues_grid, container, false);
-        
-        mGridView = (GridView) view.findViewById(R.id.grid_view);
-        
+        View view = inflater.inflate(R.layout.fragment_issues_grid, container, false);
         return view;
     }
     
@@ -36,12 +40,9 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
         Activity activity = getActivity();
 
         if (activity != null) {
-            mGridAdapter = new IssueGridAdapter(activity, issues);
-            
-            if (mGridView != null) {
-                mGridView.setAdapter(mGridAdapter);
-            }
-            
+            mGridAdapter = new IssuesGridAdapter(activity, issues);
+            mGridView = (GridView) getActivity().findViewById(R.id.issues_grid_view);
+            mGridView.setAdapter(mGridAdapter);
             mGridView.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
@@ -50,6 +51,7 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
                 }
                 
             });
+            
         }
     }
     
@@ -57,15 +59,16 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
         Activity activity = getActivity();
         
         if (activity != null) {            
-            Intent intent = new Intent(this.getSherlockActivity(), IssueActivity.class);
-            intent.putExtra(IssueFragment.ARG_ISSUE,(Issue) mGridAdapter.getItem(position));
+            Intent intent = new Intent(this.getSherlockActivity(), IssueDetailsActivity.class);
+            intent.putExtra(IssueDetailsFragment.ARG_ISSUE,(Issue) mGridAdapter.getItem(position));
             startActivity(intent);
         }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        Log.e("ONRES", "ONRED");
         this.refresh();
     }
     
@@ -80,12 +83,10 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
         client.getIssues(new MagPiClient.OnIssuesReceivedListener() {
             public void onReceived(ArrayList<Issue> issues) {         
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssuesFragment.this.getSherlockActivity());
-                prefs.edit().putString("last_issue", issues.get(0).getId()).commit();
+                prefs.edit().putString("last_issue", issues.get(issues.size()-1).getId()).commit();
                 updateGrid(issues); 
-                try {
-                    ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                    getActivity().findViewById(R.id.progress_issues).setVisibility(View.GONE);
-                } catch (NullPointerException ex) {}
+                ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                getActivity().findViewById(R.id.progress_issues).setVisibility(View.GONE);
             }
             public void onError(int error) {
                 ((RefreshableContainer) getActivity()).stopRefreshIndicator();

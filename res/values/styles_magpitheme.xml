@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- File created by the Android Action Bar Style Generator
 
+     Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,11 +46,11 @@
         <item name="background">@drawable/ab_transparent_magpitheme</item>
         <item name="progressBarStyle">@style/ProgressBar.Magpitheme</item>
     </style>
-    
-    <style name="PopupMenu.Magpitheme" parent="@style/Widget.Sherlock.ListPopupWindow"> 
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>    
+	
+    <style name="PopupMenu.Magpitheme" parent="@style/Widget.Sherlock.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>	
     </style>
-    
+	
     <style name="DropDownListView.Magpitheme" parent="@style/Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_magpitheme</item>
     </style>
@@ -57,7 +58,7 @@
     <style name="ActionBarTabStyle.Magpitheme" parent="@style/Widget.Sherlock.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_magpitheme</item>
     </style>
-    
+	
     <style name="DropDownNav.Magpitheme" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_magpitheme</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_magpitheme</item>
