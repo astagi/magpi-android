@@ -49,10 +49,11 @@ public class IssueDetailsActivity extends SherlockFragmentActivity implements Re
                 ((Refreshable)issueFragment).refresh();
                 break;
             case android.R.id.home:
-                Intent i = new Intent();
+            	finish();
+                /*Intent i = new Intent();
                 i.setClass(IssueDetailsActivity.this, MagpiMainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                startActivity(i);*/
                 break;
         }
         return super.onOptionsItemSelected(item);

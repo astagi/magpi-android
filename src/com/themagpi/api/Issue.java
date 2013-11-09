@@ -10,6 +10,7 @@ public class Issue implements Parcelable {
     private String date;
     private String imgUrl;
     private String pdfUrl;
+    private String editorial;
     
     public static class Builder {
 
@@ -18,13 +19,15 @@ public class Issue implements Parcelable {
         private String date;
         private String imgUrl;
         private String pdfUrl;
+        private String editorial;
         
         public Builder id(String id){this.id = id; return this; }
         public Builder title(String title){this.title = title; return this; }
         public Builder date(String date){this.date = date; return this; }
         public Builder imageUrl(String imgUrl){this.imgUrl = imgUrl; return this; }
         public Builder pdfUrl(String pdfUrl){this.pdfUrl = pdfUrl; return this; }
-
+        public Builder editorial(String editorial){this.editorial = editorial; return this; }
+        
         public Issue build() {
             return new Issue(this);
         }
@@ -36,6 +39,7 @@ public class Issue implements Parcelable {
         setCoverUrl(builder.imgUrl);
         setPdfUrl(builder.pdfUrl);
         setId(builder.id);
+        setEditorial(builder.editorial);
     }
 
     public String getPdfUrl() {
@@ -92,6 +96,7 @@ public class Issue implements Parcelable {
         dest.writeString(pdfUrl);
         dest.writeString(imgUrl);
         dest.writeString(date);
+        dest.writeString(editorial);
     }
     
     public static final Parcelable.Creator CREATOR =
@@ -111,6 +116,7 @@ public class Issue implements Parcelable {
         pdfUrl = in.readString();
         imgUrl = in.readString();
         date = in.readString();
+        editorial = in.readString();
     }
     
     public Issue(Parcel in) {
@@ -120,4 +126,12 @@ public class Issue implements Parcelable {
     public String toString() {
         return this.title;
     }
+
+	public String getEditorial() {
+		return editorial;
+	}
+
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
+	}
 }

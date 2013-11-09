@@ -22,11 +22,12 @@ public class IssuesFactory {
     public static Issue buildFromJsonObject(JSONObject item) {
         try {
             return (new Issue.Builder())
-                    .id("" + item.getInt("id"))
+                    .id("" + item.getInt("title"))
                     .date(capitalizeString(item.getString("date")))
-                    .title("Issue " + item.getInt("id"))
-                    .pdfUrl(item.getString("url"))
+                    .title("Issue " + item.getInt("title"))
+                    .pdfUrl(item.getString("pdf"))
                     .imageUrl(item.getString("cover"))
+                    .editorial(item.getString("editorial"))
                     .build();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class IssuesFactory {
         JSONArray jsonArray;
         
         try {
-            jsonArray = feed.getJSONArray("issues");      
+            jsonArray = feed.getJSONArray("data");      
             for(int i = 0 ; i < jsonArray.length() ; i++) {
                 issues.add(buildFromJsonObject(jsonArray.getJSONObject(i)));
             }

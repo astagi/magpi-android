@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themagpi.android.R;
 import com.themagpi.android.StatisticsInputStream;
 import com.themagpi.api.Issue;
@@ -275,7 +278,14 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         this.issue = issue;
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
-        showCover();
+        TextView editorialText = (TextView) getActivity().findViewById(R.id.text_editorial);
+        editorialText.setText(issue.getEditorial());
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+        .cacheInMemory()
+        .cacheOnDisc().resetViewBeforeLoading()
+        .build();
+        ImageLoader.getInstance().displayImage(issue.getCoverUrl(), (ImageView) getActivity().findViewById(R.id.cover), options);
+        //showCover();
     }
 
     @Override
@@ -292,14 +302,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     private void showCover() {
         
         final ImageView image = (ImageView) IssueDetailsFragment.this.getActivity().findViewById(R.id.cover);
-        image.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                downloadIssue();
-            }
-            
-        });
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File(sdCard.getAbsolutePath() + "/MagPi/"
                 + issue.getId());
@@ -349,7 +352,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     public void refresh() {
         ((RefreshableContainer) getActivity()).startRefreshIndicator(); 
         this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
-        showCover();
+        //showCover();
     }
     
     public boolean canDisplayPdf(Context context) {
