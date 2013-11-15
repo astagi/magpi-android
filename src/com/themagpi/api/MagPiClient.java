@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 /*
@@ -49,37 +48,31 @@ public class MagPiClient {
             
             @Override
             public void onSuccess(JSONObject response) {
-                Log.e("RESPONSE", response.toString());
-                issueListener.onReceived(IssuesFactory.buildFromJSONFeed(response));
+            	try {
+                	Log.e("RESPONSE", response.toString());
+                	issueListener.onReceived(IssuesFactory.buildFromJSONFeed(response));
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
+            }
+            
+            @Override
+            public void onFailure(Throwable e, JSONObject response) {
+            	try {
+                	issueListener.onError(0);
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
             
             @Override
             public void onFailure(Throwable e, String response) {
-                issueListener.onError(0);
+            	try {
+                	issueListener.onError(0);
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
-        });
-    }
-    
-    public void getPdf(Issue issue, final OnFileReceivedListener fileListener) {
-        Log.e("DOWNLOADING", "..." + issue.getPdfUrl());
-        String[] allowedContentTypes = new String[] { "application/pdf" };
-        client.get(issue.getPdfUrl(), new BinaryHttpResponseHandler(allowedContentTypes) {
-            @Override
-            public void onSuccess(byte[] fileData) {
-                fileListener.onReceived(fileData);
-            }
-        });
-    }
-    
-    public void getCover(Issue issue, final OnFileReceivedListener fileListener) {
-        String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
-        client.get(issue.getCoverUrl(), new BinaryHttpResponseHandler(allowedContentTypes) {
-            @Override
-            public void onSuccess(byte[] fileData) {
-                fileListener.onReceived(fileData);
-            }
-            
-            
         });
     }
     
@@ -87,14 +80,22 @@ public class MagPiClient {
         client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
-                RSSParser parser = new RSSParser(new RSSConfig());
-                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
-                newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
+            	try {
+	                RSSParser parser = new RSSParser(new RSSConfig());
+	                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
+	                newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
             
             @Override
             public void onFailure(Throwable e, String response) {
-                newsListener.onError(0);
+            	try {
+                	newsListener.onError(0);
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
         });
     }

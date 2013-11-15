@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
  
-    <string name="app_name">MagPi</string>
+    <string name="app_name">The MagPi</string>
     <string name="downloading">Descargando</string>
     <string name="menu_issues">Temas</string>
     <string name="menu_news">Noticias</string>
@@ -22,12 +22,12 @@
     <string name="settings_keep_desc">Almacenar los temas en el dispositivo</string>
     <string name="settings_about">Acerca de</string>
     <string name="settings_more">Más</string>
-    <string name="settings_visit">Sitio web de MagPi</string>
+    <string name="settings_visit">Sitio web de The MagPi</string>
     <string name="about">Acerca de</string>
-    <string name="about_app_longname">MagPi para Android</string>
+    <string name="about_app_longname">The MagPi para Android</string>
     <string name="about_andrea">Desarrollado por Andrea Stagi</string>
     <string name="about_marta">Iconos y gráficos por Marta Calistri</string>
     <string name="about_open">Esta app es un producto open source, construido basándose en los siguientes proyectos open source</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. Todo el código se encuentra bajo licencia del MIT.</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Todo el código se encuentra bajo licencia del MIT.</string>
  
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MagPi</string>
+    <string name="app_name">The MagPi</string>
     <string name="downloading">Laster ned</string>
     <string name="menu_issues">Utgave</string>
     <string name="menu_news">Nyheter</string>
@@ -22,12 +22,12 @@
     <string name="settings_keep_desc">Beholder utgaver på din enhet</string>
     <string name="settings_about">Om</string>
     <string name="settings_more">Mer</string>
-    <string name="settings_visit">MagPi på nett</string>
+    <string name="settings_visit">The MagPi på nett</string>
     <string name="about">Om</string>
-    <string name="about_app_longname">MagPi for Android</string>
+    <string name="about_app_longname">The MagPi for Android</string>
     <string name="about_andrea">Utviklet av Andrea Stagi</string>
     <string name="about_marta">Grafikk av Marta Calistri</string>
     <string name="about_open">Denne applikasjonen er åpen kildekode, og bygger på disse prosjektene</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. All kode er sluppet under MIT lisens.</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All kode er sluppet under MIT lisens.</string>
 
 </resources>

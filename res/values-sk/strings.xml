@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MagPi</string>
+    <string name="app_name">The MagPi</string>
     <string name="downloading">Sťahovanie</string>
     <string name="menu_issues">Chyby</string>
     <string name="menu_news">Novinky</string>
@@ -22,12 +22,12 @@
     <string name="settings_keep_desc">Uložiť hlásené chyby vo Vašom Zariadení</string>
     <string name="settings_about">O Porgrame</string>
     <string name="settings_more">Viac</string>
-    <string name="settings_visit">MagPi webstránka</string>
+    <string name="settings_visit">The MagPi webstránka</string>
     <string name="about">O Programe</string>
-    <string name="about_app_longname">MagPi pre Android</string>
+    <string name="about_app_longname">The MagPi pre Android</string>
     <string name="about_andrea">Vývojár : Andrea Stagi</string>
     <string name="about_marta">Grafika : Marta Calistri</string>
     <string name="about_open">Táto aplikácia je open source produkt, postavená na nasledujúcich projektoch.</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. Celý kód je vydaný pod licenciou MIT .</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Celý kód je vydaný pod licenciou MIT .</string>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MagPi</string>
+    <string name="app_name">The MagPi</string>
     <string name="downloading">Laddar ner</string>
     <string name="menu_issues">Nummer</string>
     <string name="menu_news">Nyheter</string>
@@ -22,12 +22,12 @@
     <string name="settings_keep_desc">Behåll nummer på din enhet</string>
     <string name="settings_about">Om</string>
     <string name="settings_more">Mer</string>
-    <string name="settings_visit">MagPi hemsidan</string>
+    <string name="settings_visit">The MagPi hemsidan</string>
     <string name="about">Om</string>
-    <string name="about_app_longname">MagPi för Android</string>
+    <string name="about_app_longname">The MagPi för Android</string>
     <string name="about_andrea">Utvecklad av Andrea Stagi</string>
     <string name="about_marta">Grafik av Marta Calistri</string>
     <string name="about_open">Det här programmet är en produkt byggt med öppen källkod och bygger på följande projekt med öppen källkod</string>
-    <string name="about_copyright">Copyright ©2013 MagPi. All kod är släppt under MIT licensen</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All kod är släppt under MIT licensen</string>
 
 </resources>

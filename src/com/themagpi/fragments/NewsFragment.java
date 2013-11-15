@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -41,6 +42,11 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
     @Override
     public void onResume() {
         super.onResume();
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         this.setHasOptionsMenu(true);
         refresh();
     }
@@ -86,6 +92,7 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
             }
             public void onError(int error) {
                 ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG).show();
             }
         });        
     }

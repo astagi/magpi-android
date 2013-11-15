@@ -5,32 +5,46 @@
     android:background="#000000"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:layout_height="60dip" >
 
         <ImageView
             android:id="@+id/cover"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-             />
+            android:layout_width="140dip"
+            android:layout_height="140dip"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dip"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF" >
+
+        <ProgressBar
+            android:id="@+id/image_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
 
         <ScrollView
             android:id="@+id/scroller_text_editorial"
@@ -39,7 +53,7 @@
             android:fillViewport="true"
             android:scrollbars="vertical" >
 
-            <TextView
+            <WebView
                 android:id="@+id/text_editorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,14 +65,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </ScrollView>
-
-        <ProgressBar
-            android:id="@+id/image_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

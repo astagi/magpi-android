@@ -8,26 +8,29 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.app.DownloadManager;
+import android.app.DownloadManager.Query;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.themagpi.android.R;
 import com.themagpi.android.StatisticsInputStream;
 import com.themagpi.api.Issue;
@@ -44,22 +49,45 @@ import com.themagpi.interfaces.RefreshableContainer;
 
 public class IssueDetailsFragment extends SherlockFragment implements Refreshable {
     public final static String ARG_ISSUE = "IssueObject";
-    private final int MAX_BMP_WIDTH = 600;
     private MagPiClient client = new MagPiClient();
-    private ProgressDialog progressBar;
     private Issue issue;
+    private DownloadManager dm;
+    long enqueue;
+    //BroadcastReceiver downloadReceiver;
     private Handler updateUI = new Handler();
     private volatile boolean isRunning;
     private RetreiveFileTask task;
+    private ProgressDialog progressBar;
 
     public void onCreate(Bundle si) {
         super.onCreate(si);
         this.setHasOptionsMenu(true);
+        
+        /*downloadReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                    long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                    Query query = new Query();
+                    query.setFilterById(enqueue);
+                    Cursor c = dm.query(query);
+                    if (c.moveToFirst()) {
+                        int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                        if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+                        	//ON SUCCESS
+                        	Log.e("SUCCESSDOWNLOAD", "SUCCESSDOWNLOAD");
+                        }
+                    }
+                }
+            }
+        };
+ 
+        getActivity().registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));*/
     }
 
-    @SuppressWarnings("deprecation")
     public void downloadIssue() {
-        if(!this.canDisplayPdf(this.getActivity())) {
+    	if(!this.canDisplayPdf(this.getActivity())) {
             Toast.makeText(getActivity(), "You need to install a PDF viewer first!", Toast.LENGTH_LONG).show();
             return;
         }
@@ -95,6 +123,26 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             task.execute();
             
         }
+        /*if(!this.canDisplayPdf(getActivity())) {
+            Toast.makeText(getActivity(), getActivity().getString(R.string.pdf_reader_required), Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        String file = issue.getId() + ".pdf";
+        File pdf = new File (Config.ISSUE_FOLDER, file);
+        
+        if(pdf.exists()) {
+            Intent intentPdf = new Intent(Intent.ACTION_VIEW);
+            intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
+            startActivity(intentPdf);
+        } else {
+        	dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            Request request = new Request(Uri.parse(issue.getPdfUrl()));
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+            request.setTitle("Downloading Issue " + issue.getId());
+            request.setDestinationInExternalPublicDir("MagPi", file);
+            enqueue = dm.enqueue(request);
+        }*/
     }
     
     class RetreiveFileTask extends AsyncTask<Void, Void, Boolean> {
@@ -233,6 +281,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         });
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -254,7 +303,8 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             case R.id.menu_share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, issue.getPdfUrl());
+                String shareText = String.format(getActivity().getString(R.string.share_text), issue.getId(), issue.getPdfUrl());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_issue)));
                 return true;
             default:
@@ -274,17 +324,42 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         }
     }
 
-    public void updateIssueView(Issue issue) {
+    public void updateIssueView(final Issue issue) {
         this.issue = issue;
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
-        TextView editorialText = (TextView) getActivity().findViewById(R.id.text_editorial);
-        editorialText.setText(issue.getEditorial());
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-        .cacheInMemory()
-        .cacheOnDisc().resetViewBeforeLoading()
-        .build();
-        ImageLoader.getInstance().displayImage(issue.getCoverUrl(), (ImageView) getActivity().findViewById(R.id.cover), options);
+        //editorialText.setText(issue.getEditorial());
+        DisplayImageOptions options = new DisplayImageOptions.Builder().build();
+        final ImageView issueCoverView = (ImageView) getActivity().findViewById(R.id.cover);
+        ImageLoader.getInstance().displayImage(issue.getCoverUrl(), issueCoverView, options, new ImageLoadingListener() {
+
+			@Override
+			public void onLoadingCancelled(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+		        String htmlArticle = "<img align='left' src='%s' style='margin-right:10px; height:120px; width:90px;'/><b>%s</b>";
+		        WebView editorialText = (WebView) getActivity().findViewById(R.id.text_editorial);
+		        editorialText.loadData(String.format(htmlArticle, imageUri, issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ")), "text/html", "UTF-8");
+			}
+
+			@Override
+			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onLoadingStarted(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
+        
         //showCover();
     }
 
@@ -295,64 +370,18 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     
     public void onPause() {
         super.onPause(); 
-        if (getActivity() != null && client != null)
-            client.close(getActivity());
-    }
-    
-    private void showCover() {
-        
-        final ImageView image = (ImageView) IssueDetailsFragment.this.getActivity().findViewById(R.id.cover);
-
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + "/MagPi/"
-                + issue.getId());
-        dir.mkdirs();
-        final File file = new File(dir, "cover.jpg");
-        
-        if(file.exists()) {
-            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-            image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
-            ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-            getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-            return;
-        }
-
-        client.getCover(issue, new MagPiClient.OnFileReceivedListener() {
-            public void onReceived(byte[] data) {
-                Log.e("File Status", "Arrived");
-
-                try {
-                    FileOutputStream f = new FileOutputStream(file);
-                    f.write(data);
-                    f.flush();
-                    f.close();
-                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    image.setImageBitmap(ScaleBitmap(bmp, getBitmapScalingFactor(bmp)));
-                    
-                } catch (Exception e) {
-                    Log.e("error", "Error opening file.", e);
-                } finally {
-                    try{
-                        ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                        IssueDetailsFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-                    } catch (Exception ex) {}
-                }
-            }
-            
-            public void onError(int error) {
-                try{
-                    ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                    IssueDetailsFragment.this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.GONE);
-                } catch (Exception ex) {}
-            }
-        });
+        client.close(getActivity());
+        /*try {
+        	getActivity().unregisterReceiver(downloadReceiver);
+        } catch (IllegalArgumentException ex) {
+        	ex.printStackTrace();
+        }*/
     }
 
     @Override
     public void refresh() {
         ((RefreshableContainer) getActivity()).startRefreshIndicator(); 
         this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
-        //showCover();
     }
     
     public boolean canDisplayPdf(Context context) {
@@ -364,28 +393,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         } else {
             return false;
         }
-    }
-
-    
-    /*
-     * --------------------------- BITMAP FUNCTIONS ---------------------------
-     */
-    
-    Bitmap ScaleBitmap(Bitmap bm, float scalingFactor) {
-        int scaleHeight = (int) (bm.getHeight() * scalingFactor);
-        int scaleWidth = (int) (bm.getWidth() * scalingFactor);
-
-        if (scaleWidth <= MAX_BMP_WIDTH)
-            return Bitmap.createScaledBitmap(bm, scaleWidth, scaleHeight, true);
-        float hwRatio = ((float) bm.getHeight() / bm.getWidth());
-        return Bitmap.createScaledBitmap(bm, MAX_BMP_WIDTH,
-                (int) (hwRatio * MAX_BMP_WIDTH), true);
-    }
-
-    private float getBitmapScalingFactor(Bitmap bm) {
-        int displayWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        int imageViewWidth = displayWidth;
-        return ((float) imageViewWidth / (float) bm.getWidth());
     }
 
 }

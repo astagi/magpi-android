@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
@@ -69,14 +70,13 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
     public void onResume() {
         super.onResume();
         Log.e("ONRES", "ONRED");
-        this.refresh();
     }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.refresh();
     }
-
 
     @Override
     public void refresh() {
@@ -91,8 +91,16 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
             }
             public void onError(int error) {
                 ((RefreshableContainer) getActivity()).stopRefreshIndicator();
+                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG).show();
             }
             
         });      
+    }
+    
+    public void onPause() {
+    	super.onPause();
+    	Log.e("PAUSE", "PAUSE");
+    	client.close(getActivity());
+    	((RefreshableContainer) getActivity()).stopRefreshIndicator();
     }
 }
