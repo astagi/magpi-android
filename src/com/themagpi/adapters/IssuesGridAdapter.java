@@ -75,7 +75,10 @@ public class IssuesGridAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        DisplayImageOptions options = new DisplayImageOptions.Builder().build();
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+        .cacheInMemory()
+        .cacheOnDisc().resetViewBeforeLoading()
+        .build();
         
         ImageLoader.getInstance().displayImage(locationModel.getCoverUrl(), viewHolder.imageView, options);
         viewHolder.textView.setText(locationModel.getTitle());

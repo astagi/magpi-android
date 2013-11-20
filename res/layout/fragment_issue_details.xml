@@ -40,7 +40,7 @@
         android:background="#FFFFFF" >
 
         <ProgressBar
-            android:id="@+id/image_progress"
+            android:id="@+id/web_content_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

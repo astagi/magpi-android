@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         }
         
         String file = issue.getId() + ".pdf";
-        File pdf = new File (Config.ISSUE_FOLDER, file);
+        File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + Config.ISSUE_FOLDER, file);
         
         if(pdf.exists() && !isDownloading(issue.getPdfUrl())) {
             Intent intentPdf = new Intent(Intent.ACTION_VIEW);
@@ -62,7 +63,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             Request request = new Request(Uri.parse(issue.getPdfUrl()));
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
             request.setTitle(getActivity().getString(R.string.download_text) + " " + issue.getId());
-            request.setDestinationInExternalPublicDir("MagPi", file);
+            request.setDestinationInExternalPublicDir(Config.ISSUE_FOLDER, file);
             dm.enqueue(request);
         }
     }
@@ -180,9 +181,10 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
         //editorialText.setText(issue.getEditorial());
         String htmlArticle = "<img align='left' src='%s' style='margin-right:10px; height:120px; width:90px;'/><b>%s</b>";
-        WebView editorialText = (WebView) getActivity().findViewById(R.id.text_editorial);
+        WebView editorialText = (WebView) getSherlockActivity().findViewById(R.id.text_editorial);
         editorialText.loadData(String.format(htmlArticle, issue.getCoverUrl(), issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ")), "text/html", "UTF-8");
         editorialText.setVisibility(View.VISIBLE);
+        getSherlockActivity().findViewById(R.id.web_content_progress).setVisibility(View.GONE);
         //showCover();
     }
 
@@ -204,7 +206,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     @Override
     public void refresh() {
         ((RefreshableContainer) getActivity()).startRefreshIndicator(); 
-        this.getSherlockActivity().findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
+        this.getSherlockActivity().findViewById(R.id.web_content_progress).setVisibility(View.VISIBLE);
     }
     
     public boolean canDisplayPdf(Context context) {
