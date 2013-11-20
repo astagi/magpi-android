@@ -33,4 +33,5 @@
 	<string name="share_text">I just read issue %1$s of @TheMagP1 using their @Android app. Read it here today - %2$s</string>
 	<string name="download_text">Downloading issue</string>
 	<string name="menu_cancel">Cancel download</string>
+	<string name="connection_error">Connection error</string>
 </resources>

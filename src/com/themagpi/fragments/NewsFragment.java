@@ -92,7 +92,7 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
             }
             public void onError(int error) {
                 ((RefreshableContainer) getActivity()).stopRefreshIndicator();
-                Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_LONG).show();
             }
         });        
     }

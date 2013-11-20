@@ -3,6 +3,8 @@ package com.themagpi.api;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
+import org.as.asyncache.AsynCache;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcsoxford.rss.RSSConfig;
 import org.mcsoxford.rss.RSSFeed;
@@ -43,35 +45,74 @@ public class MagPiClient {
         public abstract void onError(int error);
     }
     
-    public void getIssues(final OnIssuesReceivedListener issueListener) {
+    public void getIssues(final Context context, final OnIssuesReceivedListener issueListener) {
         client.get("http://www.themagpi.com/mps_api/mps-api-v1.php?mode=list_issues", new JsonHttpResponseHandler() {
-            
-            @Override
-            public void onSuccess(JSONObject response) {
+        	
+        	private void sendSuccessResponse(JSONObject response) {
             	try {
                 	Log.e("RESPONSE", response.toString());
                 	issueListener.onReceived(IssuesFactory.buildFromJSONFeed(response));
             	} catch (Exception ex) {
             		ex.printStackTrace();
             	}
+        	}
+        	
+        	private void sendFailureResponse(JSONObject response) {
+            	try {
+                	issueListener.onError(0);
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
+        	}
+        	
+        	private void tryLoadingFromCache(final JSONObject response) {
+        		AsynCache.getInstance().read(context, "getIssue", new AsynCache.ReadResponseHandler() {
+
+		            @Override
+		            public void onSuccess(byte[] data) {
+		            	try {
+							JSONObject myCachedJson = new JSONObject(new String(data));
+							sendSuccessResponse(myCachedJson);
+						} catch (JSONException e) {
+							sendFailureResponse(response);
+							e.printStackTrace();
+						}
+		            }
+
+		            @Override
+		            public void onFailure(Throwable t) {
+		            	sendFailureResponse(response);
+		            	t.printStackTrace();
+		            }
+
+		        });
+        	}
+            
+            @Override
+            public void onSuccess(final JSONObject response) {
+            	 AsynCache.getInstance().write(context, "getIssue", response.toString(), new AsynCache.WriteResponseHandler() {
+
+					@Override
+					public void onSuccess() {
+						sendSuccessResponse(response);
+					}
+
+					@Override
+					public void onFailure(Throwable t) {
+						sendSuccessResponse(response);
+					}
+
+				});
             }
             
             @Override
             public void onFailure(Throwable e, JSONObject response) {
-            	try {
-                	issueListener.onError(0);
-            	} catch (Exception ex) {
-            		ex.printStackTrace();
-            	}
+            	tryLoadingFromCache(response);
             }
             
             @Override
             public void onFailure(Throwable e, String response) {
-            	try {
-                	issueListener.onError(0);
-            	} catch (Exception ex) {
-            		ex.printStackTrace();
-            	}
+            	tryLoadingFromCache(null);
             }
         });
     }

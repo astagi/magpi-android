@@ -15,6 +15,5 @@ libs/
 proguard/
 src/org/mcsoxford
 .DS_Store
-Config.java
 
 Thumbs.db

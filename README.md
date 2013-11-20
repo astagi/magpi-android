@@ -4,13 +4,12 @@
 
 MagPi for Android
 -----------
-
 MagPi client for Android. Read MagPi issues with your Android device :)
 
 Dependencies
 ------------
-
 - ActionBarSherlock (http://actionbarsherlock.com)
+- AsynCache (https://github.com/atooma/AsynCache)
 - Async-http (http://loopj.com/android-async-http)
 - Android-rss (https://github.com/ahorn/android-rss)
 - GCM for Android (http://developer.android.com/google/gcm/gs.html#libs)
@@ -18,7 +17,6 @@ Dependencies
 
 Add configuration file
 ----------------------
-
 First thing you've to do is adding a Config.java file under src/com/themagpi/android
 
 	public class Config {
@@ -30,7 +28,6 @@ leave SENDER_ID and SERVICE_URL equal to "" if you don't need to use push notifi
 
 How to build and install
 ------------------------
-
 Requires:
 
 - Apache Ant http://ant.apache.org
@@ -46,5 +43,4 @@ Alternatively you can import all the source in a new Android project and use ecl
 
 License
 -------
-
-This software is released under MIT License. Copyright (c) 2013 The MagPi Limited <emailthemagpi@gmail.com>
+This software is released under MIT License. Copyright (c) 2013 The MagPi Limited <editor@themagpi.com>
