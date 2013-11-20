@@ -1,12 +1,13 @@
 package com.themagpi.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.themagpi.android.R;
-import com.themagpi.android.R.layout;
 
 public class AboutActivity extends SherlockActivity {
     @Override
@@ -17,6 +18,12 @@ public class AboutActivity extends SherlockActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        try {
+			String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			((TextView)this.findViewById(R.id.label_version)).setText(versionName);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
     }
     
     @Override

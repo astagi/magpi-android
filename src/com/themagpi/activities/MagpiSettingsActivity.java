@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.themagpi.android.R;
-import com.themagpi.android.R.xml;
 
 public class MagpiSettingsActivity extends SherlockPreferenceActivity {
     @Override

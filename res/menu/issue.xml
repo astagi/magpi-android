@@ -23,7 +23,7 @@
         android:id="@+id/menu_cancel_download"
         android:visible="false"
         android:showAsAction="always"
-        android:title=""
+        android:title="@string/menu_cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
 
 </menu>

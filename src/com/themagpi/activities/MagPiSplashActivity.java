@@ -1,10 +1,9 @@
 package com.themagpi.activities;
 
-import com.themagpi.android.R;
-import com.themagpi.android.R.layout;
-
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.themagpi.android.R;
 
 public class MagPiSplashActivity extends SplashScreenActivity {
     Handler splashTimeout = new Handler();

@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themagpi.android.R;
-import com.themagpi.android.R.id;
-import com.themagpi.android.R.layout;
 import com.themagpi.api.Issue;
 
 public class IssuesGridAdapter extends BaseAdapter {
@@ -77,10 +75,7 @@ public class IssuesGridAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-        .cacheInMemory()
-        .cacheOnDisc().resetViewBeforeLoading()
-        .build();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().build();
         
         ImageLoader.getInstance().displayImage(locationModel.getCoverUrl(), viewHolder.imageView, options);
         viewHolder.textView.setText(locationModel.getTitle());

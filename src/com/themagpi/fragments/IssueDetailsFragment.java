@@ -11,25 +11,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.themagpi.android.Config;
 import com.themagpi.android.R;
 import com.themagpi.api.Issue;
@@ -42,7 +34,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     private MagPiClient client = new MagPiClient();
     private Issue issue;
     private DownloadManager dm;
-    long enqueue;
     BroadcastReceiver downloadReceiver;
 	private Menu menu;
     
@@ -70,9 +61,9 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         	menu.findItem(R.id.menu_cancel_download).setVisible(true);
             Request request = new Request(Uri.parse(issue.getPdfUrl()));
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-            request.setTitle("Downloading Issue " + issue.getId());
+            request.setTitle(getActivity().getString(R.string.download_text) + " " + issue.getId());
             request.setDestinationInExternalPublicDir("MagPi", file);
-            enqueue = dm.enqueue(request);
+            dm.enqueue(request);
         }
     }
     
@@ -166,7 +157,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     }
     
     private boolean isDownloading(String path) {
-    	Log.e("DOWNLOADING", "DO");
 		boolean isDownloading = false;
 		DownloadManager.Query query = new DownloadManager.Query();
 		query.setFilterByStatus(
@@ -177,7 +167,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
 		int col = cur.getColumnIndex(DownloadManager.COLUMN_URI);
 		for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
 			isDownloading = path.equals(cur.getString(col));
-			Log.e("DOWNLOADING", "-" + cur.getString(col));
 			if(isDownloading)
 				break;
 		}
@@ -190,37 +179,10 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
         //editorialText.setText(issue.getEditorial());
-        DisplayImageOptions options = new DisplayImageOptions.Builder().build();
-        final ImageView issueCoverView = (ImageView) getActivity().findViewById(R.id.cover);
-        ImageLoader.getInstance().displayImage(issue.getCoverUrl(), issueCoverView, options, new ImageLoadingListener() {
-
-			@Override
-			public void onLoadingCancelled(String arg0, View arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-		        String htmlArticle = "<img align='left' src='%s' style='margin-right:10px; height:120px; width:90px;'/><b>%s</b>";
-		        WebView editorialText = (WebView) getActivity().findViewById(R.id.text_editorial);
-		        editorialText.loadData(String.format(htmlArticle, imageUri, issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ")), "text/html", "UTF-8");
-			}
-
-			@Override
-			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onLoadingStarted(String arg0, View arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-        	
-        });
-        
+        String htmlArticle = "<img align='left' src='%s' style='margin-right:10px; height:120px; width:90px;'/><b>%s</b>";
+        WebView editorialText = (WebView) getActivity().findViewById(R.id.text_editorial);
+        editorialText.loadData(String.format(htmlArticle, issue.getCoverUrl(), issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ")), "text/html", "UTF-8");
+        editorialText.setVisibility(View.VISIBLE);
         //showCover();
     }
 

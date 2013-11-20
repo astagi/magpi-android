@@ -38,10 +38,11 @@
             <TableRow android:gravity="center_vertical|center_horizontal" >
 
                 <TextView
+                    android:id="@+id/label_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/app_version"
+                    android:text=""
                     android:textColor="#000" />
             </TableRow>
         </TableLayout>

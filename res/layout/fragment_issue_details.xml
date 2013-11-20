@@ -63,7 +63,8 @@
                 android:paddingTop="0dp"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
         </ScrollView>
     </RelativeLayout>
 

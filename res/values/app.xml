@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_version">1.0-alpha2</string>
     <string name="app_contrib_translators">Tosakun Meeting, LiangChih Chiang, Tomáš Pytlíček, Nico Majorana, Bert Claes, Fredrik Johansson, Jorge García, Tctovsli</string>
-
 </resources>

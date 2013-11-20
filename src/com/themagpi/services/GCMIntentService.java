@@ -24,7 +24,6 @@ import com.loopj.android.http.RequestParams;
 import com.themagpi.activities.IssueDetailsActivity;
 import com.themagpi.android.Config;
 import com.themagpi.android.R;
-import com.themagpi.android.R.drawable;
 import com.themagpi.api.Issue;
 import com.themagpi.api.IssuesFactory;
 import com.themagpi.fragments.IssueDetailsFragment;
