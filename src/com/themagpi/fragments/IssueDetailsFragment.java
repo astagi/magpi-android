@@ -1,31 +1,19 @@
 package com.themagpi.fragments;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import android.app.DownloadManager;
 import android.app.DownloadManager.Query;
-import android.app.ProgressDialog;
+import android.app.DownloadManager.Request;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.themagpi.android.Config;
 import com.themagpi.android.R;
-import com.themagpi.android.StatisticsInputStream;
 import com.themagpi.api.Issue;
 import com.themagpi.api.MagPiClient;
 import com.themagpi.interfaces.Refreshable;
@@ -53,77 +43,17 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     private Issue issue;
     private DownloadManager dm;
     long enqueue;
-    //BroadcastReceiver downloadReceiver;
-    private Handler updateUI = new Handler();
-    private volatile boolean isRunning;
-    private RetreiveFileTask task;
-    private ProgressDialog progressBar;
-
+    BroadcastReceiver downloadReceiver;
+	private Menu menu;
+    
     public void onCreate(Bundle si) {
         super.onCreate(si);
         this.setHasOptionsMenu(true);
-        
-        /*downloadReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
-                    long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
-                    Query query = new Query();
-                    query.setFilterById(enqueue);
-                    Cursor c = dm.query(query);
-                    if (c.moveToFirst()) {
-                        int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
-                        if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
-                        	//ON SUCCESS
-                        	Log.e("SUCCESSDOWNLOAD", "SUCCESSDOWNLOAD");
-                        }
-                    }
-                }
-            }
-        };
- 
-        getActivity().registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));*/
+        dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
     }
 
     public void downloadIssue() {
-    	if(!this.canDisplayPdf(this.getActivity())) {
-            Toast.makeText(getActivity(), "You need to install a PDF viewer first!", Toast.LENGTH_LONG).show();
-            return;
-        }
-            
-        File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MagPi/" + 
-                                issue.getId() + "/" + issue.getId() + ".pdf");
-        if(pdf.exists()) {
-            Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-            intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
-            startActivity(intentPdf);
-        } else {
-            progressBar = new ProgressDialog(this.getActivity());
-            progressBar.setCancelable(false);
-            progressBar.setMessage(getResources().getString(R.string.downloading) + " ... " + issue.getTitle());
-            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressBar.setProgress(0);
-            progressBar.setButton(getResources().getString(R.string.cancel), new ProgressDialog.OnClickListener() {
-    
-                @Override
-                public void onClick(DialogInterface dialog, int arg1) {
-                    dialog.cancel();
-                    isRunning = false;
-                }
-    
-            });
-            progressBar.setMax(100);
-            progressBar.show();
-
-            isRunning = true;
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(IssueDetailsFragment.this.getSherlockActivity());
-
-            task = new RetreiveFileTask(issue, prefs.getBoolean("pref_store_issue", true));
-            task.execute();
-            
-        }
-        /*if(!this.canDisplayPdf(getActivity())) {
+        if(!this.canDisplayPdf(getActivity())) {
             Toast.makeText(getActivity(), getActivity().getString(R.string.pdf_reader_required), Toast.LENGTH_LONG).show();
             return;
         }
@@ -131,156 +61,46 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         String file = issue.getId() + ".pdf";
         File pdf = new File (Config.ISSUE_FOLDER, file);
         
-        if(pdf.exists()) {
+        if(pdf.exists() && !isDownloading(issue.getPdfUrl())) {
             Intent intentPdf = new Intent(Intent.ACTION_VIEW);
             intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
             startActivity(intentPdf);
-        } else {
-        	dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        } else if (!isDownloading(issue.getPdfUrl())) {
+        	menu.findItem(R.id.menu_view).setVisible(false);
+        	menu.findItem(R.id.menu_cancel_download).setVisible(true);
             Request request = new Request(Uri.parse(issue.getPdfUrl()));
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
             request.setTitle("Downloading Issue " + issue.getId());
             request.setDestinationInExternalPublicDir("MagPi", file);
             enqueue = dm.enqueue(request);
-        }*/
+        }
     }
     
-    class RetreiveFileTask extends AsyncTask<Void, Void, Boolean> {
-
-        private Issue issue;
-        private boolean keep;
-
-        RetreiveFileTask(Issue issue, boolean keep) {
-            this.issue = issue;
-            this.keep = keep;
-        }
-
-        protected void onPostExecute(Boolean result) {
-            if(result != true)
-                Toast.makeText(getActivity(), "Error downloading Issue", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... arg0) {
-            return downloadFile(issue, keep);
-        }
-     }
-    
-    private boolean downloadFile(Issue issue, boolean keep) {
-        
-        boolean result = true;
-        
-        Log.e("URL to download", issue.getPdfUrl());
-        
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = null;
-        File file = null;
-        if(!keep) {
-            dir = new File (sdCard.getAbsolutePath() + "/MagPi/");
-            dir.mkdirs();
-            file = new File(dir, "tmp.pdf");
-        } else {
-            dir = new File (sdCard.getAbsolutePath() + "/MagPi/" + issue.getId());
-            dir.mkdirs();
-            file = new File(dir, issue.getId() + ".pdf");
-        }
-        
-        int actualRead = 0;
-        long fileSize = 0;
-
-        try {
-            
-            actualRead = 0;
-            fileSize = 0;
-
-            URL url = new URL(issue.getPdfUrl());
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    public void onResume() {
+    	super.onResume();        
+    	downloadReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                    Query query = new Query();
+                    query.setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL);
+                    Cursor c = dm.query(query);
+                    if (c.moveToFirst()) {
+                        int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_URI);
+                        String urlDownloaded = c.getString(columnIndex);
+                	    if ((issue.getPdfUrl()+"/").equals(urlDownloaded)) {
+                        	menu.findItem(R.id.menu_view).setVisible(true);
+                        	menu.findItem(R.id.menu_cancel_download).setVisible(false);
+                        } 
+                    }
+                    c.close();
+                }
+            }
+        };
  
-            String contentLen = urlConnection.getHeaderField("Content-Length");
-            
-            if(contentLen == null)
-                throw new IOException();
-                    
-            fileSize = Long.parseLong(contentLen);
-            
-            Log.e("File length", "" + fileSize);
-            
-            int percentage, oldPercentage = 0;
-    
-            InputStream inputStr = new BufferedInputStream(urlConnection.getInputStream());
-            StatisticsInputStream input = new StatisticsInputStream(inputStr);
-            FileOutputStream output = new FileOutputStream(file);
-    
-            byte data[] = new byte[1024];
-            int count = 0;
-            
-            while (isRunning && (count = input.read(data)) != -1) {
-                output.write(data);
-                actualRead += count;
-                percentage = (int)(((float)actualRead/fileSize)*100);
-                if(percentage != oldPercentage) {
-                    progressUpdate(percentage);
-                    oldPercentage = percentage;
-                }
-            }
-    
-            output.flush();
-            output.close();
-            input.close();
-            
-            if (actualRead == fileSize) {
-                if (file != null) {
-                    Intent intentPdf = new Intent(Intent.ACTION_VIEW);
-                    intentPdf.setDataAndType(Uri.fromFile(file), "application/pdf");
-                    startActivity(intentPdf);
-                }
-                Log.e("DOWNLOADSERVICE", "COMPLETE");
-            }
-            
-        } catch (IOException e) {
-            result = false;
-        } finally {
-            updateUI.post(new Runnable()
-            {
-                public void run() 
-                {
-                    progressDismiss();
-
-                }
-            });
-            if(actualRead != fileSize) {
-                Log.e("ROLLBACK", "ROLLBACK");
-                file.delete();
-            }
-        }
-        
-        return result;
-            
+        getActivity().registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
-    
-    private void progressDismiss() {
-        updateUI.post(new Runnable()
-        {
-            public void run() 
-            {
-                if(progressBar != null && progressBar.isShowing())
-                    progressBar.dismiss();
-            }
-        });
-    }
-    
-    private void progressUpdate(final int percentage) {
-        updateUI.post(new Runnable()
-        {
-            public void run() 
-            {
-                if(progressBar != null && progressBar.isShowing())
-                    progressBar.setProgress(percentage);
-            }
-        });
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -300,6 +120,9 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             case R.id.menu_view:
                 downloadIssue();
                 return true;
+            case R.id.menu_cancel_download:
+                cancelDownload();
+                return true;
             case R.id.menu_share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
@@ -313,7 +136,25 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         
     }
 
-    @Override
+    private void cancelDownload() {
+    	Query query = new Query();
+		query.setFilterByStatus(
+			    DownloadManager.STATUS_PAUSED|
+			    DownloadManager.STATUS_PENDING|
+			    DownloadManager.STATUS_RUNNING);
+		Cursor cur = dm.query(query);
+		int col = cur.getColumnIndex(DownloadManager.COLUMN_URI);
+		int colId = cur.getColumnIndex(DownloadManager.COLUMN_ID);
+		for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+			if(issue.getPdfUrl().equals(cur.getString(col)))
+				dm.remove(cur.getLong(colId));
+		}
+		cur.close();
+    	menu.findItem(R.id.menu_view).setVisible(true);
+    	menu.findItem(R.id.menu_cancel_download).setVisible(false);
+	}
+
+	@Override
     public void onStart() {
         super.onStart();
 
@@ -322,6 +163,26 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             issue = (Issue) args.getParcelable("IssueObject");
             updateIssueView(issue);
         }
+    }
+    
+    private boolean isDownloading(String path) {
+    	Log.e("DOWNLOADING", "DO");
+		boolean isDownloading = false;
+		DownloadManager.Query query = new DownloadManager.Query();
+		query.setFilterByStatus(
+		    DownloadManager.STATUS_PAUSED|
+		    DownloadManager.STATUS_PENDING|
+		    DownloadManager.STATUS_RUNNING);
+		Cursor cur = dm.query(query);
+		int col = cur.getColumnIndex(DownloadManager.COLUMN_URI);
+		for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+			isDownloading = path.equals(cur.getString(col));
+			Log.e("DOWNLOADING", "-" + cur.getString(col));
+			if(isDownloading)
+				break;
+		}
+		cur.close();
+		return isDownloading;
     }
 
     public void updateIssueView(final Issue issue) {
@@ -371,11 +232,11 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     public void onPause() {
         super.onPause(); 
         client.close(getActivity());
-        /*try {
+        try {
         	getActivity().unregisterReceiver(downloadReceiver);
         } catch (IllegalArgumentException ex) {
         	ex.printStackTrace();
-        }*/
+        }
     }
 
     @Override
@@ -393,6 +254,18 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         } else {
             return false;
         }
+    }
+    
+    public void onPrepareOptionsMenu(Menu menu) {
+    	this.menu = menu;
+        Bundle args = getArguments();
+        if (args != null) {
+            if(isDownloading(issue.getPdfUrl())) {
+            	menu.findItem(R.id.menu_view).setVisible(false);
+            	menu.findItem(R.id.menu_cancel_download).setVisible(true);
+            }
+        }
+        return;
     }
 
 }

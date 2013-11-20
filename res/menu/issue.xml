@@ -9,7 +9,7 @@
     
     <item
         android:id="@+id/menu_share"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_share"
         android:icon="@android:drawable/ic_menu_share"/>
     
@@ -18,5 +18,12 @@
         android:showAsAction="always"
         android:title="@string/menu_view"
         android:icon="@android:drawable/ic_menu_view"/>
+    
+    <item
+        android:id="@+id/menu_cancel_download"
+        android:visible="false"
+        android:showAsAction="always"
+        android:title=""
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
 
 </menu>
