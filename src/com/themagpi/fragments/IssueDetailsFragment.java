@@ -40,7 +40,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     
     public void onCreate(Bundle si) {
         super.onCreate(si);
-        this.setHasOptionsMenu(true);
         dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
     }
 
@@ -97,7 +96,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-
+    	setHasOptionsMenu(true);
         if (savedInstanceState != null) {
             // mCurrentPosition = savedInstanceState.getInt(ARG_ISSUE);
         }
@@ -224,6 +223,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     	this.menu = menu;
         Bundle args = getArguments();
         if (args != null) {
+            issue = (Issue) args.getParcelable("IssueObject");
             if(isDownloading(issue.getPdfUrl())) {
             	menu.findItem(R.id.menu_view).setVisible(false);
             	menu.findItem(R.id.menu_cancel_download).setVisible(true);
