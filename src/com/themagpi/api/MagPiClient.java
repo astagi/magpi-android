@@ -163,27 +163,66 @@ public class MagPiClient {
         });
     }
     
-    public void getNews(final OnNewsReceivedListener newsListener) {
+    public void getNews(final Context context, final OnNewsReceivedListener newsListener) {
         client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(final String response) {
+	           	AsynCache.getInstance().write(context, "getNews", response.toString(), new AsynCache.WriteResponseHandler() {
+	
+						@Override
+						public void onSuccess() {
+							sendSuccessResponse(response);
+						}
+	
+						@Override
+						public void onFailure(Throwable t) {
+							sendSuccessResponse(response);
+						}
+	
+					});
+            }
+            
+            @Override
+            public void onFailure(Throwable e, String response) {
+            	tryLoadingFromCache(response);
+            }
+            
+        	
+        	private void sendSuccessResponse(String response) {
             	try {
+                	Log.e("RESPONSE", response.toString());
 	                RSSParser parser = new RSSParser(new RSSConfig());
 	                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
 	                newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
             	} catch (Exception ex) {
             		ex.printStackTrace();
             	}
-            }
+        	}
             
-            @Override
-            public void onFailure(Throwable e, String response) {
+            private void sendFailureResponse(String response) {
             	try {
                 	newsListener.onError(0);
             	} catch (Exception ex) {
             		ex.printStackTrace();
             	}
             }
+            
+        	private void tryLoadingFromCache(final String response) {
+        		AsynCache.getInstance().read(context, "getNews", new AsynCache.ReadResponseHandler() {
+
+		            @Override
+		            public void onSuccess(byte[] data) {
+		            	sendSuccessResponse(new String(data));
+		            }
+
+		            @Override
+		            public void onFailure(Throwable t) {
+		            	sendFailureResponse(response);
+		            	t.printStackTrace();
+		            }
+
+		        });
+        	}
         });
     }
     

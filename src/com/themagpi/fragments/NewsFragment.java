@@ -69,7 +69,7 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
     @Override
     public void refresh() {
         ((RefreshableContainer) getActivity()).startRefreshIndicator();
-        client.getNews(new MagPiClient.OnNewsReceivedListener() {
+        client.getNews(getActivity(), new MagPiClient.OnNewsReceivedListener() {
             public void onReceived(ArrayList<News> news) {         
                 NewsFragment.this.news = news;
                 getListView().setAdapter(createNewsAdapter(news));
