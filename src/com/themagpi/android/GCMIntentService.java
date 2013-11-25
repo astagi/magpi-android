@@ -42,14 +42,20 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onMessage(Context ctx, Intent intent) {
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		Log.e("GCM", "MESSAGE ARRIVED " + intent.getExtras());
+		Log.e("LOG", "LAST ISSUE FETCHED " + prefs.getString("last_issue", ""));
 
 		if (!prefs.getBoolean("pref_notif_newissue", true))
 			return;
 
 		Issue issue = IssuesFactory.buildFromIntent(intent);
 
-		if (prefs.getString("last_issue", "").equalsIgnoreCase(issue.getId()))
+		if (prefs.getString("last_issue", "").equalsIgnoreCase(issue.getId())) {
 			return;
+		} else {
+			prefs.edit().putString("last_issue", issue.getId()).commit();
+		}
 
 		InputStream is = null;
 		byte[] bytes = null;

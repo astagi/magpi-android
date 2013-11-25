@@ -19,9 +19,9 @@ public class IssuesFactory {
     public static Issue buildFromJsonObject(JSONObject item) {
         try {
             return (new Issue.Builder())
-                    .id("" + item.getInt("title"))
+                    .id(item.getString("title"))
                     .date(capitalizeString(item.getString("date")))
-                    .title("Issue " + item.getInt("title"))
+                    .title("Issue " + item.getString("title"))
                     .pdfUrl(item.getString("pdf"))
                     .imageUrl(item.getString("cover"))
                     .editorial(item.getString("editorial"))
