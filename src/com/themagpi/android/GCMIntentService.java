@@ -2,14 +2,11 @@ package com.themagpi.android;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Notification;
@@ -24,8 +21,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.themagpi.activities.IssueDetailsActivity;
 import com.themagpi.api.Issue;
 import com.themagpi.api.IssuesFactory;
@@ -46,8 +41,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onMessage(Context ctx, Intent intent) {
 
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (!prefs.getBoolean("pref_notif_newissue", true))
 			return;
@@ -79,7 +73,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 		Notification noti = new NotificationCompat.Builder(this)
-				.setContentTitle("New issue!")
+				.setContentTitle(getString(R.string.notification_new_issue))
 				.setContentText(issue.getTitle() + " - " + issue.getDate())
 				.setContentIntent(contentIntent)
 				.setSmallIcon(R.drawable.new_issue)
@@ -89,7 +83,20 @@ public class GCMIntentService extends GCMBaseIntentService {
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		notificationManager.notify(0, noti);
-
+		notifyOnPebble(issue);
+	}
+	
+	private void notifyOnPebble(Issue issue) {
+		final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
+        final Map data = new HashMap();
+        data.put("title", "The MagPi " + issue.getTitle());
+        data.put("body", issue.getEditorial());
+        final JSONObject jsonData = new JSONObject(data);
+        final String notificationData = new JSONArray().put(jsonData).toString();
+        i.putExtra("messageType", "PEBBLE_ALERT");
+        i.putExtra("sender", "The MagPi");
+        i.putExtra("notificationData", notificationData);
+        sendBroadcast(i);
 	}
 
 	@Override

@@ -86,7 +86,7 @@ public class IssuesFactory {
         return (new Issue.Builder())
                 .id(item.getStringExtra("id"))
                 .date(item.getStringExtra("date"))
-                .title(item.getStringExtra("title"))
+                .title("Issue " + item.getStringExtra("title"))
                 .pdfUrl(item.getStringExtra("link"))
                 .imageUrl(item.getStringExtra("image"))
                 .editorial(item.getStringExtra("editorial"))
