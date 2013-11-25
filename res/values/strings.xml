@@ -17,12 +17,10 @@
     <string name="settings_issues_desc">Notify when a new Issue appears</string>
     <string name="settings_news">News</string>
     <string name="settings_news_desc">Notify when new news appear</string>
-    <string name="settings_storage">Storage</string>
-    <string name="settings_keep">Keep Issues</string>
-    <string name="settings_keep_desc">Store Issues on your device</string>
     <string name="settings_about">About</string>
     <string name="settings_more">More</string>
     <string name="settings_visit">The MagPi website</string>
+    <string name="buy_visit">Help support The MagPi by buying printed copies</string>
     <string name="about">About</string>
     <string name="about_app_longname">The MagPi for Android</string>
     <string name="about_andrea">Developed by Andrea Stagi</string>

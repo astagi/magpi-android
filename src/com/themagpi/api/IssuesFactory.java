@@ -1,10 +1,7 @@
 package com.themagpi.api;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,35 +82,14 @@ public class IssuesFactory {
                 .build();
     }
     
-    public static Issue buildFromIntent(Intent item) {
-        
-        Pattern ISSUE_PATTERN = Pattern.compile("The-MagPi-(issue-[0-9]+)-en");
-        
-        Matcher mIssue = ISSUE_PATTERN.matcher(item.getStringExtra("title"));
-        String issueTitle = "";
-        while (mIssue.find()) {
-            issueTitle = mIssue.group(1);
-            issueTitle = issueTitle.replace("-", " ");
-            Log.e("ISSUETITLEEE", issueTitle);
-        }
-        
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = formatter.parse(item.getStringExtra("pubDate"));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        SimpleDateFormat formatter2 = new SimpleDateFormat("MMMM yyyy");
-        String pubDateText = formatter2.format(date);
-        
+    public static Issue buildFromIntent(Intent item) {    
         return (new Issue.Builder())
-                .id(issueTitle.replace(" ", "_"))
-                .date(capitalizeString(pubDateText))
-                .title(capitalizeString(issueTitle))
-                .pdfUrl(item.getStringExtra("link") + "/pdf")
+                .id(item.getStringExtra("id"))
+                .date(item.getStringExtra("date"))
+                .title(item.getStringExtra("title"))
+                .pdfUrl(item.getStringExtra("link"))
                 .imageUrl(item.getStringExtra("image"))
+                .editorial(item.getStringExtra("editorial"))
                 .build();
     }
     

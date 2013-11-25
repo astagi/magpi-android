@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,7 @@ import com.themagpi.android.CompatActionBarNavHandler;
 import com.themagpi.android.CompatActionBarNavListener;
 import com.themagpi.android.Config;
 import com.themagpi.android.R;
+import com.themagpi.api.MagPiClient;
 import com.themagpi.fragments.IssuesFragment;
 import com.themagpi.fragments.NewsFragment;
 import com.themagpi.interfaces.Refreshable;
@@ -89,20 +91,13 @@ public class MagpiMainActivity extends SherlockFragmentActivity
         
         GCMRegistrar.checkDevice(this);
         GCMRegistrar.checkManifest(this);
-        final String regId = GCMRegistrar.getRegistrationId(this);
-        if (regId.equals("")) {
+        final String idGcm = GCMRegistrar.getRegistrationId(this);
+        if (TextUtils.isEmpty(idGcm)) {
+        	Log.e("GCM", "NOT registered");
             GCMRegistrar.register(MagpiMainActivity.this, Config.SENDER_ID);
         } else {
-            RequestParams params = new RequestParams();
-            params.put("id", regId);
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.post(Config.SERVICE_URL + "/register", params, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(JSONArray timeline) {
-
-                }
-            });
-            Log.e("ERRORREGISTERING", "Already registered");
+        	Log.e("GCM", "Already registered" + idGcm);
+        	new MagPiClient().registerDevice(this, idGcm);
         }
 
         mOnNavigationListener = new OnNavigationListener() {

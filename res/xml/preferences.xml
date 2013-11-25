@@ -8,20 +8,11 @@
             android:key="pref_notif_newissue"
             android:summary="@string/settings_issues_desc"
             android:title="@string/settings_issues" />
-        <!--  <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_notif_newnews"
-                    android:summary="@string/settings_news_desc"
-                    android:title="@string/settings_news" /> -->
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:key="storage_settings"
-        android:title="@string/settings_storage" >
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_store_issue"
-            android:summary="@string/settings_keep_desc"
-            android:title="@string/settings_keep" />
+            android:defaultValue="false"
+            android:key="pref_notif_newnews"
+            android:summary="@string/settings_news_desc"
+            android:title="@string/settings_news" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="about_settings"
@@ -31,8 +22,13 @@
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.themagpi.com" />
         </Preference>
+        <Preference android:title="@string/buy_visit" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.themagpi.com/buy" />
+        </Preference>
         <Preference android:title="@string/settings_about" >
-            <intent android:action="com.themagpi.android.AboutActivity"/>
+            <intent android:action="com.themagpi.android.AboutActivity" />
         </Preference>
     </PreferenceCategory>
 

@@ -1,9 +1,15 @@
 package com.themagpi.api;
 
 import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Locale;
 
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.as.asyncache.AsynCache;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcsoxford.rss.RSSConfig;
@@ -16,6 +22,8 @@ import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.themagpi.android.Config;
+import com.themagpi.android.Utils;
 
 /*
  * NEW API
@@ -44,6 +52,44 @@ public class MagPiClient {
         public abstract void onReceived(byte[] fileData);
         public abstract void onError(int error);
     }
+    
+    public void registerDevice(Context context, String idGcm) {
+		try {
+			JSONObject jsonDevice = new JSONObject();
+			jsonDevice.put("id", Utils.getDeviceId(context));
+			jsonDevice.put("id_gcm", idGcm);
+			jsonDevice.put("language", Locale.getDefault().getLanguage());
+			jsonDevice.put("os", "Android");
+			StringEntity entity;
+			entity = createUTF8StringEntity(jsonDevice.toString());
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.post(context, Config.SERVICE_URL + "/register", null, entity,
+					"application/json", new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(JSONArray timeline) {
+
+						}
+					});
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+	protected static StringEntity createUTF8StringEntity(String string) {
+		StringEntity entity;
+		try {
+			entity = new StringEntity(string, "UTF-8");
+			entity.setContentType("application/json;charset=UTF-8");
+			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+					"application/json;charset=UTF-8"));
+			return entity;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
     
     public void getIssues(final Context context, final OnIssuesReceivedListener issueListener) {
         client.get("http://www.themagpi.com/mps_api/mps-api-v1.php?mode=list_issues", new JsonHttpResponseHandler() {
