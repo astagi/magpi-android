@@ -56,12 +56,6 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
         ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
     
-    public void onPause() {
-        super.onPause();
-        if(getActivity() != null && client != null)
-            client.close(getActivity());
-    }
-    
     public ListView getListView() {
     	return (ListView) getActivity().findViewById(R.id.news_list_view);
     }

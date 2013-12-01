@@ -2,14 +2,16 @@ package com.themagpi.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.as.asyncache.AsynCache;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mcsoxford.rss.RSSConfig;
@@ -17,6 +19,7 @@ import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSParser;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -36,7 +39,7 @@ import com.themagpi.android.Utils;
 
 public class MagPiClient {
     
-    private AsyncHttpClient client = new AsyncHttpClient();
+    private final static String DATE_FORMAT = "yyyy-M-d HH:mm:ss Z";
 
     public static interface OnIssuesReceivedListener {
         public abstract void onReceived(ArrayList<Issue> issues);
@@ -53,22 +56,37 @@ public class MagPiClient {
         public abstract void onError(int error);
     }
     
-    public void registerDevice(Context context, String idGcm) {
+    public void registerDevice(final Context context, String idGcm) {
 		try {
+			Log.e("START", "REGISTERING");
 			JSONObject jsonDevice = new JSONObject();
 			jsonDevice.put("id", Utils.getDeviceId(context));
 			jsonDevice.put("id_gcm", idGcm);
 			jsonDevice.put("language", Locale.getDefault().getLanguage());
-			jsonDevice.put("os", "Android");
+			jsonDevice.put("os", "Android"); 
 			StringEntity entity;
 			entity = createUTF8StringEntity(jsonDevice.toString());
 			AsyncHttpClient client = new AsyncHttpClient();
-			client.post(context, Config.SERVICE_URL + "/register", null, entity,
-					"application/json", new JsonHttpResponseHandler() {
+			setAuth(context, client, "POST", Config.SERVICE_URL + "/register", jsonDevice.toString());
+			client.post(context, Config.SERVICE_URL + "/register", null,
+                    entity, "application/json", new JsonHttpResponseHandler() {
 						@Override
-						public void onSuccess(JSONArray timeline) {
-
+						public void onSuccess(JSONObject response) { 	
+			            	Log.e("SUCC", "REGISTERING" + response);
+					    	SharedPreferences prefs = context.getSharedPreferences("MAGPI_REGISTRATION", Context.MODE_PRIVATE);
+					    	prefs.edit().putLong("TIME_LAST_REG", Calendar.getInstance().getTimeInMillis()).commit();
 						}
+						 
+			            @Override
+			            public void onFailure(Throwable e, JSONObject response) {
+			            	Log.e("FAIL", "REGISTERING" + response);
+			            	
+			            }
+			            
+			            @Override
+			            public void onFailure(Throwable e, String response) {
+			            	Log.e("FAIL", "REGISTERING" + response);
+			            }
 					});
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -81,8 +99,7 @@ public class MagPiClient {
 		try {
 			entity = new StringEntity(string, "UTF-8");
 			entity.setContentType("application/json;charset=UTF-8");
-			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
-					"application/json;charset=UTF-8"));
+			entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
 			return entity;
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -92,11 +109,11 @@ public class MagPiClient {
 	}
     
     public void getIssues(final Context context, final OnIssuesReceivedListener issueListener) {
+    	AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://www.themagpi.com/mps_api/mps-api-v1.php?mode=list_issues", new JsonHttpResponseHandler() {
         	
         	private void sendSuccessResponse(JSONObject response) {
             	try {
-                	Log.e("RESPONSE", response.toString());
                 	issueListener.onReceived(IssuesFactory.buildFromJSONFeed(response));
             	} catch (Exception ex) {
             		ex.printStackTrace();
@@ -164,6 +181,7 @@ public class MagPiClient {
     }
     
     public void getNews(final Context context, final OnNewsReceivedListener newsListener) {
+    	AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(final String response) {
@@ -190,7 +208,6 @@ public class MagPiClient {
         	
         	private void sendSuccessResponse(String response) {
             	try {
-                	Log.e("RESPONSE", response.toString());
 	                RSSParser parser = new RSSParser(new RSSConfig());
 	                RSSFeed feed = parser.parse(new ByteArrayInputStream(response.getBytes()));
 	                newsListener.onReceived(NewsFactory.buildFromRSSFeed(feed));
@@ -226,7 +243,19 @@ public class MagPiClient {
         });
     }
     
-    public void close(Context ctx) {
-        client.cancelRequests(ctx, true);
+    protected void setAuth(Context context, AsyncHttpClient client, String verb, String url, String contentToEncode) {
+        String currentDate = new SimpleDateFormat(DATE_FORMAT).format(new Date());
+
+        String contentMd5 = SecurityUtils.md5(contentToEncode);
+        String toSign = verb + "\n" + contentMd5 + "\n" + currentDate + "\n" + url;
+
+        Log.e("STRINGTOHASH", "-" + toSign);
+
+        String hmac = SecurityUtils.Hmac(Config.APP_SECRET, toSign);
+        client.addHeader("Datetime", currentDate);
+        client.addHeader("Content-Md5", contentMd5);
+        client.addHeader("Hmac", SecurityUtils.md5(Config.USER) + ":" + hmac);
+        Log.e("HMAC", SecurityUtils.md5(Config.USER) + ":" + hmac);
     }
+    
 }

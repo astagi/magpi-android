@@ -100,7 +100,6 @@ public class IssuesFragment extends SherlockFragment implements Refreshable {
     public void onPause() {
     	super.onPause();
     	Log.e("PAUSE", "PAUSE");
-    	client.close(getActivity());
     	((RefreshableContainer) getActivity()).stopRefreshIndicator();
     }
 }

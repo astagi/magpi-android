@@ -26,13 +26,11 @@ import com.actionbarsherlock.view.Menu;
 import com.themagpi.android.Config;
 import com.themagpi.android.R;
 import com.themagpi.api.Issue;
-import com.themagpi.api.MagPiClient;
 import com.themagpi.interfaces.Refreshable;
 import com.themagpi.interfaces.RefreshableContainer;
 
 public class IssueDetailsFragment extends SherlockFragment implements Refreshable {
     public final static String ARG_ISSUE = "IssueObject";
-    private MagPiClient client = new MagPiClient();
     private Issue issue;
     private DownloadManager dm;
     BroadcastReceiver downloadReceiver;
@@ -194,7 +192,6 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
     
     public void onPause() {
         super.onPause(); 
-        client.close(getActivity());
         try {
         	getActivity().unregisterReceiver(downloadReceiver);
         } catch (IllegalArgumentException ex) {

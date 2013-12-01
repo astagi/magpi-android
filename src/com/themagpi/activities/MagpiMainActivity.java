@@ -1,12 +1,12 @@
 package com.themagpi.activities;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
-import org.json.JSONArray;
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -21,9 +21,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.google.android.gcm.GCMRegistrar;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.themagpi.adapters.PagerAdapter;
 import com.themagpi.android.CompatActionBarNavHandler;
 import com.themagpi.android.CompatActionBarNavListener;
@@ -97,8 +94,9 @@ public class MagpiMainActivity extends SherlockFragmentActivity
             GCMRegistrar.register(MagpiMainActivity.this, Config.SENDER_ID);
         } else {
         	Log.e("GCM", "Already registered" + idGcm);
-        	new MagPiClient().registerDevice(this, idGcm);
-        }
+        	if(isTimeToRegister())
+        		new MagPiClient().registerDevice(this, idGcm);
+        } 
 
         mOnNavigationListener = new OnNavigationListener() {
             @Override
@@ -108,8 +106,7 @@ public class MagpiMainActivity extends SherlockFragmentActivity
         };
         
         this.intialiseViewPager();
-
-            
+ 
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
         
         SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dropdown_array,
@@ -127,7 +124,18 @@ public class MagpiMainActivity extends SherlockFragmentActivity
         
     }
 
-    @Override
+    private boolean isTimeToRegister() {
+    	SharedPreferences prefs = this.getSharedPreferences("MAGPI_REGISTRATION", Context.MODE_PRIVATE);
+		long timeLastRegistration = prefs.getLong("TIME_LAST_REG", 0L);
+		long currentTime = Calendar.getInstance().getTimeInMillis();
+		Log.e("NOW", ""+ currentTime);
+		Log.e("LAST",""+timeLastRegistration);
+		if(currentTime > timeLastRegistration + 86400000L)
+			return true;
+		return false;
+	}
+
+	@Override
     public void onCategorySelected(int catIndex) {
         this.mViewPager.setCurrentItem(catIndex);
     }
