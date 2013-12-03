@@ -15,6 +15,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -58,7 +59,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 		}
 
 		InputStream is = null;
-		byte[] bytes = null;
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+		byte[] notificationImgData = stream.toByteArray();
 
 		try {
 			URL url = new URL(issue.getCoverUrl());
@@ -68,7 +72,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 			while ((buff = is.read()) != -1) {
 				outStream.write(buff);
 			}
-			bytes = outStream.toByteArray();
+			notificationImgData = outStream.toByteArray();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,8 +87,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				.setContentText(issue.getTitle() + " - " + issue.getDate())
 				.setContentIntent(contentIntent)
 				.setSmallIcon(R.drawable.new_issue)
-				.setLargeIcon(
-						BitmapFactory.decodeByteArray(bytes, 0, bytes.length))
+				.setLargeIcon(BitmapFactory.decodeByteArray(notificationImgData, 0, notificationImgData.length))
 				.build();
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
