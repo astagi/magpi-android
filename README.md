@@ -15,17 +15,6 @@ Dependencies
 - GCM for Android (http://developer.android.com/google/gcm/gs.html#libs)
 - Universal Image Loader for Android (https://github.com/nostra13/Android-Universal-Image-Loader)
 
-Add configuration file
-----------------------
-First thing you've to do is adding a Config.java file under src/com/themagpi/android
-
-	public class Config {
-		public static final String SENDER_ID = "17515127172";
-		public static final String SERVICE_URL = "http://yourserviceurl.com";
-	}
-
-leave SENDER_ID and SERVICE_URL equal to "" if you don't need to use push notifications
-
 How to build and install
 ------------------------
 Requires:
