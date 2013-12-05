@@ -86,17 +86,21 @@ public class MagpiMainActivity extends SherlockFragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magpi_main);
         
-        GCMRegistrar.checkDevice(this);
-        GCMRegistrar.checkManifest(this);
-        final String idGcm = GCMRegistrar.getRegistrationId(this);
-        if (TextUtils.isEmpty(idGcm)) {
-        	Log.e("GCM", "NOT registered");
-            GCMRegistrar.register(MagpiMainActivity.this, Config.SENDER_ID);
-        } else {
-        	Log.e("GCM", "Already registered" + idGcm);
-        	if(isTimeToRegister())
-        		new MagPiClient().registerDevice(this, idGcm);
-        } 
+        try {
+	        GCMRegistrar.checkDevice(this);
+	        GCMRegistrar.checkManifest(this);
+	        final String idGcm = GCMRegistrar.getRegistrationId(this);
+	        if (TextUtils.isEmpty(idGcm)) {
+	        	Log.e("GCM", "NOT registered");
+	            GCMRegistrar.register(MagpiMainActivity.this, Config.SENDER_ID);
+	        } else {
+	        	Log.e("GCM", "Already registered" + idGcm);
+	        	if(isTimeToRegister())
+	        		new MagPiClient().registerDevice(this, idGcm);
+	        }
+        } catch (UnsupportedOperationException ex) {
+        	Log.e("GCM", "Google Cloud Messaging not supported - please install Google Apps package!");
+        }
 
         mOnNavigationListener = new OnNavigationListener() {
             @Override
