@@ -12,11 +12,11 @@
     <string name="menu_share">Dela</string>
     <string name="menu_refresh">Uppdatera</string>
     <string name="menu_view">Vy</string>
-    <string name="settings_notifications">Notifikationer</string>
+    <string name="settings_notifications">Notifieringar</string>
     <string name="settings_issues">Nummer</string>
-    <string name="settings_issues_desc">Medala mig när ett nytt nummer finns tillgängligt</string>
+    <string name="settings_issues_desc">Meddela mig när ett nytt nummer finns tillgängligt</string>
     <string name="settings_news">Nyheter</string>
-    <string name="settings_news_desc">Medla mig när en nyhet inkommit</string>
+    <string name="settings_news_desc">Meddela mig när en nyhet inkommit</string>
     <string name="settings_storage">Utrymme</string>
     <string name="settings_keep">Behåll nummer</string>
     <string name="settings_keep_desc">Behåll nummer på din enhet</string>
@@ -27,7 +27,7 @@
     <string name="about_app_longname">The MagPi för Android</string>
     <string name="about_andrea">Utvecklad av Andrea Stagi</string>
     <string name="about_marta">Grafik av Marta Calistri</string>
-    <string name="about_open">Det här programmet är en produkt byggt med öppen källkod och bygger på följande projekt med öppen källkod</string>
+    <string name="about_open">Det här programmet är byggt med öppen källkod och bygger på följande projekt</string>
     <string name="about_copyright">Copyright © 2013 The MagPi Limited. All kod är släppt under MIT licensen</string>
 
 </resources>
