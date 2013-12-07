@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">Pobieranie</string>
+    <string name="menu_issues">Numery</string>
+    <string name="menu_news">Aktualności</string>
+    <string name="cancel">Anuluj</string>
+    <string name="share_news">Udostępnij aktualność</string>
+    <string name="share_issue">Udostępnij numer</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_share">Udostępnij</string>
+    <string name="menu_refresh">Odśwież</string>
+    <string name="menu_view">Zobacz</string>
+    <string name="settings_notifications">Powiadomienia</string>
+    <string name="settings_issues">Numery</string>
+    <string name="settings_issues_desc">Powiadamiaj, gdy ukaże się nowy numer</string>
+    <string name="settings_news">Aktualności</string>
+    <string name="settings_news_desc">Powiadamiaj, gdy pojawi się nowa aktualność</string>
+    <string name="settings_about">O programie</string>
+    <string name="settings_more">Więcej</string>
+    <string name="settings_visit">Strona www The MagPi</string>
+    <string name="buy_visit">Kup egzemplarz papierowy</string>
+    <string name="about">O programie</string>
+    <string name="about_app_longname">Aplikacja The MagPi dla Androida</string>
+    <string name="about_andrea">Program: Andrea Stagi</string>
+    <string name="about_marta">Grafika: Marta Calistri</string>
+    <string name="about_open">Ta aplikacja jest oprogramowaniem o otwartym kodzie źródłowym. Oparta jest na następujących projektach open source:</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Cały kod aplikacji dostępny jest na warunkach licencji MIT.</string>
+	<string name="pdf_reader_required">Musisz najpierw zainstalować czytnik plików PDF!</string>
+	<string name="share_text">Właśnie przeczytałem %1$s numer @TheMagP1 korzystając z ich aplikacji dla @Android. Przeczytaj go dziś tutaj: %2$s</string>
+	<string name="download_text">Pobieranie numeru</string>
+	<string name="menu_cancel">Anuluj pobieranie</string>
+	<string name="connection_error">Błąd połączenia</string>
+	<string name="notification_new_issue">Dostępny jest nowy numer!</string>
+</resources>
