@@ -17,17 +17,20 @@
     <string name="settings_issues_desc">Notifica si hay nuevos temas disponibles</string>
     <string name="settings_news">Noticias</string>
     <string name="settings_news_desc">Notifica si hay nuevas noticias disponibles</string>
-    <string name="settings_storage">Almacenamiento</string>
-    <string name="settings_keep">Mantener los temas</string>
-    <string name="settings_keep_desc">Almacenar los temas en el dispositivo</string>
     <string name="settings_about">Acerca de</string>
     <string name="settings_more">Más</string>
     <string name="settings_visit">Sitio web de The MagPi</string>
+    <string name="buy_visit">Comprar copias impresas</string>
     <string name="about">Acerca de</string>
     <string name="about_app_longname">The MagPi para Android</string>
     <string name="about_andrea">Desarrollado por Andrea Stagi</string>
     <string name="about_marta">Iconos y gráficos por Marta Calistri</string>
     <string name="about_open">Esta app es un producto open source, construido basándose en los siguientes proyectos open source</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Todo el código se encuentra bajo licencia del MIT.</string>
- 
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Todo el código se encuentra bajo licencia MIT.</string>
+        <string name="pdf_reader_required">Primero debes instalar un lector PDF!</string>
+        <string name="share_text">Acabo de leer el tema %1$s de @TheMagP1 usando su app para @Android. Léelo hoy aquí - %2$s</string>
+        <string name="download_text">Descargando tema</string>
+        <string name="menu_cancel">Cancelar descarga</string>
+        <string name="connection_error">Error de conexión</string>
+        <string name="notification_new_issue">Nuevo tema!</string>
 </resources>
