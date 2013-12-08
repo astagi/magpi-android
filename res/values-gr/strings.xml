@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Το MagPi</string>
+    <string name="downloading">Λήψη</string>
+    <string name="menu_issues">Τεύχη</string>
+    <string name="menu_news">Νέα</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="share_news">Μοιραστείτε Νέα</string>
+    <string name="share_issue">Μοιραστείτε Τεύχος</string>
+    <string name="menu_settings">Ρυθμίσεις</string>
+    <string name="menu_share">Μοιραστείτε</string>
+    <string name="menu_refresh">Ανανέωση</string>
+    <string name="menu_view">Δείτε</string>
+    <string name="settings_notifications">Ειδοποιήσεις</string>
+    <string name="settings_issues">Τεύχη</string>
+    <string name="settings_issues_desc">Ειδοποίηση για εμφάνιση καινούριου τεύχους</string>
+    <string name="settings_news">Νέα</string>
+    <string name="settings_news_desc">Ειδοποίηση για εμφάνιση καινούριων νέων</string>
+    <string name="settings_about">Περί</string>
+    <string name="settings_more">Περισσότερα</string>
+    <string name="settings_visit">Ο ιστότοπος MagPi</string>
+    <string name="buy_visit">Αγοράστε έντυπα τεύχη</string>
+    <string name="about">Περί</string>
+    <string name="about_app_longname">Το MagPi για Android</string>
+    <string name="about_andrea">Ανάπτυξη Andrea Stagi</string>
+    <string name="about_marta">Γραφικά Marta Calistri</string>
+    <string name="about_open">Η παρούσα εφαρμογή είναι ανοικτού κώδικα, βασισμένη στα ακόλουθα προγράμματα ανοικτού κώδικα</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Ολος ο κώδικας υπάγεται στην άδεια MIT.</string>
+	<string name="pdf_reader_required">Χρειάζεται να εγκαταστήσετε ένα PDF αναγνώστη πρώτα!</string>
+	<string name="share_text">Μόλις διάβασα το τεύχος %1$s από το @TheMagP1 χρησιμοποιώντας την @Android εφαρμογή του. Διαβάστε το εδώ σήμερα - %2$s</string>
+	<string name="download_text">Λήψη τεύχους</string>
+	<string name="menu_cancel">Ακύρωση λήψης</string>
+	<string name="connection_error">Σφάλμα σύνδεσης</string>
+	<string name="notification_new_issue">Νέο τεύχος!</string>
+</resources>
