@@ -32,5 +32,5 @@
         <string name="download_text">Numéro en téléchargement</string>
         <string name="menu_cancel">Annuler le téléchargement</string>
         <string name="connection_error">Erreur de connexion</string>
-        <string name="notification_new_issue">Nouveau numéro!</string>
+        <string name="notification_new_issue">Nouveau numéro !</string>
 </resources>
