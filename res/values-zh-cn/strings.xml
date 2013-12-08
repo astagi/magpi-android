@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">下载</string>
+    <string name="menu_issues">期刊</string>
+    <string name="menu_news">新闻</string>
+    <string name="cancel">取消</string>
+    <string name="share_news">分享新闻</string>
+    <string name="share_issue">分享期刊</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_view">视图</string>
+    <string name="settings_notifications">通知</string>
+    <string name="settings_issues">期刊</string>
+    <string name="settings_issues_desc">当有新期刊时通知</string>
+    <string name="settings_news">新闻</string>
+    <string name="settings_news_desc">当有新闻时通知</string>
+    <string name="settings_about">关于</string>
+    <string name="settings_more">更多</string>
+    <string name="settings_visit">The MagPi网站</string>
+    <string name="buy_visit">购买印刷版</string>
+    <string name="about">关于</string>
+    <string name="about_app_longname">Android版MagPi</string>
+    <string name="about_andrea">开发: Andrea Stagi</string>
+    <string name="about_marta">美术: Marta Calistri</string>
+    <string name="about_open">本app是开源产品，基于以下开源项目开发</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. 所有代码使用MIT证书发布。</string>
+	<string name="pdf_reader_required">请先安装PDF阅读器!</string>
+	<string name="share_text">我刚用@TheMagP1的@Android app阅读了的第%1$s期The MagPi。点击这里阅读 - %2$s</string>
+	<string name="download_text">期刊下载中</string>
+	<string name="menu_cancel">取消下载</string>
+	<string name="connection_error">连接错误</string>
+	<string name="notification_new_issue">新的一期!</string>
+</resources>
