@@ -2,32 +2,36 @@
 <resources>
 
     <string name="app_name">The MagPi</string>
-    <string name="downloading">Aan het downloaden</string>
-    <string name="menu_issues">Problemen</string>
+    <string name="downloading">Ophalen</string>
+    <string name="menu_issues">Uitgaven</string>
     <string name="menu_news">Nieuws</string>
-    <string name="cancel">Annuleren</string>
+    <string name="cancel">Annuleer</string>
     <string name="share_news">Deel nieuws</string>
-    <string name="share_issue">Deel probleem</string>
+    <string name="share_issue">Deel Uitgave</string>
     <string name="menu_settings">Instellingen</string>
-    <string name="menu_share">Deel</string>
-    <string name="menu_refresh">Vernieuw</string>
-    <string name="menu_view">Bekijk</string>
-    <string name="settings_notifications">Berichten</string>
-    <string name="settings_issues">Problemen</string>
-    <string name="settings_issues_desc">Verwittig me als er een nieuw probleem is</string>
+    <string name="menu_share">Delen</string>
+    <string name="menu_refresh">Verversen</string>
+    <string name="menu_view">Bekijken</string>
+    <string name="settings_notifications">Notificaties</string>
+    <string name="settings_issues">Uitgaven</string>
+    <string name="settings_issues_desc">Verwittig bij nieuwe uitgave</string>
     <string name="settings_news">Nieuws</string>
-    <string name="settings_news_desc">Verwittig me als er nieuws is</string>
-    <string name="settings_storage">Opslag</string>
-    <string name="settings_keep">Bewaar problemen</string>
-    <string name="settings_keep_desc">Bewaar problemen op je eigen toestel</string>
-    <string name="settings_about">Over</string>
+    <string name="settings_news_desc">Verwittig bij nieuwe nieuwsberichten</string>
+    <string name="settings_about">Onderwerp</string>
     <string name="settings_more">Meer</string>
     <string name="settings_visit">The MagPi website</string>
-    <string name="about">Over</string>
-    <string name="about_app_longname">The MagPi voor Android</string>
-    <string name="about_andrea">Ontwikkeld door Andrea Stagi</string>
-    <string name="about_marta">Grafiek door Marta Calistri</string>
-    <string name="about_open">Deze app is een open source product, gebaseerd op de volgende open source projecten</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Al de code is uitgebracht onder de MIT licentie.</string>
+    <string name="buy_visit">Koop gedrukte exemplaren</string>
+    <string name="about">Onderwerp</string>
+    <string name="about_app_longname">The MagPi for Android</string>
+    <string name="about_andrea">Ontworpen door Andrea Stagi</string>
+    <string name="about_marta">Grafische vormgeving door Marta Calistri</string>
+    <string name="about_open">Deze app is een "open source" produkt, gebouwd naar de volgende "open source" projekten</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Alle code is vrijgegeven onder MIT licensie.</string>
+    <string name="pdf_reader_required">De installatie van een PDF reader is noodzakelijk!</string>
+    <string name="share_text">Ik lees juist nummer %1$s van @TheMagP1 gebruikmakend van hun @Android app. Lees het hier vandaag - %2$s</string>
+    <string name="download_text">Ophalen nummer</string>
+    <string name="menu_cancel">Ophalen annuleren</string>
+    <string name="connection_error">Verbindings fout</string>
+    <string name="notification_new_issue">Nieuw uitgave</string>
 
 </resources>
