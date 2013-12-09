@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">Downloading</string>
+    <string name="menu_issues">Ausgaben</string>
+    <string name="menu_news">News</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="share_news">News mitteilen</string>
+    <string name="share_issue">Ausgabe mitteilen</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_share">Mitteilen</string>
+    <string name="menu_refresh">Aktualisieren</string>
+    <string name="menu_view">Ansicht</string>
+    <string name="settings_notifications">Bemerkungen</string>
+    <string name="settings_issues">Ausgaben</string>
+    <string name="settings_issues_desc">Hinweis auf neue Ausgabe</string>
+    <string name="settings_news">Neuigkeiten</string>
+    <string name="settings_news_desc">Hinweis auf neue Nachrichten</string>
+    <string name="settings_about">Info</string>
+    <string name="settings_more">mehr Info</string>
+    <string name="settings_visit">Die MagPi Webseite</string>
+    <string name="buy_visit">Druckausgabe kaufen</string>
+    <string name="about">Info über</string>
+    <string name="about_app_longname">Das MagPi Magazin für Android</string>
+    <string name="about_andrea">Entwickelt von Andrea Stagi</string>
+    <string name="about_marta">Graphiken von Marta Calistri</string>
+    <string name="about_open">Diese App ist ein quelloffenes Produkt, aufbauend auf folgende open source Projekte</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Insgesamt gelten die Bestimmungen der MIT license.</string>
+    <string name="pdf_reader_required">Es muss erst ein PDF reader installiert werden!</string>
+    <string name="share_text">Ich habe gerade Ausgabe %1$s des @TheMagP1 Magazins mit @Android app gelesen. Lies sie hier - %2$s</string>
+    <string name="download_text">Ausgabe herunterladen</string>
+    <string name="menu_cancel">Download abbrechen</string>
+    <string name="connection_error">Verbindungsfehler</string>
+    <string name="notification_new_issue">Neue Ausgabe!</string>
+
+</resources>
