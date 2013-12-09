@@ -176,13 +176,12 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         this.issue = issue;
         TextView issueText = (TextView) getActivity().findViewById(R.id.article);
         issueText.setText(issue.getTitle() + " - " + issue.getDate());
-        //editorialText.setText(issue.getEditorial());
         String htmlArticle = "<img align='left' src='%s' style='margin-right:10px; height:120px; width:90px;'/><b>%s</b>";
         WebView editorialText = (WebView) getSherlockActivity().findViewById(R.id.text_editorial);
-        editorialText.loadData(String.format(htmlArticle, issue.getCoverUrl(), issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ")), "text/html", "UTF-8");
+        String content = issue.getEditorial().replace("\r\n", "<br/>").replace("\u00a0", " ");
+        editorialText.loadData(String.format(htmlArticle, issue.getCoverUrl(), content), "text/html; charset=utf-8", "utf-8");
         editorialText.setVisibility(View.VISIBLE);
         getSherlockActivity().findViewById(R.id.web_content_progress).setVisibility(View.GONE);
-        //showCover();
     }
 
     @Override

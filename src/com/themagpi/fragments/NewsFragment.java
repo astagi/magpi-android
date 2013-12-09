@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +97,10 @@ public class NewsFragment extends SherlockFragment implements Refreshable {
         
         for( News pnews : news ) {     
             HashMap<String,Object> temp = new HashMap<String,Object>();
-            temp.put("news_content", pnews.getContent());
+            String content = pnews.getContent().replaceAll("<img.+?>", "");
+            if(TextUtils.isEmpty(content))
+            	continue;
+            temp.put("news_content", Html.fromHtml(content));
             temp.put("news_date", pnews.getDate());
             list_populate.add(temp);
         }

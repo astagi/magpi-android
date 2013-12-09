@@ -182,7 +182,7 @@ public class MagPiClient {
     
     public void getNews(final Context context, final OnNewsReceivedListener newsListener) {
     	AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://feeds.feedburner.com/MagPi", new AsyncHttpResponseHandler() {
+        client.get("http://feeds.feedburner.com/TheMagPiNews", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(final String response) {
 	           	AsynCache.getInstance().write(context, "getNews", response.toString(), new AsynCache.WriteResponseHandler() {
