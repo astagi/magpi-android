@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">Yn llwytho</string>
+    <string name="menu_issues">Rhifynnau</string>
+    <string name="menu_news">Newyddion</string>
+    <string name="cancel">Canslo</string>
+    <string name="share_news">Rhannu newyddion</string>
+    <string name="share_issue">Rhannu rhifyn</string>
+    <string name="menu_settings">Gosodiadau</string>
+    <string name="menu_share">Rhannu</string>
+    <string name="menu_refresh">Ail-lwytho</string>
+    <string name="menu_view">Gweld</string>
+    <string name="settings_notifications">Hysbysiadau</string>
+    <string name="settings_issues">Rhifynnau</string>
+    <string name="settings_issues_desc">Hysbysu pan fod Rhifyn newydd</string>
+    <string name="settings_news">Newyddion</string>
+    <string name="settings_news_desc">Hysbysu pan fod newyddion newydd</string>
+    <string name="settings_about">Ynghylch</string>
+    <string name="settings_more">Mwy</string>
+    <string name="settings_visit">Gwefan The MagPi</string>
+    <string name="buy_visit">Prynu copïau print</string>
+    <string name="about">Ynghylch</string>
+    <string name="about_app_longname">The MagPi at gyfer Android</string>
+    <string name="about_andrea">Datblygwyd gan Andrea Stagi</string>
+    <string name="about_marta">Graffeg gan Marta Calistri</string>
+    <string name="about_open">Mae\'r ap hwn yn brosiect côd agored gafodd ei adeiladu ar y prosiectau côd agored canlynol</string>
+    <string name="about_copyright">Hawlfraint © 2013 The MagPi Limited. Rhyddheir y côd i gyd dan drwydded MIT.</string>
+    <string name="pdf_reader_required">Rhaid gosod darllenydd PDF yn gyntaf!</string>
+    <string name="share_text">Rwy newydd ddarllen rhifyn %1$s o @TheMagP1 drwy ddefnyddio\'r ap @Android. Darllenwch hwn fan hyn heddiw - %2$s</string>
+    <string name="download_text">Yn llwytho rhifyn</string>
+    <string name="menu_cancel">Canslo\'r llwytho</string>
+    <string name="connection_error">Gwall cysylltiad</string>
+    <string name="notification_new_issue">Rhifyn newydd!</string>
+
+</resources>

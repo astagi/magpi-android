@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">A MagPi</string>
+    <string name="downloading">A Descarregar</string>
+    <string name="menu_issues">Edição</string>
+    <string name="menu_news">Notícias</string>
+    <string name="cancel">Cancelar</string>
+    <string name="share_news">Partilhar Notícias</string>
+    <string name="share_issue">Partilhar Edição</string>
+    <string name="menu_settings">Configurações</string>
+    <string name="menu_share">Partilhar</string>
+    <string name="menu_refresh">Actualizar</string>
+    <string name="menu_view">Ver</string>
+    <string name="settings_notifications">Notificações</string>
+    <string name="settings_issues">Edições</string>
+    <string name="settings_issues_desc">Notificar sobre novas edições</string>
+    <string name="settings_news">Notícias</string>
+    <string name="settings_news_desc">Notificar sobre novas notícias</string>
+    <string name="settings_about">Sobre</string>
+    <string name="settings_more">Mais</string>
+    <string name="settings_visit">O site da MagPi</string>
+    <string name="buy_visit">Comprar edição impressa</string>
+    <string name="about">Sobre</string>
+    <string name="about_app_longname">A MagPi para Android</string>
+    <string name="about_andrea">Desenvolvido por Andrea Stagi</string>
+    <string name="about_marta">Gráficos por Marta Calistri</string>
+    <string name="about_open">Esta aplicação é open source, construida sobre os seguintes projectos open source </string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Todo o código é distribuido segundo a liçensa MIT.</string>
+    <string name="pdf_reader_required">É necessário instalar uma aplicação de leitura de PDFs primeiro!</string>
+    <string name="share_text">Acabei de ler a edição nº %1$s da @TheMagP1 com a aplicação para @Android. Lê-a aqui hoje - %2$s</string>
+    <string name="download_text">A descarregar edição</string>
+    <string name="menu_cancel">Cancelar download</string>
+    <string name="connection_error">Erro de ligação</string>
+    <string name="notification_new_issue">Nova edição!</string>
+
+</resources>
