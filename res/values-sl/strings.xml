@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">Prenašanje</string>
+    <string name="menu_issues">Napake</string>
+    <string name="menu_news">Novice</string>
+    <string name="cancel">Prekliči</string>
+    <string name="share_news">Deli novice</string>
+    <string name="share_issue">Deli napake</string>
+    <string name="menu_settings">Nastavitve</string>
+    <string name="menu_share">Deli</string>
+    <string name="menu_refresh">Osveži</string>
+    <string name="menu_view">Pogled</string>
+    <string name="settings_notifications">Obvestila</string>
+    <string name="settings_issues">Napake</string>
+    <string name="settings_issues_desc">Opozori me, ko pride do napake</string>
+    <string name="settings_news">Novice</string>
+    <string name="settings_news_desc">Opozori me o novih novicah</string>
+    <string name="settings_about">O programu</string>
+    <string name="settings_more">Več</string>
+    <string name="settings_visit">Spletna stran The MagPi</string>
+    <string name="buy_visit">Kupi tiskan izvod</string>
+    <string name="about">O programu</string>
+    <string name="about_app_longname">The MagPi za Android</string>
+    <string name="about_andrea">Razvijalec: Andrea Stagi</string>
+    <string name="about_marta">Grafična podoba: Marta Calistri</string>
+    <string name="about_open">Ta aplikacija je odprtokodni produkt, ki temelji na naslednjih odprtokodnih projektih.</string>
+    <string name="about_copyright">Avtorske pravice © 2013 The MagPi Limited. Vsa koda je objavljena pod licenco MIT.</string>
+    <string name="pdf_reader_required">Najprej je potrebno namestiti PDF bralnik!</string>
+    <string name="share_text">Ravnokar sem prebral revijo %1$s of @TheMagP1 z uporabo njihove @Android aplikacije. Preberi tudi ti, še danes - %2$s</string>
+    <string name="download_text">Prenašam revijo</string>
+    <string name="menu_cancel">Ustavi prenos</string>
+    <string name="connection_error">Napaka s povezavo</string>
+    <string name="notification_new_issue">Nova revija je na voljo!</string>
+
+</resources>
