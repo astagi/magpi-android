@@ -23,18 +23,18 @@ public class IssuesGridAdapter extends BaseAdapter {
         public TextView  textView;
     }
     
-    private ArrayList<Issue> mLocations;
-    private LayoutInflater  mInflater;
+    private ArrayList<Issue> issues;
+    private LayoutInflater  inflater;
     
-    public IssuesGridAdapter(Context context, ArrayList<Issue> locations) {
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mLocations = locations;
+    public IssuesGridAdapter(Context context, ArrayList<Issue> issues) {
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.issues = issues;
     }
     
     @Override
     public int getCount() {
-        if (mLocations != null) {
-            return mLocations.size();
+        if (issues != null) {
+            return issues.size();
         }
         
         return 0;
@@ -42,8 +42,8 @@ public class IssuesGridAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (mLocations != null && position >= 0 && position < getCount()) {
-            return mLocations.get(position);
+        if (issues != null && position >= 0 && position < getCount()) {
+            return issues.get(position);
         }
         
         return null;
@@ -60,10 +60,10 @@ public class IssuesGridAdapter extends BaseAdapter {
         View view = convertView;
         ViewHolder viewHolder;
 
-        Issue locationModel = mLocations.get(position);
+        Issue issueModel = issues.get(position);
         
         if (view == null) {
-            view = mInflater.inflate(R.layout.adapter_issue_item, parent, false);
+            view = inflater.inflate(R.layout.adapter_issue_item, parent, false);
             
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) view.findViewById(R.id.grid_image);
@@ -80,8 +80,8 @@ public class IssuesGridAdapter extends BaseAdapter {
         .cacheOnDisc().resetViewBeforeLoading()
         .build();
         
-        ImageLoader.getInstance().displayImage(locationModel.getCoverUrl(), viewHolder.imageView, options);
-        viewHolder.textView.setText(locationModel.getTitle());
+        ImageLoader.getInstance().displayImage(issueModel.getCoverUrl(), viewHolder.imageView, options);
+        viewHolder.textView.setText(issueModel.getTitle());
         
         return view;
     }
