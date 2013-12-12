@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagPi</string>
+    <string name="downloading">Descărcare</string>
+    <string name="menu_issues">Numere</string>
+    <string name="menu_news">Noutăți</string>
+    <string name="cancel">Anulare</string>
+    <string name="share_news">Partajează noutățile</string>
+    <string name="share_issue">Partajează numărul</string>
+    <string name="menu_settings">Setări</string>
+    <string name="menu_share">Partajează</string>
+    <string name="menu_refresh">Reîmprospătează</string>
+    <string name="menu_view">Vizualizare</string>
+    <string name="settings_notifications">Notificări</string>
+    <string name="settings_issues">Apariții</string>
+    <string name="settings_issues_desc">Anunță-mă la o nouă apariție</string>
+    <string name="settings_news">Noutăți</string>
+    <string name="settings_news_desc">Anunță-mă când apar noutăți</string>
+    <string name="settings_about">Despre</string>
+    <string name="settings_more">Mai mult</string>
+    <string name="settings_visit">Site-ul MagPi</string>
+    <string name="buy_visit">Cumpără exemplare tipărite</string>
+    <string name="about">Despre</string>
+    <string name="about_app_longname">MagPi pentru Android</string>
+    <string name="about_andrea">Dezvoltat de Andrea Stagi</string>
+    <string name="about_marta">Grafica realizată de Marta Calistri</string>
+    <string name="about_open">Această aplicație este un proiect open source, dezvoltat pe următoarele proiecte open source</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Tot codul este licențiat MIT license.</string>
+	<string name="pdf_reader_required">Trebuie sa îți instalezi mai întâi o aplicație pentru citirea fișierelor pdf!</string>
+	<string name="share_text">Tocmai am citit numărul %1$s din @TheMagP1 folosind aplicația lor @Android. O poți citi și tu aici - %2$s</string>
+	<string name="download_text">Descărcare număr</string>
+	<string name="menu_cancel">Anulare descărcare</string>
+	<string name="connection_error">Eroare de conexiune</string>
+	<string name="notification_new_issue">Apariție nouă!</string>
+</resources>
