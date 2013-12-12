@@ -68,8 +68,12 @@ public class MagpiMainActivity extends SherlockFragmentActivity
                 refreshFragment((Refreshable)this.mPagerAdapter.getItem(mViewPager.getCurrentItem()));
                 break;
             case R.id.menu_settings:
-                Intent intent = new Intent(this, MagpiSettingsActivity.class);
-                startActivity(intent);
+                Intent intentSettings = new Intent(this, MagpiSettingsActivity.class);
+                startActivity(intentSettings);
+                break;
+            case R.id.menu_about:
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -134,7 +138,7 @@ public class MagpiMainActivity extends SherlockFragmentActivity
 		long currentTime = Calendar.getInstance().getTimeInMillis();
 		Log.e("NOW", ""+ currentTime);
 		Log.e("LAST",""+timeLastRegistration);
-		if(currentTime > timeLastRegistration + 86400000L)
+		if(currentTime > timeLastRegistration + 86400000L * 3L)
 			return true;
 		return false;
 	}
