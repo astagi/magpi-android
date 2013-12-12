@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Le MagPi</string>
+    <string name="downloading">Téléchargement</string>
+    <string name="menu_issues">Numéros</string>
+    <string name="menu_news">Nouvelles</string>
+    <string name="cancel">Annuler</string>
+    <string name="share_news">Partager des nouvelles</string>
+    <string name="share_issue">Partager un numéro</string>
+    <string name="menu_settings">Réglages</string>
+    <string name="menu_share">Partager</string>
+    <string name="menu_refresh">Rafraîchir</string>
+    <string name="menu_view">Voir</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_issues">Numéros</string>
+    <string name="settings_issues_desc">Vous informe quand un nouveau numéro arrive</string>
+    <string name="settings_news">Nouvelles</string>
+    <string name="settings_news_desc">Vous informe des dernières nouvelles</string>
+    <string name="settings_about">À propos</string>
+    <string name="settings_more">Plus</string>
+    <string name="settings_visit">Le site web MagPi</string>
+    <string name="buy_visit">Acheter des copies imprimées</string>
+    <string name="about">À propos</string>
+    <string name="about_app_longname">Le MagPi pour Android</string>
+    <string name="about_andrea">Développé par Andrea Stagi</string>
+    <string name="about_marta">Graphiquess par Marta Calistri</string>
+    <string name="about_open">Cette application est un produit ouvert, bâti à l\'aide des autres projets libres suivants: </string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Tout le code est relâché sous la licence MIT.</string>
+    <string name="pdf_reader_required">Il vous faut un lecteur PDF d\'abord !</string>
+    <string name="share_text">J\'ai juste lu le numéro %1$s du @TheMagP1 avec leur app @Android app. Lisez-le ici aujourd\'hui - %2$s</string>
+    <string name="download_text">Télécharger numéro</string>
+    <string name="menu_cancel">Annuler téléchargement</string>
+    <string name="connection_error">Erreur de connexion</string>
+    <string name="notification_new_issue">Nouveau numéro!</string>
+
+</resources>
