@@ -88,7 +88,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 				.setContentIntent(contentIntent)
 				.setSmallIcon(R.drawable.new_issue)
 				.setLargeIcon(BitmapFactory.decodeByteArray(notificationImgData, 0, notificationImgData.length))
-				.build();
+				.getNotification();
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		notificationManager.notify(0, noti);
