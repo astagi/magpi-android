@@ -160,19 +160,21 @@ public class MagpiMainActivity extends SherlockFragmentActivity
     public void onPageSelected(int pos) {
         getSupportActionBar().setSelectedNavigationItem(pos);
     }
+    
+    private int refreshRequests = 0;
 
     @Override
-    public void startRefreshIndicator() {
+    public synchronized void startRefreshIndicator() {
+    	refreshRequests++;
         if(menu != null)
             menu.findItem(R.id.menu_refresh).setActionView(inflater.inflate(R.layout.actionbar_refresh_progress, null));
-        
     }
 
     @Override
-    public void stopRefreshIndicator() {
-        if(menu != null)
-            menu.findItem(R.id.menu_refresh).setActionView(null);
-        
+    public synchronized void stopRefreshIndicator() {
+    	refreshRequests--;
+        if(refreshRequests == 0 && menu != null)
+            menu.findItem(R.id.menu_refresh).setActionView(null);   
     }
 
 }
