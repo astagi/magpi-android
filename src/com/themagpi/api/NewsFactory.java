@@ -15,7 +15,8 @@ public class NewsFactory {
         for(RSSItem item : feed.getItems()) {
             SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy HH:mm");
             String pubDateText = formatter.format(item.getPubDate());
-            news.add(new News(pubDateText, item.getDescription()));
+            String content = item.getDescription().replace("href=\"/l.php?u=", "href=\"http://www.facebook.com/l.php?u=");
+            news.add(new News(pubDateText, content));
         }
         
         return news;
