@@ -1,11 +1,13 @@
 #______________________________________________________________________________________
-#
-#                                YMCA - You Make Cool Apps
+#                             _ _   _____   ___   ___
+#                            | v | |     | |  _| | _ |
+#                             |_|  |_|_|_| |___| |_|_|
 #______________________________________________________________________________________
 #                                                                           version 1.0
+# YMCA (You Make Cool Apps)
+# Description: Makefile for building Android apps using Ant
 # Author: Andrea Stagi (@4ndreaSt4gi)
-# https://github.com/4ndreaSt4gi/YMCA
-# Makefile for building Android apps using Ant
+# Source: https://github.com/4ndreaSt4gi/YMCA
 # License: MIT
 #
 # Copyright (C) 2012 Andrea Stagi <stagi.andrea@gmail.com>.
@@ -119,19 +121,29 @@ sign:
 	@echo "\nGenerating a signed apk..."
     ifneq ($(wildcard ant.properties),)
 	@cat ant.properties > .ant.propertiestmp
+    ifneq ($(wildcard build.properties),)
+	@cat build.properties > .build.propertiestmp
     endif
 	@echo "" >> ant.properties
-	@echo "key.store=$(KEY_STORE)\nkey.alias=$(KEY_ALIAS)" >> ant.properties
+	@echo "" >> build.properties
+	@echo "key.store=$(KEY_STORE)" >> ant.properties
+	@echo "key.alias=$(KEY_ALIAS)" >> ant.properties
+	@echo "key.store=$(KEY_STORE)" >> build.properties
+	@echo "key.alias=$(KEY_ALIAS)" >> build.properties
     ifdef KEY_STORE_PASSWORD
         ifdef KEY_ALIAS_PASSWORD
-		    @echo "key.alias.password=$(KEY_ALIAS_PASSWORD)\nkey.store.password=$(KEY_STORE_PASSWORD)" >> ant.properties
+		    @echo "key.alias.password=$(KEY_ALIAS_PASSWORD)" >> ant.properties
+		    @echo "key.store.password=$(KEY_STORE_PASSWORD)" >> ant.properties
+		    @echo "key.alias.password=$(KEY_ALIAS_PASSWORD)" >> build.properties
+		    @echo "key.store.password=$(KEY_STORE_PASSWORD)" >> build.properties
         endif
     endif
-    ifneq ($(wildcard ant.properties),)
 	ant release
     endif
 	@cat .ant.propertiestmp > ant.properties
+	@cat .build.propertiestmp > build.properties
 	@rm .ant.propertiestmp
+	@rm .build.propertiestmp
 
 restartadb:
 	@echo "\nRestarting adb..."
