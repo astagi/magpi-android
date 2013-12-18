@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.themagpi.android"
     android:versionCode="1"
-    android:versionName="1.0-rc2" >
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -81,6 +81,12 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.themagpi.android" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.themagpi.receivers.DownloadCompletedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" >
+                </action>
             </intent-filter>
         </receiver>
     </application>
