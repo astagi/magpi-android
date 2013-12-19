@@ -83,6 +83,12 @@
                 <category android:name="com.themagpi.android" />
             </intent-filter>
         </receiver>
+        <receiver android:name="com.themagpi.receivers.DownloadCompletedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

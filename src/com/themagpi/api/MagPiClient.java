@@ -249,8 +249,6 @@ public class MagPiClient {
         String contentMd5 = SecurityUtils.md5(contentToEncode);
         String toSign = verb + "\n" + contentMd5 + "\n" + currentDate + "\n" + url;
 
-        Log.e("STRINGTOHASH", "-" + toSign);
-
         String hmac = SecurityUtils.Hmac(Config.APP_SECRET, toSign);
         client.addHeader("Datetime", currentDate);
         client.addHeader("Content-Md5", contentMd5);

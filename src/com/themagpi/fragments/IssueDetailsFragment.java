@@ -48,8 +48,9 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         }
         
         String file = issue.getId() + ".pdf";
+        File magPiFolder = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + Config.ISSUE_FOLDER);
+        magPiFolder.mkdirs();
         File pdf = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + Config.ISSUE_FOLDER, file);
-        
         if(pdf.exists() && !isDownloading(issue.getPdfUrl())) {
             Intent intentPdf = new Intent(Intent.ACTION_VIEW);
             intentPdf.setDataAndType(Uri.fromFile(pdf), "application/pdf");
@@ -59,7 +60,8 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         	menu.findItem(R.id.menu_cancel_download).setVisible(true);
             Request request = new Request(Uri.parse(issue.getPdfUrl()));
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-            request.setTitle(getActivity().getString(R.string.download_text) + " " + issue.getId());
+            request.setTitle(getActivity().getString(R.string.app_name) + " n¡" + issue.getId());
+            request.setDescription(getActivity().getString(R.string.download_text) + " n¡" + issue.getId());
             request.setDestinationInExternalPublicDir(Config.ISSUE_FOLDER, file);
             dm.enqueue(request);
         }
@@ -78,7 +80,7 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
                     if (c.moveToFirst()) {
                         int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_URI);
                         String urlDownloaded = c.getString(columnIndex);
-                	    if ((issue.getPdfUrl()+"/").equals(urlDownloaded)) {
+                	    if ((issue.getPdfUrl() + "/").equals(urlDownloaded)) {
                         	menu.findItem(R.id.menu_view).setVisible(true);
                         	menu.findItem(R.id.menu_cancel_download).setVisible(false);
                         } 
