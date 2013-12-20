@@ -1,6 +1,14 @@
 <p align="center">
   <img src="https://raw.github.com/astagi/magpi-android/master/pub/TheMagPi.png" alt="MagPi client for Android."/>
 </p>
+
+<p align="center">
+    <a href="https://play.google.com/store/apps/details?id=com.themagpi.android">
+      <img alt="Android app on Google Play"
+           src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+    </a>
+</p>
+
 MagPi for Android
 -----------
 MagPi client for Android. Read MagPi issues with your Android device :)
