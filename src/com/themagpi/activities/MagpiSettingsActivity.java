@@ -1,6 +1,5 @@
 package com.themagpi.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
