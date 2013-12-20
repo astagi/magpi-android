@@ -225,6 +225,9 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             if(isDownloading(issue.getPdfUrl())) {
             	menu.findItem(R.id.menu_view).setVisible(false);
             	menu.findItem(R.id.menu_cancel_download).setVisible(true);
+            } else {
+            	menu.findItem(R.id.menu_view).setVisible(true);
+            	menu.findItem(R.id.menu_cancel_download).setVisible(false);
             }
         }
         return;

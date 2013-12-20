@@ -1,6 +1,5 @@
 package com.themagpi.activities;
 
-import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.widget.TextView;
