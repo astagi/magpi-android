@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The MagPi</string>
+    <string name="downloading">ダウンロード中</string>
+    <string name="menu_issues">イシュー</string>
+    <string name="menu_news">ニュース</string>
+    <string name="cancel">キャンセル</string>
+    <string name="share_news">ニュースを共有</string>
+    <string name="share_issue">イシューを共有</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_share">共有</string>
+    <string name="menu_refresh">更新</string>
+    <string name="menu_view">ビュー</string>
+    <string name="settings_notifications">通知</string>
+    <string name="settings_issues">イシュー</string>
+    <string name="settings_issues_desc">新しいイシューを受け取ったときに通知する</string>
+    <string name="settings_news">ニュース</string>
+    <string name="settings_news_desc">新しいニュースを受け取ったときに通知する</string>
+    <string name="settings_about">このアプリについて</string>
+    <string name="settings_more">その他</string>
+    <string name="settings_visit">The MagPiのウェブサイトを見る</string>
+    <string name="buy_visit">印刷されたコピーを買う</string>
+    <string name="about">このアプリについて</string>
+    <string name="about_app_longname">The MagPi for Android</string>
+    <string name="about_andrea">Developed by Andrea Stagi</string>
+    <string name="about_marta">Graphics by Marta Calistri</string>
+    <string name="about_open">This app is an open source product, built upon the following open source projects</string>
+    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All the code is released under MIT license.</string>
+    <string name="pdf_reader_required">PDFリーダーを先にダウンロードしてください！</string>
+    <string name="share_text">I just read issue %1$s of @TheMagP1 using their @Android app. Read it here today - %2$s</string>
+    <string name="download_text">イシューをダウンロードしています</string>
+    <string name="download_completed_text">ダウンロードが完了しました</string>
+    <string name="menu_cancel">ダウンロードをキャンセルしました</string>
+    <string name="connection_error">接続エラー</string>
+    <string name="notification_new_issue">新しいイシュー！</string>
+
+</resources>
