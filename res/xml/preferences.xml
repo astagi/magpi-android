@@ -10,6 +10,20 @@
             android:title="@string/settings_issues" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="issues_settings"
+        android:title="@string/menu_issues" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_open_issuu"
+            android:summary="@string/settings_open_issuu_desc"
+            android:title="@string/settings_open_issuu" />
+
+<!--         <Preference -->
+<!--             android:key="download_folder" -->
+<!--             android:summary="/" -->
+<!--             android:title="@string/download_folder" /> -->
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="about_settings"
         android:title="@string/settings_more" >
         <Preference android:title="@string/settings_visit" >

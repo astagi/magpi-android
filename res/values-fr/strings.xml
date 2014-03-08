@@ -26,7 +26,7 @@
     <string name="about_andrea">Developpé par Andrea Stagi</string>
     <string name="about_marta">Graphisme par Marta Calistri</string>
     <string name="about_open">Cette application est un produit open source, basé sur les projets open sources suivants</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Code sous licence MIT.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Code sous licence MIT.</string>
     <string name="pdf_reader_required">Vous devez installer un lecteur PDF d\'abord !</string>
     <string name="share_text">Je viens de lire le numéro %1$s de @TheMagP1 avec son application @Android. Lisez le aujourd\'hui - %2$s</string>
     <string name="download_text">Numéro en téléchargement</string>

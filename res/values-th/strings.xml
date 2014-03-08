@@ -28,6 +28,6 @@
     <string name="about_andrea">พัฒนาโดย Andrea Stagi</string>
     <string name="about_marta">กราฟิก โดย Marta Calistri</string>
     <string name="about_open">โปรแกรมนี้เป็นผลิตภัณฑ์ที่เปิดเผยรหัสต้นฉบับ (open source)  </string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All the code is relased under MIT license.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. All the code is relased under MIT license.</string>
 
 </resources>

@@ -28,6 +28,6 @@
     <string name="about_andrea">Utvecklad av Andrea Stagi</string>
     <string name="about_marta">Grafik av Marta Calistri</string>
     <string name="about_open">Det här programmet är byggt med öppen källkod och bygger på följande projekt</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. All kod är släppt under MIT licensen</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. All kod är släppt under MIT licensen</string>
 
 </resources>

@@ -26,7 +26,7 @@
     <string name="about_andrea">Razvijalec: Andrea Stagi</string>
     <string name="about_marta">Grafična podoba: Marta Calistri</string>
     <string name="about_open">Ta aplikacija je odprtokodni produkt, ki temelji na naslednjih odprtokodnih projektih.</string>
-    <string name="about_copyright">Avtorske pravice © 2013 The MagPi Limited. Vsa koda je objavljena pod licenco MIT.</string>
+    <string name="about_copyright">Avtorske pravice © 2014 The MagPi Limited. Vsa koda je objavljena pod licenco MIT.</string>
     <string name="pdf_reader_required">Najprej je potrebno namestiti PDF bralnik!</string>
     <string name="share_text">Ravnokar sem prebral revijo %1$s of @TheMagP1 z uporabo njihove @Android aplikacije. Preberi tudi ti, še danes - %2$s</string>
     <string name="download_text">Prenašam revijo</string>

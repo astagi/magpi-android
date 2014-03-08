@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +110,10 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
             return true;
         switch (item.getItemId()) {
             case R.id.menu_view:
-                downloadIssue();
+            	if(!PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("pref_open_issuu", false))
+                	downloadIssue();
+            	else
+            		viewOnISSUU();
                 return true;
             case R.id.menu_cancel_download:
                 cancelDownload();
@@ -127,7 +131,14 @@ public class IssueDetailsFragment extends SherlockFragment implements Refreshabl
         
     }
 
-    private void cancelDownload() {
+    private void viewOnISSUU() {
+    	String url = String.format("http://issuu.com/themagpi/docs/%s", issue.getISSUU());
+    	Intent i = new Intent(Intent.ACTION_VIEW);
+    	i.setData(Uri.parse(url));
+    	startActivity(i);
+	}
+
+	private void cancelDownload() {
     	Query query = new Query();
 		query.setFilterByStatus(
 			    DownloadManager.STATUS_PAUSED|

@@ -26,7 +26,7 @@
     <string name="about_andrea">Program: Andrea Stagi</string>
     <string name="about_marta">Grafika: Marta Calistri</string>
     <string name="about_open">Ta aplikacja jest oprogramowaniem o otwartym kodzie źródłowym. Oparta jest na następujących projektach open source:</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Cały kod aplikacji dostępny jest na warunkach licencji MIT.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Cały kod aplikacji dostępny jest na warunkach licencji MIT.</string>
 	<string name="pdf_reader_required">Musisz najpierw zainstalować czytnik plików PDF!</string>
 	<string name="share_text">Właśnie przeczytałem %1$s numer @TheMagP1 korzystając z ich aplikacji dla @Android. Przeczytaj go dziś tutaj: %2$s</string>
 	<string name="download_text">Pobieranie numeru</string>

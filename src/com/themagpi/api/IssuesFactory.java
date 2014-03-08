@@ -25,6 +25,7 @@ public class IssuesFactory {
                     .pdfUrl(item.getString("pdf"))
                     .imageUrl(item.getString("cover"))
                     .editorial(item.getString("editorial"))
+                    .issuuUrl(item.getString("issuu"))
                     .build();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,6 +91,7 @@ public class IssuesFactory {
                 .pdfUrl(item.getStringExtra("link"))
                 .imageUrl(item.getStringExtra("image"))
                 .editorial(item.getStringExtra("editorial"))
+                .issuuUrl(item.getStringExtra("issuu"))
                 .build();
     }
     

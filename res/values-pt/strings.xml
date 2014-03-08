@@ -26,7 +26,7 @@
     <string name="about_andrea">Desenvolvido por Andrea Stagi</string>
     <string name="about_marta">Gráficos por Marta Calistri</string>
     <string name="about_open">Esta aplicação é open source, construida sobre os seguintes projectos open source </string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Todo o código é distribuido segundo a licença MIT.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Todo o código é distribuido segundo a licença MIT.</string>
     <string name="pdf_reader_required">É necessário instalar uma aplicação de leitura de PDFs primeiro!</string>
     <string name="share_text">Acabei de ler a edição nº %1$s da @TheMagP1 com a aplicação para @Android. Lê-a aqui hoje - %2$s</string>
     <string name="download_text">A descarregar edição</string>

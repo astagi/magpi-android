@@ -26,7 +26,7 @@
     <string name="about_andrea">开发: Andrea Stagi</string>
     <string name="about_marta">美术: Marta Calistri</string>
     <string name="about_open">本app是开源产品，基于以下开源项目开发</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. 所有代码使用MIT证书发布。</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. 所有代码使用MIT证书发布。</string>
 	<string name="pdf_reader_required">请先安装PDF阅读器!</string>
 	<string name="share_text">我刚用@TheMagP1的@Android app阅读了的第%1$s期The MagPi。点击这里阅读 - %2$s</string>
 	<string name="download_text">期刊下载中</string>

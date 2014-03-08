@@ -14,7 +14,7 @@
     <string name="menu_view">Leggi</string>
     <string name="settings_notifications">Notifiche</string>
     <string name="settings_issues">Numeri</string>
-    <string name="settings_issues_desc">Notifica l\'arrivo di una nuovo numero</string>
+    <string name="settings_issues_desc">Notifica l\'arrivo di un nuovo numero</string>
     <string name="settings_news">Notizie</string>
     <string name="settings_news_desc">Notifica l\'arrivo di nuove notizie</string>
     <string name="settings_storage">Storage</string>
@@ -29,7 +29,7 @@
     <string name="about_andrea">Sviluppata da Andrea Stagi</string>
     <string name="about_marta">Grafica di Marta Calistri</string>
     <string name="about_open">Questa app è un prodotto open source, sviluppata con l\'ausilio dei seguenti software:</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Tutto il codice è rilasciato sotto licenza MIT.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Tutto il codice è rilasciato sotto licenza MIT.</string>
     <string name="pdf_reader_required">Installa un lettore PDF per leggere la rivista!</string>
     <string name="share_text">Ho appena letto il numero %1$s fi @TheMagP1 usando la loro app @Android. Leggilo anche tu - %2$s</string>
     <string name="download_text">Scaricando il numero</string>

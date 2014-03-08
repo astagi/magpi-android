@@ -26,7 +26,7 @@
     <string name="about_andrea">Dezvoltat de Andrea Stagi</string>
     <string name="about_marta">Grafica realizată de Marta Calistri</string>
     <string name="about_open">Această aplicație este un proiect open source, dezvoltat pe următoarele proiecte open source</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Tot codul este licențiat MIT license.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Tot codul este licențiat MIT license.</string>
 	<string name="pdf_reader_required">Trebuie sa îți instalezi mai întâi o aplicație pentru citirea fișierelor pdf!</string>
 	<string name="share_text">Tocmai am citit numărul %1$s din @TheMagP1 folosind aplicația lor @Android. O poți citi și tu aici - %2$s</string>
 	<string name="download_text">Descărcare număr</string>
