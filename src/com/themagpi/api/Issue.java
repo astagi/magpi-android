@@ -11,6 +11,7 @@ public class Issue implements Parcelable {
     private String imgUrl;
     private String pdfUrl;
     private String editorial;
+    private String issuuUrl;
     
     public static class Builder {
 
@@ -20,6 +21,7 @@ public class Issue implements Parcelable {
         private String imgUrl;
         private String pdfUrl;
         private String editorial;
+        private String issuuUrl;
         
         public Builder id(String id){this.id = id; return this; }
         public Builder title(String title){this.title = title; return this; }
@@ -27,7 +29,7 @@ public class Issue implements Parcelable {
         public Builder imageUrl(String imgUrl){this.imgUrl = imgUrl; return this; }
         public Builder pdfUrl(String pdfUrl){this.pdfUrl = pdfUrl; return this; }
         public Builder editorial(String editorial){this.editorial = editorial; return this; }
-        
+        public Builder issuuUrl(String issuuUrl){this.issuuUrl = issuuUrl; return this; }
         public Issue build() {
             return new Issue(this);
         }
@@ -40,6 +42,7 @@ public class Issue implements Parcelable {
         setPdfUrl(builder.pdfUrl);
         setId(builder.id);
         setEditorial(builder.editorial);
+        setISSUU(builder.issuuUrl);
     }
 
     public String getPdfUrl() {
@@ -97,6 +100,7 @@ public class Issue implements Parcelable {
         dest.writeString(imgUrl);
         dest.writeString(date);
         dest.writeString(editorial);
+        dest.writeString(issuuUrl);
     }
     
     public static final Parcelable.Creator CREATOR =
@@ -117,6 +121,7 @@ public class Issue implements Parcelable {
         imgUrl = in.readString();
         date = in.readString();
         editorial = in.readString();
+        setISSUU(in.readString());
     }
     
     public Issue(Parcel in) {
@@ -133,5 +138,13 @@ public class Issue implements Parcelable {
 
 	public void setEditorial(String editorial) {
 		this.editorial = editorial;
+	}
+
+	public String getISSUU() {
+		return issuuUrl;
+	}
+
+	public void setISSUU(String issuuUrl) {
+		this.issuuUrl = issuuUrl;
 	}
 }

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.themagpi.android.R;
+import com.themagpi.android.services.PebbleNotifier;
 
 public class DownloadCompletedReceiver extends BroadcastReceiver {
 	
@@ -48,6 +49,8 @@ public class DownloadCompletedReceiver extends BroadcastReceiver {
         				.setContentIntent(contentIntent)
         				.setSmallIcon(R.drawable.new_issue)
         				.getNotification();
+        		
+        		PebbleNotifier.notify(context, title, context.getString(R.string.download_completed_text));
 
         		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         		noti.flags |= Notification.FLAG_AUTO_CANCEL;

@@ -26,7 +26,7 @@
     <string name="about_andrea">Datblygwyd gan Andrea Stagi</string>
     <string name="about_marta">Graffeg gan Marta Calistri</string>
     <string name="about_open">Mae\'r ap hwn yn brosiect côd agored gafodd ei adeiladu ar y prosiectau côd agored canlynol</string>
-    <string name="about_copyright">Hawlfraint © 2013 The MagPi Limited. Rhyddheir y côd i gyd dan drwydded MIT.</string>
+    <string name="about_copyright">Hawlfraint © 2014 The MagPi Limited. Rhyddheir y côd i gyd dan drwydded MIT.</string>
     <string name="pdf_reader_required">Rhaid gosod darllenydd PDF yn gyntaf!</string>
     <string name="share_text">Rwy newydd ddarllen rhifyn %1$s o @TheMagP1 drwy ddefnyddio\'r ap @Android. Darllenwch hwn fan hyn heddiw - %2$s</string>
     <string name="download_text">Yn llwytho rhifyn</string>

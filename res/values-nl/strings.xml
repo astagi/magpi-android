@@ -26,7 +26,7 @@
     <string name="about_andrea">Ontworpen door Andrea Stagi</string>
     <string name="about_marta">Grafische vormgeving door Marta Calistri</string>
     <string name="about_open">Deze app is een "open source" produkt, gebouwd naar de volgende "open source" projekten</string>
-    <string name="about_copyright">Copyright © 2013 The MagPi Limited. Alle code is vrijgegeven onder MIT licensie.</string>
+    <string name="about_copyright">Copyright © 2014 The MagPi Limited. Alle code is vrijgegeven onder MIT licensie.</string>
     <string name="pdf_reader_required">De installatie van een PDF reader is noodzakelijk!</string>
     <string name="share_text">Ik lees juist nummer %1$s van @TheMagP1 gebruikmakend van hun @Android app. Lees het hier vandaag - %2$s</string>
     <string name="download_text">Ophalen nummer</string>

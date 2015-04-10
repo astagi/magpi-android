@@ -26,7 +26,7 @@
     <string name="about_andrea">Autor: Andrea Stagi</string>
     <string name="about_marta">Grafika: Marta Calistri</string>
     <string name="about_open">Ovo je aplikacija otvorenog koda, razvijena na navedenim projektima otvorenog koda</string>
-    <string name="about_copyright">Autorska prava © 2013 The MagPi Limited. Čitav kod je objavljen pod MIT licencom.</string>
+    <string name="about_copyright">Autorska prava © 2014 The MagPi Limited. Čitav kod je objavljen pod MIT licencom.</string>
     <string name="pdf_reader_required">Najprije trebate instalirati PDF čitač!</string>
     <string name="share_text">Upravo sam pročitao/la izdanje %1$s @TheMagP1 pomoću @Android app. Pročitaj ga ovdje još danas - %2$s</string>
     <string name="download_text">Preuzimanje izdanja u tijeku</string>

@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.themagpi.activities.IssueDetailsActivity;
+import com.themagpi.android.services.PebbleNotifier;
 import com.themagpi.api.Issue;
 import com.themagpi.api.IssuesFactory;
 import com.themagpi.api.MagPiClient;
@@ -92,21 +93,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
 		notificationManager.notify(0, noti);
-		notifyOnPebble(issue);
+		PebbleNotifier.notify(this, "The MagPi " + issue.getTitle(), issue.getEditorial());
 	}
 	
-	private void notifyOnPebble(Issue issue) {
-		final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
-        final Map data = new HashMap();
-        data.put("title", "The MagPi " + issue.getTitle());
-        data.put("body", issue.getEditorial());
-        final JSONObject jsonData = new JSONObject(data);
-        final String notificationData = new JSONArray().put(jsonData).toString();
-        i.putExtra("messageType", "PEBBLE_ALERT");
-        i.putExtra("sender", "The MagPi");
-        i.putExtra("notificationData", notificationData);
-        sendBroadcast(i);
-	}
 
 	@Override
 	protected void onRegistered(Context ctx, String idGcm) {
