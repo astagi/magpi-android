@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">The MagPi</string>
     <string name="downloading">Sťahovanie</string>
-    <string name="menu_issues">Chyby</string>
+    <string name="menu_issues">Čísla</string>
     <string name="menu_news">Novinky</string>
     <string name="cancel">Zrušiť</string>
-    <string name="share_news">Zdielať Novinky</string>
-    <string name="share_issue">Zdielať Chybu</string>
+    <string name="share_news">Zdieľať novinky</string>
+    <string name="share_issue">Zdieľať číslo</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_share">Zdieľať</string>
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_view">Zobraziť</string>
     <string name="settings_notifications">Oznámenia</string>
-    <string name="settings_issues">Chyby</string>
-    <string name="settings_issues_desc">Upozorniť ma ak sa vyskytne chyba</string>
+    <string name="settings_issues">Čísla</string>
+    <string name="settings_issues_desc">Upozorniť ma, keď vyjde nové číslo</string>
     <string name="settings_news">Novinky</string>
-    <string name="settings_news_desc">Oznámiť ak sa vyskytne novinka</string>
-    <string name="settings_storage">Úložisko</string>
-    <string name="settings_keep">Ponechať chyby</string>
-    <string name="settings_keep_desc">Uložiť hlásené chyby vo Vašom Zariadení</string>
-    <string name="settings_about">O Porgrame</string>
+    <string name="settings_news_desc">Oznámiť, ak sa vyskytne novinka</string>
+    <string name="settings_about">O programe</string>
     <string name="settings_more">Viac</string>
     <string name="settings_visit">The MagPi webstránka</string>
-    <string name="about">O Programe</string>
-    <string name="about_app_longname">The MagPi pre Android</string>
-    <string name="about_andrea">Vývojár : Andrea Stagi</string>
-    <string name="about_marta">Grafika : Marta Calistri</string>
-    <string name="about_open">Táto aplikácia je open source produkt, postavená na nasledujúcich projektoch.</string>
+    <string name="about">O programe</string>
+    <string name="about_app_longname">MagPi pre Android</string>
+    <string name="about_andrea">Vývojár: Andrea Stagi</string>
+    <string name="about_marta">Grafik: Marta Calistri</string>
+    <string name="about_open">Táto aplikácia je open source produkt, postavený na nasledujúcich projektoch.</string>
     <string name="about_copyright">Copyright © 2014 The MagPi Limited. Celý kód je vydaný pod licenciou MIT .</string>
-
+    <string name="buy_visit">Kúpiť papierový výtlačok</string>
+    <string name="pdf_reader_required">Potrebujete najprv nainštalovať prehliadač PDF!</string>
+    <string name="share_text">Práve som dočítal(a) číslo %1$s časopisu @TheMagP1 cez ich @Android aplikáciu. Prečítaj si ho ešte dnes - %2$s</string>
+    <string name="download_text">Sťahujem číslo</string>
+    <string name="download_completed_text">Sťahovanie dokončené</string>
+    <string name="menu_cancel">Zrušiť sťahovanie</string>
+    <string name="connection_error">Chyba pri pripájaní</string>
+    <string name="notification_new_issue">Nové číslo!</string>
+    <string name="download_folder">Priečinok pre sťahovanie</string>
+    <string name="settings_open_issuu">Otvoriť na ISSUU</string>
+    <string name="settings_open_issuu_desc">Otvorte číslo priamo na ISSUU</string>
 </resources>
